@@ -41,6 +41,10 @@ vendor/
 composer.lock
 composer.json
 
+# Node and packages
+node_modules/
+package.json
+package-lock.json
 
 #intelliJ
 *.iml
