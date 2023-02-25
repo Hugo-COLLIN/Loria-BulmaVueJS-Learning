@@ -11,15 +11,15 @@
 <body>
     <div id="app">
         <h1>Todo list</h1>
-        <input type="text" v-model="message"> <button @click="ajouterNote">Ajouter !</button>
-        <ul v-bind:title="message" v-for="todo in todos" v-on:click="inverser">
-            <li>{{ todo }}</li>
+        <input type="text" v-model="message"> <button @click="ajouterNote" v-if="message != ''">Ajouter !</button>
+        <ul>
+            <note v-for="todo in todos" :content="todo" @click="inverser"></note>
         </ul>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-        const app = Vue.createApp({
+        const vue = Vue.createApp({
             data() {
                 return {
                     message: "Bonjour !",
@@ -35,9 +35,17 @@
                 ajouterNote()
                 {
                     this.todos.push(this.message);
+                    this.message = '';
                 }
             }
-        }).mount('#app');
+        });
+
+        vue.component('note', {
+            props: ['content'],
+            template: `<li>{{ content }}</li>`
+        })
+
+        vue.mount('#app');
     </script>
 </body>
 </html>
