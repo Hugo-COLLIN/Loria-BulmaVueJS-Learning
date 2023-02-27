@@ -11,7 +11,7 @@
 <body>
     <div id="app">
         <h1>Todo list</h1>
-        <input type="text" v-model="message"> <button @click="ajouterNote" v-if="message != ''">Ajouter !</button>
+        <ajout @nouvellenote="ajouterNote"></ajout>
         <ul>
             <note v-for="todo in todos" :content="todo" @click="inverser"></note>
         </ul>
@@ -22,7 +22,6 @@
         const vue = Vue.createApp({
             data() {
                 return {
-                    message: "Bonjour !",
                     todos: ['Apprendre VueJS', 'Lire un livre', "Boire un chocolat chaud"]
                 }
             },
@@ -32,10 +31,9 @@
                     this.todos.reverse();
                 },
 
-                ajouterNote()
+                ajouterNote(message)
                 {
-                    this.todos.push(this.message);
-                    this.message = '';
+                    this.todos.push(message);
                 }
             }
         });
@@ -43,6 +41,25 @@
         vue.component('note', {
             props: ['content'],
             template: `<li>{{ content }}</li>`
+        });
+
+        vue.component('ajout', {
+            props: [],
+            emits: ['nouvellenote'],
+            data()
+            {
+                return {interne: 'Nouveau message'}
+            },
+            methods: {
+                enregistrementNote()
+                {
+                    this.$emit('nouvellenote', this.interne);
+                    this.interne = '';
+                }
+            },
+            template: `<input type="text" v-model="interne">
+            <button @click="enregistrementNote" v-if="interne != ''">Ajouter !</button>
+            {{ interne }}`
         })
 
         vue.mount('#app');
