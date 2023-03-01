@@ -1,9 +1,10 @@
 <template>
-  <div class="dashboard">
+  <div>
     <div class="level">
       <div class="level-left">
         <h1 class="subtitle is-3">
-          <span class="has-text-grey-light">Hello</span> <strong>Alex Johnson</strong>
+          <span class="has-text-grey-light">Hello</span>
+          <strong>Alex Johnson</strong>
         </h1>
       </div>
       <div class="level-right">
@@ -23,14 +24,14 @@
     <div class="columns is-multiline">
       <div class="column is-12-tablet is-6-desktop is-3-widescreen">
         <div class="notification is-link has-text">
-          <p class="title is-1">{{selectedStats.orders}}</p>
+          <p class="title is-1">{{ selectedStats.orders }}</p>
           <p class="subtitle is-4">Orders</p>
         </div>
       </div>
 
       <div class="column is-12-tablet is-6-desktop is-3-widescreen">
         <div class="notification is-info has-text">
-          <p class="title is-1">{{ selectedStats.revenue }}</p>
+          <p class="title is-1">${{ selectedStats.revenue }}</p>
           <p class="subtitle is-4">Revenue</p>
         </div>
       </div>
@@ -44,7 +45,7 @@
 
       <div class="column is-12-tablet is-6-desktop is-3-widescreen">
         <div class="notification is-success has-text">
-          <p class="title is-1">{{ selectedStats.pageViews }}</p>
+          <p class="title is-1">{{ selectedStats.pageviews }}</p>
           <p class="subtitle is-4">Pageviews</p>
         </div>
       </div>
@@ -56,23 +57,23 @@
               Latest orders
             </h2>
 
-            <template :key="order.id" v-for="(order, key) in this.orders">
+            <template v-for="(order, key) in orders" :key="order.id">
               <div class="level" >
                 <div class="level-left">
                   <div>
                     <p class="title is-5 is-marginless">
-                      <router-link to="/edit-order">{{order.id}}</router-link>
+                      <router-link to="/edit-order">{{ order.id }}</router-link>
                     </p>
                     <small>
-                      {{order.date}} by <router-link to="/edit-customer">{{order.purchasedBy}}</router-link>
+                      {{ order.date }} by
+                      <router-link to="/edit-customer">{{ order.purchasedBy }}</router-link>
                     </small>
                   </div>
                 </div>
-
                 <div class="level-right">
                   <div class="has-text-right">
                     <p class="title is-5 is-marginless">
-                      $ {{order.price}}
+                      ${{ order.price }}
                     </p>
                     <span class="tag" :class="order.status.class">{{ order.status.label }}</span>
                   </div>
@@ -115,15 +116,14 @@
         </div>
       </div>
 
-
       <div class="column is-12-tablet is-6-desktop is-4-fullhd">
         <div class="card">
           <div class="card-content">
             <h2 class="title is-4">
               Most loyal customers
             </h2>
-            <template :key="customer.id" v-for="(customer, key) in customers">
-              <div class="media">
+            <template v-for="(customer, key) in customers" :key="customer.id">
+              <div class="media" >
                 <div class="media-left is-marginless">
                   <p class="number">{{ key +1  }}</p>
                 </div>
@@ -142,17 +142,15 @@
           </div>
         </div>
       </div>
-
     </div>
-  </div>
 
+  </div>
 </template>
 
 <script>
-import orders from "@/views/Orders.vue";
-
 export default {
   name: 'Dashboard',
+  components: { },
   data() {
     return {
       customers: [
@@ -232,52 +230,49 @@ export default {
           orders: "232",
           revenue: "7,648",
           visitors: "1,678",
-          pageViews: "20,756"
+          pageviews: "20,756"
         },
         yesterday: {
           orders: "200",
           revenue: "5,465",
           visitors: "1,400",
-          pageViews: "18,556"
+          pageviews: "18,556"
         },
         week: {
           orders: "200",
           revenue: "5,465",
           visitors: "1,400",
-          pageViews: "18,556"
+          pageviews: "18,556"
         },
         month: {
           orders: "200",
           revenue: "5,465",
           visitors: "1,400",
-          pageViews: "18,556"
+          pageviews: "18,556"
         },
         alltime: {
           orders: "1000",
           revenue: "55,465",
           visitors: "10,400",
-          pageViews: "87,999"
+          pageviews: "87,999"
         }
       },
       selectedStats: {}
     }
   },
-  computed: {
-    selectedStats() {
-      return this.stats.today;
-    }
+  mounted: function(){
+    this.selectedStats = this.stats.today;
   },
   methods: {
     changeStats(event) {
+      let thing = this.stats[event.target.value];
+      console.log(thing);
       this.selectedStats = this.stats[event.target.value];
-    },
-    getImgPath(image) {
-      return image ? require(`@/assets/images/${image}`) : "";
     }
   }
 }
 </script>
 
-<style lang="sass" scoped>
-
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
 </style>
