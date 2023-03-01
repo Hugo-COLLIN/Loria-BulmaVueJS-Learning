@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/books',
     name: 'books',
-    component: () => import(/* webpackChunkName: "books" */ '../views/Books.vue')
+    component: () => import(/* webpackChunkName: "books" */ '../views/Items.vue')
   },
   {
     path: '/customers',
