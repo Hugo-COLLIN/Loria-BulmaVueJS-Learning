@@ -258,8 +258,7 @@ export default {
           visitors: "10,400",
           pageViews: "87,999"
         }
-      },
-      selectedStats: {}
+      }
     }
   },
   computed: {
