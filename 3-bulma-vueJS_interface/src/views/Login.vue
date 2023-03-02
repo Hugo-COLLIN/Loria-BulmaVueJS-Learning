@@ -14,7 +14,7 @@
                 <div class="field">
                   <label class="label">Email</label>
                   <div class="control has-icons-left">
-                    <input :class="{'is-danger': error.email}" class="input" type="email" placeholder="e.g. alexjohnson@gmail.com">
+                    <input v-model="email" :class="{'is-danger': error.email}" class="input" type="email" placeholder="e.g. alexjohnson@gmail.com">
                     <span class="icon is-small is-left">
                                         <i class="fa fa-envelope"></i>
                                     </span>
@@ -25,7 +25,7 @@
                 <div class="field">
                   <label class="label">Password</label>
                   <div class="control has-icons-left">
-                    <input :class="{'is-danger': error.password}" class="input" type="password" placeholder="**********">
+                    <input v-model="password" :class="{'is-danger': error.password}" class="input" type="password" placeholder="**********">
                     <span class="icon is-small is-left">
                                         <i class="fa fa-lock"></i>
                                     </span>
@@ -85,6 +85,24 @@ export default {
     resetErrors() {
       this.error.email = false;
       this.error.password = false;
+    }
+  },
+  computed: {
+    email: {
+      get() {
+        return this.form.email;
+      },
+      set(value) {
+        this.form.email = value;
+      }
+    },
+    password: {
+      get() {
+        return this.form.password;
+      },
+      set(value) {
+        this.form.password = value;
+      }
     }
   }
 }
