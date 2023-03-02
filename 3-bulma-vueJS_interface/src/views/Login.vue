@@ -14,21 +14,23 @@
                 <div class="field">
                   <label class="label">Email</label>
                   <div class="control has-icons-left">
-                    <input class="input" type="email" placeholder="e.g. alexjohnson@gmail.com">
+                    <input :class="{'is-danger': error.email}" class="input" type="email" placeholder="e.g. alexjohnson@gmail.com">
                     <span class="icon is-small is-left">
                                         <i class="fa fa-envelope"></i>
                                     </span>
                   </div>
+                  <p class="help is-danger is-left" v-if="error.email">Oops... wrong email!</p>
                 </div>
 
                 <div class="field">
                   <label class="label">Password</label>
                   <div class="control has-icons-left">
-                    <input class="input" type="password" placeholder="**********">
+                    <input :class="{'is-danger': error.password}" class="input" type="password" placeholder="**********">
                     <span class="icon is-small is-left">
                                         <i class="fa fa-lock"></i>
                                     </span>
                   </div>
+                  <p class="help is-danger" v-if="error.password">Oops... wrong password!</p>
                 </div>
 
                 <div class="field">
@@ -39,7 +41,7 @@
                 </div>
 
                 <div class="field">
-                  <button class="button is-success">
+                  <button class="button is-success" @click.prevent="tryLogin">
                     Login
                   </button>
                 </div>
@@ -55,7 +57,36 @@
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data() {
+    return {
+      form: {
+        email: "",
+        password: ""
+      },
+      error: {
+        email: false,
+        password: false
+      }
+    }
+  },
+  methods: {
+    tryLogin() {
+      this.resetErrors();
+
+      if (this.form.email !== "user@bulma.com")
+        return this.error.email = true;
+      if(this.form.password !== "password")
+        return this.error.password = true;
+
+      this.resetErrors();
+      this.$router.push({name: 'dashboard'});
+    },
+    resetErrors() {
+      this.error.email = false;
+      this.error.password = false;
+    }
+  }
 }
 </script>
 
