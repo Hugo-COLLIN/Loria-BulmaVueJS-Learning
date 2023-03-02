@@ -34,10 +34,10 @@
         </div>
         <div class="level-item">
           <div class="select">
-            <select>
-              <option>Publish date</option>
-              <option>Price</option>
-              <option>Page count</option>
+            <select @change="sortItems">
+              <option value="publishDate">Publish date</option>
+              <option value="price">Price</option>
+              <option value="pageCount">Page count</option>
             </select>
           </div>
         </div>
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import Collect from 'collect.js';
 export default {
   name: 'Items',
   data() {
@@ -201,6 +202,18 @@ export default {
       searchWord: "",
     };
   },
+
+  methods:
+  {
+    sortBooks(event)
+    {
+      let selectValue = String(event.target.value);
+      let collection = Collect(this.books);
+      let sortedBooks = collection.sortBy(selectValue);
+
+      this.books = Object.assign([], sortedBooks.all())
+    }
+  }
 }
 </script>
 
