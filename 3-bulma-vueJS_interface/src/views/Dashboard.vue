@@ -92,21 +92,21 @@
               Most popular books
             </h2>
 
-            <template v-for="(book, key) in books" :key="book.id">
+            <template v-for="(item, key) in items" :key="item.id">
               <div class="media" >
                 <div class="media-left is-marginless">
-                  <p class="number">{{ key +1 }}</p>
+                  <p class="number">{{ key + 1 }}</p>
                 </div>
                 <div class="media-left">
-                  <img :src="require(`@/assets/${book.image}`)" width="40">
+                  <img :src="require(`@/assets/${item.image}`)" width="40">
                 </div>
                 <div class="media-content">
                   <p class="title is-5 is-spaced is-marginless">
-                    <router-link to="/edit-book">{{ book.name }}</router-link>
+                    <router-link to="/edit-book">{{ item.name }}</router-link>
                   </p>
                 </div>
                 <div class="media-right">
-                  {{ book.copiesSold}} sold
+                  {{ item.copiesSold}} sold
                 </div>
               </div>
             </template>
@@ -175,7 +175,7 @@ export default {
           orderCount: 2
         }
       ],
-      books: [
+      items: [
         {
           id: 1,
           name: "Learning Swift",
