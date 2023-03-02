@@ -25,27 +25,27 @@
             <div class="navbar-dropdown">
               <a class="navbar-item">
                 <div>
-                         <span class="icon is-small">
-                            <i class="fa fa-user-circle-o"></i>
-                         </span>
+                <span class="icon is-small">
+                   <i class="fa fa-user-circle-o"></i>
+                </span>
                   Profile
                 </div>
               </a>
 
               <a class="navbar-item">
                 <div>
-                             <span class="icon is-small">
-                                <i class="fa fa-bug"></i>
-                             </span>
+                <span class="icon is-small">
+                   <i class="fa fa-bug"></i>
+                </span>
                   Report bug
                 </div>
               </a>
 
-              <a class="navbar-item">
+              <a class="navbar-item" @click="openBugReport = true">
                 <div>
-                             <span class="icon is-small">
-                                <i class="fa fa-sign-out"></i>
-                             </span>
+                <span class="icon is-small">
+                   <i class="fa fa-sign-out"></i>
+                </span>
                   Sign Out
                 </div>
               </a>
@@ -99,9 +99,24 @@
         </main>
       </div>
     </section>
+    <BugReport :show-modal="openBugReport" @close="openBugReport = false"/>
   </template>
   <template v-else><router-view/></template>
 </template>
+
+<script>
+import BugReport from "@/components/BugReport.vue";
+export default {
+  name: "App",
+  components: {
+    BugReport
+  },
+  data()
+  {
+    return {openBugReport: false}
+  }
+};
+</script>
 
 <style lang="scss">
 #app {
