@@ -11,7 +11,7 @@
         </div>
 
         <p class="level-item">
-          <a class="button is-success" href="new-book.html">New</a>
+          <button class="button is-success" @click="showNewModal = true">New</button>
         </p>
 
         <div class="level-item is-hidden-tablet-only">
@@ -102,13 +102,16 @@
       </ul>
     </nav>
   </div>
+  <ModalItem :show-modal="showNewModal" @close="showNewModal = false"></ModalItem>
 </template>
 
 <script>
 import Collect from 'collect.js';
+import ModalItem from "@/components/ModalItem.vue";
 
 export default {
   name: 'Items',
+  components: {ModalItem},
   data() {
     return {
       books: [
