@@ -7,8 +7,8 @@
           <p class="modal-card-title">Book information</p>
           <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
-        <section class="modal-card-body">
-          <div class="notification is-success" :class="{'is-hidden': hideNotification}">
+        <section class="modal-card-body" :class="{'notification is-success': !hideNotification}">
+          <div :class="{'is-hidden': hideNotification}">
             <p>Item added!</p>
           </div>
 
@@ -114,7 +114,7 @@ export default {
       setTimeout(() => {
         this.hideNotification = true;
         this.resetModal();
-      }, 4000);
+      }, 3000);
     }
   },
 }
