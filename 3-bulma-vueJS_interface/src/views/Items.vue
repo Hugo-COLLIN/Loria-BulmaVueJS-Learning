@@ -17,12 +17,10 @@
         <div class="level-item is-hidden-tablet-only">
           <div class="field has-addons">
             <p class="control">
-              <input class="input" type="text" placeholder="Book name, ISBN…">
+              <input class="input" type="text" placeholder="Book name, ISBN…" v-model="searchWord" v-on:keyup="search">
             </p>
             <p class="control">
-              <button class="button">
-                Search
-              </button>
+              <button class="button" @click="search">Search</button>
             </p>
           </div>
         </div>
@@ -108,6 +106,7 @@
 
 <script>
 import Collect from 'collect.js';
+
 export default {
   name: 'Items',
   data() {
@@ -212,7 +211,21 @@ export default {
       let sortedBooks = collection.sortBy(selectValue);
 
       this.books = Object.assign([], sortedBooks.all())
-    }
+    },
+
+    search() {
+      if (this.searchWord === '') {
+        this.books = this.allBooks;
+        return;
+      }
+
+      this.books = new Collect(this.allBooks)
+          .filter((book) => book.title.toLowerCase().includes(this.searchWord.toLowerCase()))
+          .all();
+    },
+  },
+  mounted() {
+    this.allBooks = this.books;
   }
 }
 </script>
