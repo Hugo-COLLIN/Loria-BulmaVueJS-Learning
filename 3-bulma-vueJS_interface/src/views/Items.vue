@@ -43,24 +43,24 @@
     </nav>
 
     <div class="columns is-multiline">
-      <template v-for="(book, key) in books">
+      <template v-for="(item, key) in items">
         <div class="column is-12-tablet is-6-desktop is-4-widescreen">
           <article class="box">
             <div class="media">
               <aside class="media-left">
-                <img :src="require(`@/assets/images/${book.coverImage}`)" width="80">
+                <img :src="require(`@/assets/images/${item.coverImage}`)" width="80">
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
-                  <router-link to="edit-item">{{book.title}}</router-link>
+                  <router-link to="edit-item">{{item.title}}</router-link>
                 </p>
                 <p class="subtitle is-marginless">
-                  {{book.price}}
+                  {{item.price}}
                 </p>
                 <div class="content is-small">
-                  {{book.pageCount}} pages
+                  {{item.pageCount}} pages
                   <br>
-                  ISBN: {{book.ISBN}}
+                  ISBN: {{item.ISBN}}
                   <br>
                   <router-link to="edit-item">Edit</router-link>
                   <span>·</span>
@@ -102,7 +102,7 @@
       </ul>
     </nav>
   </div>
-  <ModalItem :show-modal="showNewModal" @close="showNewModal = false"></ModalItem>
+  <ModalItem :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem"></ModalItem>
 </template>
 
 <script>
@@ -114,7 +114,7 @@ export default {
   components: {ModalItem},
   data() {
     return {
-      books: [
+      items: [
         {
           title: "TensorFlow For Machine Intelligence",
           price: "$22.99",
@@ -198,7 +198,14 @@ export default {
           publishDate: 2014,
         },
       ],
-      book: {},
+      item: {
+        title: "",
+        price: "",
+        pageCount: "",
+        ISBN: "",
+        coverImage: "",
+        publishDate: "",
+      },
       showNewModal: false,
       showEditModal: false,
       searchWord: "",
@@ -207,28 +214,34 @@ export default {
 
   methods:
   {
-    sortBooks(event)
+    sortItems(event)
     {
       let selectValue = String(event.target.value);
-      let collection = Collect(this.books);
+      let collection = Collect(this.items);
       let sortedBooks = collection.sortBy(selectValue);
 
-      this.books = Object.assign([], sortedBooks.all())
+      this.items = Object.assign([], sortedBooks.all())
     },
 
     search() {
       if (this.searchWord === '') {
-        this.books = this.allBooks;
+        this.items = this.allBooks;
         return;
       }
 
-      this.books = new Collect(this.allBooks)
+      this.items = new Collect(this.allBooks)
           .filter((book) => book.title.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
     },
+
+    addItem(i)
+    {
+      this.items.push(i);
+      this.showNewModal = false;
+    },
   },
   mounted() {
-    this.allBooks = this.books;
+    this.allBooks = this.items;
   }
 }
 </script>

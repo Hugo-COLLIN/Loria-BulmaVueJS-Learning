@@ -17,8 +17,9 @@
               <div class="field">
                 <label class="label">Title</label>
                 <div class="control">
-                  <input class="input is-large" type="text" placeholder="e.g. Designing with Bulma" required>
+                  <input v-model="this.form.title" :class="{'is-danger': error.title}" class="input is-large" type="text" placeholder="e.g. Designing with Bulma" required>
                 </div>
+                <p class="help is-danger" v-if="error.title">Please enter a title</p>
               </div>
             </div>
 
@@ -26,23 +27,28 @@
               <div class="column">
                 <label class="label">Price</label>
                 <div class="control has-icons-left">
-                  <input class="input" type="number" placeholder="e.g. 22.99" required>
+                  <input v-model="this.form.price" class="input" type="number" placeholder="e.g. 22.99" required>
                   <span class="icon is-small is-left">
-                                      <i class="fa fa-dollar"></i>
-                                  </span>
+                      <i class="fa fa-dollar"></i>
+                  </span>
                 </div>
+                <p class="help is-danger" v-if="error.price">Please enter a price</p>
               </div>
+
               <div class="column">
                 <label class="label">Pages</label>
                 <div class="control">
-                  <input class="input" type="number" placeholder="e.g. 270" required>
+                  <input v-model="this.form.pages" class="input" type="number" placeholder="e.g. 270" required>
                 </div>
+                <p class="help is-danger" v-if="error.pages">Please enter a title</p>
               </div>
+
               <div class="column">
                 <label class="label">ISBN</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="e.g. 9781939902351" required>
+                  <input v-model="this.form.isbn" class="input" type="text" placeholder="e.g. 9781939902351" required>
                 </div>
+                <p class="help is-danger" v-if="error.isbn">Please enter a title</p>
               </div>
             </div>
 
@@ -51,7 +57,7 @@
               <div class="control">
                 <div class="file has-name">
                   <label class="file-label">
-                    <input class="file-input" type="file">
+                    <input class="file-input" type="file"> <!-- v-model="this.form.title"-->
                     <span class="file-cta">
                        <span class="file-icon">
                         <i class="fa fa-upload"></i>
@@ -63,8 +69,9 @@
 
                     <span class="file-name">
                        No file chosen
-                       </span>
+                    </span>
                   </label>
+                  <p class="help is-danger" v-if="error.coverImage">Please enter a title</p>
                 </div>
               </div>
 
@@ -73,7 +80,7 @@
         </section>
         <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
           <div class="buttons field">
-            <button class="button is-medium is-success" @click="sendReport">Create book</button>
+            <button class="button is-medium is-success" @click.prevent="sendModal">Create book</button>
             <button class="button" @click="closeModal">Cancel</button>
           </div>
         </footer>
@@ -89,7 +96,24 @@ export default {
   data() {
     return {
       hideNotification: true,
-      reportMessage: ""
+      reportMessage: "",
+
+      form: {
+        title: "",
+        price: "",
+        pages: "",
+        isbn: "",
+        publishDate: 2017,
+        coverImage: "newbook.jpg"
+      },
+      error: {
+        title: false,
+        price: false,
+        pages: false,
+        isbn: false,
+        publishDate: false,
+        coverImage: false
+      }
     };
   },
   props: {
@@ -98,7 +122,13 @@ export default {
       default: false
     }
   },
-  methods: {
+  methods: {/*
+    saveBook() {
+      this.form.publishDate = "2017";
+      this.form.coverImage = "newbook.jpg";
+      this.allBooks.push(this.form);
+      this.sendModal();
+    },*/
     closeModal() {
       this.$emit("close");
     },
@@ -108,15 +138,59 @@ export default {
       this.closeModal();
     },
 
-    sendReport() {
+    sendModal() {
+      this.resetErrors();
+
+      for (let key in this.form)
+        if (this.form[key] === "")
+        {
+          console.log(key)
+          return this.error[key] = true;
+        }
+
+      this.resetErrors();
+
       this.hideNotification = false;
+      this.$emit("sent-data", this.form);
+      //console.log(this.form)
+/*
+      for (let key in this.form)
+        this.form[key] = "";
+ */
+      this.title = "";
+          this.price = "";
+          this.pages = "";
+          this.isbn = "";
 
       setTimeout(() => {
         this.hideNotification = true;
         this.resetModal();
       }, 3000);
+    },
+
+    resetErrors() {
+      for (let key in this.error)
+        this.error[key] = false;
     }
   },
+  computed: {
+    email: {
+      get() {
+        return this.form.email;
+      },
+      set(value) {
+        this.form.email = value;
+      }
+    },
+    password: {
+      get() {
+        return this.form.password;
+      },
+      set(value) {
+        this.form.password = value;
+      }
+    }
+  }
 }
 </script>
 
