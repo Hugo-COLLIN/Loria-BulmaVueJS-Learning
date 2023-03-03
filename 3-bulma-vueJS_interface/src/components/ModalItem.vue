@@ -2,7 +2,7 @@
   <div class="modal" :class="{'is-active': showModal}">
     <div class="modal-background" @click="closeModal"></div>
     <div class="modal-card">
-      <form>
+      <form ref="itemAddForm">
         <header class="modal-card-head" :class="{'is-hidden': !hideNotification}">
           <p class="modal-card-title">Book information</p>
           <button class="delete" aria-label="close" @click="closeModal"></button>
@@ -149,6 +149,7 @@ export default {
         }
 
       this.resetErrors();
+      this.$refs.itemAddForm.reset();
 
       this.hideNotification = false;
       this.$emit("sent-data", this.form);
@@ -157,10 +158,10 @@ export default {
       for (let key in this.form)
         this.form[key] = "";
  */
-      this.title = "";
-          this.price = "";
-          this.pages = "";
-          this.isbn = "";
+      this.form.title = "";
+      this.form.price = "";
+      this.form.pages = "";
+      this.form.isbn = "";
 
       setTimeout(() => {
         this.hideNotification = true;
@@ -171,7 +172,7 @@ export default {
     resetErrors() {
       for (let key in this.error)
         this.error[key] = false;
-    }
+    },
   },
   computed: {
     email: {
