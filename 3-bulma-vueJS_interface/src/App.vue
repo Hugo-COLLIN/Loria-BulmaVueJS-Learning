@@ -32,7 +32,7 @@
                 </div>
               </a>
 
-              <a class="navbar-item">
+              <a class="navbar-item"  @click="openBugReport = true">
                 <div>
                 <span class="icon is-small">
                    <i class="fa fa-bug"></i>
@@ -41,7 +41,7 @@
                 </div>
               </a>
 
-              <a class="navbar-item" @click="openBugReport = true">
+              <a class="navbar-item">
                 <div>
                 <span class="icon is-small">
                    <i class="fa fa-sign-out"></i>
