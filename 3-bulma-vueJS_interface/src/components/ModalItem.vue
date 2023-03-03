@@ -2,11 +2,12 @@
   <div class="modal" :class="{'is-active': showModal}">
     <div class="modal-background" @click="closeModal"></div>
     <div class="modal-card">
+
+      <header class="modal-card-head" :class="{'is-hidden': !hideNotification}">
+        <p class="modal-card-title">Book information</p>
+        <button class="delete" aria-label="close" @click="closeModal"></button>
+      </header>
       <form ref="itemAddForm">
-        <header class="modal-card-head" :class="{'is-hidden': !hideNotification}">
-          <p class="modal-card-title">Book information</p>
-          <button class="delete" aria-label="close" @click="closeModal"></button>
-        </header>
         <section class="modal-card-body" :class="{'notification is-success': !hideNotification}">
           <div :class="{'is-hidden': hideNotification}">
             <p>Item added!</p>
