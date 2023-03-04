@@ -98,6 +98,7 @@ export default {
     return {
       hideNotification: true,
       reportMessage: "",
+      edit: false,
 
       form: {
         title: "",
@@ -168,6 +169,7 @@ export default {
     },
 
     resetForm() {
+      this.edit = false;
       /*
       for (let key in this.form)
         this.form[key] = "";
@@ -177,6 +179,16 @@ export default {
       this.form.pageCount = "";
       this.form.ISBN = "";
     },
+
+    editForm(item)
+    {
+      this.edit = true;
+
+      this.form.title = item.title;
+      this.form.price = item.price.split("$")[1];
+      this.form.pageCount = item.pageCount;
+      this.form.ISBN = item.ISBN;
+    }
   },
 }
 </script>

@@ -52,7 +52,7 @@
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
-                  <router-link to="edit-item">{{item.title}}</router-link>
+                  <a @click="callEditItem($event, item)">{{item.title}}</a>
                 </p>
                 <p class="subtitle is-marginless">
                   {{item.price}}
@@ -62,7 +62,7 @@
                   <br>
                   ISBN: {{item.ISBN}}
                   <br>
-                  <router-link to="edit-item">Edit</router-link>
+                  <a @click="callEditItem($event, item)">Edit</a>
                   <span>·</span>
                   <a>Delete</a>
                 </div>
@@ -246,6 +246,12 @@ export default {
     {
       this.showNewModal = true;
       this.$refs.modalItem.resetForm();
+    },
+
+    callEditItem(event, item)
+    {
+      this.showNewModal = true;
+      this.$refs.modalItem.editForm(item);
     },
   },
   mounted() {
