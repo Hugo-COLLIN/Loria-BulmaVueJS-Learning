@@ -52,7 +52,7 @@
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
-                  <a @click="callEditItem($event, item)">{{item.title}}</a>
+                  <a @click="callEditItem(item)">{{item.title}}</a>
                 </p>
                 <p class="subtitle is-marginless">
                   ${{item.price}}
@@ -62,9 +62,9 @@
                   <br>
                   ISBN: {{item.ISBN}}
                   <br>
-                  <a @click="callEditItem($event, item)">Edit</a>
+                  <a @click="callEditItem(item)">Edit</a>
                   <span> | </span>
-                  <a>Delete</a>
+                  <a @click="deleteItem(item)">Delete</a>
                 </div>
               </div>
             </div>
@@ -253,15 +253,20 @@ export default {
     callNewItem()
     {
       this.showNewModal = true;
-      this.$refs.modalItem.resetForm();
+      this.$refs.modalItem.newForm();
     },
 
-    callEditItem(event, item)
+    callEditItem(item)
     {
       this.showNewModal = true;
       this.$refs.modalItem.editForm(item);
       this.currentItem = item;
     },
+
+    deleteItem(item)
+    {
+      this.items.splice(this.items.indexOf(item), 1);
+    }
   },
   mounted() {
     this.allItems = this.items;
