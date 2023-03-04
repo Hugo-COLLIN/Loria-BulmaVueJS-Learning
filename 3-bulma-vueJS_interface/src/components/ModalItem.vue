@@ -168,7 +168,7 @@ export default {
         this.error[key] = false;
     },
 
-    resetForm() {
+    newForm() {
       this.edit = false;
       this.btnTitle = "Create item";
 
