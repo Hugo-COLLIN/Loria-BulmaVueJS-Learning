@@ -74,8 +74,6 @@
 
     </div>
 
-    <button @click="greet">greet</button>
-
     <nav class="pagination">
       <a class="pagination-previous">Previous</a>
       <a class="pagination-next">Next page</a>
@@ -248,10 +246,6 @@ export default {
     {
       this.showNewModal = true;
       this.$refs.modalItem.resetForm();
-    },
-
-    greet() {
-      this.$refs.modalItem.greet("jane");
     },
   },
   mounted() {

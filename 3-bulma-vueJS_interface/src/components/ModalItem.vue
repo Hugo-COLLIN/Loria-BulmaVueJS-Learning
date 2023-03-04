@@ -154,17 +154,6 @@ export default {
 
       //this.hideNotification = false;
       this.$emit("sent-data", this.form);
-      //console.log(this.form)
-/*
-      for (let key in this.form)
-        this.form[key] = "";
- */
-      //TODO: execute before calling the form
-      // this.form.title = "";
-      // this.form.price = "";
-      // this.form.pages = "";
-      // this.form.isbn = "";
-
 
 /*
       setTimeout(() => {
@@ -188,16 +177,7 @@ export default {
       this.form.pages = "";
       this.form.isbn = "";
     },
-
-    greet(name) {
-      console.log(`hello world ${name}`);
-    },
   },
-  /*
-  mounted() {
-    this.reset.bus.$on('edit-item', this.resetForm);
-
-  }*/
 }
 </script>
 
