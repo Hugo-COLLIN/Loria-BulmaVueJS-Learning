@@ -4,7 +4,7 @@
     <div class="modal-card">
 
       <header class="modal-card-head" :class="{'is-hidden': !hideNotification}">
-        <p class="modal-card-title">Book information</p>
+        <p class="modal-card-title">Item information</p>
         <button class="delete" aria-label="close" @click="closeModal"></button>
       </header>
       <form ref="itemAddForm">
@@ -81,7 +81,7 @@
         </section>
         <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
           <div class="buttons field">
-            <button class="button is-medium is-success" @click.prevent="sendModal">Create book</button>
+            <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
             <button class="button" @click="closeModal">Cancel</button>
           </div>
         </footer>
@@ -99,6 +99,7 @@ export default {
       hideNotification: true,
       reportMessage: "",
       edit: false,
+      btnTitle: "Create book",
 
       form: {
         title: "",
@@ -154,7 +155,12 @@ export default {
       this.resetErrors();
 
       //this.hideNotification = false;
-      this.$emit("sent-data", this.form);
+
+      //this.form.price = "$" + this.form.price;
+      if (this.edit)
+        this.$emit("edit-data", this.form);
+      else
+        this.$emit("sent-data", this.form);
 
 /*
       setTimeout(() => {
@@ -170,6 +176,7 @@ export default {
 
     resetForm() {
       this.edit = false;
+      this.btnTitle = "Create item";
       /*
       for (let key in this.form)
         this.form[key] = "";
@@ -183,9 +190,10 @@ export default {
     editForm(item)
     {
       this.edit = true;
+      this.btnTitle = "Update item";
 
       this.form.title = item.title;
-      this.form.price = item.price.split("$")[1];
+      this.form.price = item.price; //.split("$")[1]
       this.form.pageCount = item.pageCount;
       this.form.ISBN = item.ISBN;
     }

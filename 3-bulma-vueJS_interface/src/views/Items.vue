@@ -6,7 +6,7 @@
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-            <strong>6</strong> books
+            <strong>{{this.items.length}}</strong> / {{this.allItems.length}} items
           </p>
         </div>
 
@@ -17,7 +17,7 @@
         <div class="level-item is-hidden-tablet-only">
           <div class="field has-addons">
             <p class="control">
-              <input class="input" type="text" placeholder="Book name, ISBN…" v-model="searchWord" v-on:keyup="search">
+              <input class="input" type="text" placeholder="Item name, ISBN…" v-model="searchWord" v-on:keyup="search">
             </p>
             <p class="control">
               <button class="button" @click="search">Search</button>
@@ -55,7 +55,7 @@
                   <a @click="callEditItem($event, item)">{{item.title}}</a>
                 </p>
                 <p class="subtitle is-marginless">
-                  {{item.price}}
+                  ${{item.price}}
                 </p>
                 <div class="content is-small">
                   {{item.pageCount}} pages
@@ -102,7 +102,7 @@
       </ul>
     </nav>
   </div>
-  <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem"></ModalItem>
+  <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
 
 <script>
@@ -117,7 +117,7 @@ export default {
       items: [
         {
           title: "TensorFlow For Machine Intelligence",
-          price: "$22.99",
+          price: "22.99",
           pageCount: 270,
           ISBN: "9781939902351",
           coverImage: "tensorflow.jpg",
@@ -125,7 +125,7 @@ export default {
         },
         {
           title: "Docker in Production",
-          price: "$22.99",
+          price: "22.99",
           pageCount: 156,
           ISBN: "9781939902184",
           coverImage: "docker.jpg",
@@ -133,7 +133,7 @@ export default {
         },
         {
           title: "Learning Swift",
-          price: "$24.99",
+          price: "24.99",
           pageCount: 342,
           ISBN: "9781939902115",
           coverImage: "swift.jpg",
@@ -141,7 +141,7 @@ export default {
         },
         {
           title: "Choosing a JavaScript Framework",
-          price: "$19.99",
+          price: "19.99",
           pageCount: 270,
           ISBN: "9781939902092",
           coverImage: "js-framework.jpg",
@@ -149,7 +149,7 @@ export default {
         },
         {
           title: "Developing a Gulp.js Edge",
-          price: "$15.99",
+          price: "15.99",
           pageCount: 134,
           ISBN: "9781939902146",
           coverImage: "gulp.jpg",
@@ -159,7 +159,7 @@ export default {
       allItems: [
         {
           title: "TensorFlow For Machine Intelligence",
-          price: "$22.99",
+          price: "22.99",
           pageCount: 270,
           ISBN: "9781939902351",
           coverImage: "tensorflow.jpg",
@@ -167,7 +167,7 @@ export default {
         },
         {
           title: "Docker in Production",
-          price: "$22.99",
+          price: "22.99",
           pageCount: 156,
           ISBN: "9781939902184",
           coverImage: "docker.jpg",
@@ -175,7 +175,7 @@ export default {
         },
         {
           title: "Learning Swift",
-          price: "$22.99",
+          price: "22.99",
           pageCount: 342,
           ISBN: "9781939902115",
           coverImage: "swift.jpg",
@@ -183,7 +183,7 @@ export default {
         },
         {
           title: "Choosing a JavaScript Framework",
-          price: "$19.99",
+          price: "19.99",
           pageCount: 270,
           ISBN: "9781939902092",
           coverImage: "js-framework.jpg",
@@ -191,7 +191,7 @@ export default {
         },
         {
           title: "Developing a Gulp.js Edge",
-          price: "$22.99",
+          price: "22.99",
           pageCount: 134,
           ISBN: "9781939902146",
           coverImage: "gulp.jpg",
@@ -209,6 +209,7 @@ export default {
       showNewModal: false,
       showEditModal: false,
       searchWord: "",
+      currentItem: null,
     };
   },
 
@@ -238,7 +239,17 @@ export default {
     {
       this.items.push(i);
       this.showNewModal = false;
-      console.log(i)
+    },
+
+    editItem(i)
+    {
+      //this.items[this.currentItem] = i;
+      //this.currentItem.title = i.title;
+      //i.price = "$" + i.price;
+      for (let key in i) {
+        this.currentItem[key] = i[key];
+      }
+      this.showNewModal = false;
       console.log(this.items)
     },
 
@@ -252,6 +263,7 @@ export default {
     {
       this.showNewModal = true;
       this.$refs.modalItem.editForm(item);
+      this.currentItem = item;
     },
   },
   mounted() {
