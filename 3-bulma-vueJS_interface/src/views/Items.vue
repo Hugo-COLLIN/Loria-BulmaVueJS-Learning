@@ -11,7 +11,7 @@
         </div>
 
         <p class="level-item">
-          <button class="button is-success" @click="showNewModal = true">New</button>
+          <button class="button is-success" @click="callNewItem">New</button>
         </p>
 
         <div class="level-item is-hidden-tablet-only">
@@ -74,6 +74,8 @@
 
     </div>
 
+    <button @click="greet">greet</button>
+
     <nav class="pagination">
       <a class="pagination-previous">Previous</a>
       <a class="pagination-next">Next page</a>
@@ -102,7 +104,7 @@
       </ul>
     </nav>
   </div>
-  <ModalItem :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem"></ModalItem>
+  <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem"></ModalItem>
 </template>
 
 <script>
@@ -156,7 +158,7 @@ export default {
           publishDate: 2014,
         },
       ],
-      allBooks: [
+      allItems: [
         {
           title: "TensorFlow For Machine Intelligence",
           price: "$22.99",
@@ -225,11 +227,11 @@ export default {
 
     search() {
       if (this.searchWord === '') {
-        this.items = this.allBooks;
+        this.items = this.allItems;
         return;
       }
 
-      this.items = new Collect(this.allBooks)
+      this.items = new Collect(this.allItems)
           .filter((book) => book.title.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
     },
@@ -238,10 +240,22 @@ export default {
     {
       this.items.push(i);
       this.showNewModal = false;
+      console.log(i)
+      console.log(this.items)
+    },
+
+    callNewItem()
+    {
+      this.showNewModal = true;
+      this.$refs.modalItem.resetForm();
+    },
+
+    greet() {
+      this.$refs.modalItem.greet("jane");
     },
   },
   mounted() {
-    this.allBooks = this.items;
+    this.allItems = this.items;
   }
 }
 </script>

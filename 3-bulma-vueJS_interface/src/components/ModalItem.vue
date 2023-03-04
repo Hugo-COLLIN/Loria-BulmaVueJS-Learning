@@ -121,7 +121,8 @@ export default {
     showModal: {
       type: Boolean,
       default: false
-    }
+    },
+    reset: ['item', 'form']
   },
   methods: {/*
     saveBook() {
@@ -150,49 +151,53 @@ export default {
         }
 
       this.resetErrors();
-      this.$refs.itemAddForm.reset();
 
-      this.hideNotification = false;
+      //this.hideNotification = false;
       this.$emit("sent-data", this.form);
       //console.log(this.form)
 /*
       for (let key in this.form)
         this.form[key] = "";
  */
-      this.form.title = "";
-      this.form.price = "";
-      this.form.pages = "";
-      this.form.isbn = "";
+      //TODO: execute before calling the form
+      // this.form.title = "";
+      // this.form.price = "";
+      // this.form.pages = "";
+      // this.form.isbn = "";
 
+
+/*
       setTimeout(() => {
         this.hideNotification = true;
         this.resetModal();
-      }, 3000);
+      }, 3000);*/
     },
 
     resetErrors() {
       for (let key in this.error)
         this.error[key] = false;
     },
-  },
-  computed: {
-    email: {
-      get() {
-        return this.form.email;
-      },
-      set(value) {
-        this.form.email = value;
-      }
+
+    resetForm() {
+      /*
+      for (let key in this.form)
+        this.form[key] = "";
+              */
+      this.form.title = "";
+      this.form.price = "";
+      this.form.pages = "";
+      this.form.isbn = "";
     },
-    password: {
-      get() {
-        return this.form.password;
-      },
-      set(value) {
-        this.form.password = value;
-      }
-    }
-  }
+
+    greet(name) {
+      console.log(`hello world ${name}`);
+    },
+  },
+  /*
+  mounted() {
+    this.reset.bus.$on('edit-item', this.resetForm);
+
+  }*/
 }
 </script>
 
