@@ -79,13 +79,14 @@
             </div>
           </div>
         </section>
-        <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
-          <div class="buttons field">
-            <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
-            <button class="button" @click="closeModal">Cancel</button>
-          </div>
-        </footer>
       </form>
+      <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
+        <div class="buttons">
+          <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
+          <button class="button" @click="closeModal">Cancel</button>
+        </div>
+      </footer>
+
 
     </div>
   </div>
@@ -99,7 +100,7 @@ export default {
       hideNotification: true,
       reportMessage: "",
       edit: false,
-      btnTitle: "Create book",
+      btnTitle: "",
 
       form: {
         title: "",
@@ -126,13 +127,7 @@ export default {
     },
     reset: ['item', 'form']
   },
-  methods: {/*
-    saveBook() {
-      this.form.publishDate = "2017";
-      this.form.coverImage = "newbook.jpg";
-      this.allBooks.push(this.form);
-      this.sendModal();
-    },*/
+  methods: {
     closeModal() {
       this.$emit("close");
     },
@@ -156,7 +151,6 @@ export default {
 
       //this.hideNotification = false;
 
-      //this.form.price = "$" + this.form.price;
       if (this.edit)
         this.$emit("edit-data", this.form);
       else
@@ -177,6 +171,7 @@ export default {
     resetForm() {
       this.edit = false;
       this.btnTitle = "Create item";
+
       /*
       for (let key in this.form)
         this.form[key] = "";
@@ -192,10 +187,8 @@ export default {
       this.edit = true;
       this.btnTitle = "Update item";
 
-      this.form.title = item.title;
-      this.form.price = item.price; //.split("$")[1]
-      this.form.pageCount = item.pageCount;
-      this.form.ISBN = item.ISBN;
+      for (let key in item)
+        this.form[key] = item[key];
     }
   },
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="items">
-    <h1 class="title">Books</h1>
+    <h1 class="title">Items</h1>
 
     <nav class="level">
       <div class="level-left">
@@ -63,7 +63,7 @@
                   ISBN: {{item.ISBN}}
                   <br>
                   <a @click="callEditItem($event, item)">Edit</a>
-                  <span>·</span>
+                  <span> | </span>
                   <a>Delete</a>
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default {
       }
 
       this.items = new Collect(this.allItems)
-          .filter((book) => book.title.toLowerCase().includes(this.searchWord.toLowerCase()))
+          .filter((item) => item.title.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
     },
 
@@ -243,9 +243,6 @@ export default {
 
     editItem(i)
     {
-      //this.items[this.currentItem] = i;
-      //this.currentItem.title = i.title;
-      //i.price = "$" + i.price;
       for (let key in i) {
         this.currentItem[key] = i[key];
       }
