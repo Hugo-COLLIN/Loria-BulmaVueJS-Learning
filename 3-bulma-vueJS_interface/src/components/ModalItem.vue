@@ -39,7 +39,7 @@
               <div class="column">
                 <label class="label">Pages</label>
                 <div class="control">
-                  <input v-model="this.form.pages" class="input" type="number" placeholder="e.g. 270" required>
+                  <input v-model="this.form.pageCount" class="input" type="number" placeholder="e.g. 270" required>
                 </div>
                 <p class="help is-danger" v-if="error.pages">Please enter a title</p>
               </div>
@@ -47,7 +47,7 @@
               <div class="column">
                 <label class="label">ISBN</label>
                 <div class="control">
-                  <input v-model="this.form.isbn" class="input" type="text" placeholder="e.g. 9781939902351" required>
+                  <input v-model="this.form.ISBN" class="input" type="text" placeholder="e.g. 9781939902351" required>
                 </div>
                 <p class="help is-danger" v-if="error.isbn">Please enter a title</p>
               </div>
@@ -102,8 +102,8 @@ export default {
       form: {
         title: "",
         price: "",
-        pages: "",
-        isbn: "",
+        pageCount: "",
+        ISBN: "",
         publishDate: 2017,
         coverImage: "newbook.jpg"
       },
@@ -174,8 +174,8 @@ export default {
               */
       this.form.title = "";
       this.form.price = "";
-      this.form.pages = "";
-      this.form.isbn = "";
+      this.form.pageCount = "";
+      this.form.ISBN = "";
     },
   },
 }
