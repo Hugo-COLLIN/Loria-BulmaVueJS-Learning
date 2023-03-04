@@ -61,10 +61,10 @@
                 <div class="level-left">
                   <div>
                     <p class="title is-5 is-marginless">
-                      <router-link to="/edit-order">{{order.id}}</router-link>
+                      <router-link to="/orders">{{order.id}}</router-link>
                     </p>
                     <small>
-                      {{order.date}} by <router-link to="/edit-customer">{{order.purchasedBy}}</router-link>
+                      {{order.date}} by <router-link to="/customers">{{order.purchasedBy}}</router-link>
                     </small>
                   </div>
                 </div>
@@ -89,7 +89,7 @@
         <div class="card">
           <div class="card-content">
             <h2 class="title is-4">
-              Most popular books
+              Most popular items
             </h2>
 
             <template v-for="(item, key) in items" :key="item.id">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="media-content">
                   <p class="title is-5 is-spaced is-marginless">
-                    <router-link to="/edit-book">{{ item.name }}</router-link>
+                    <router-link to="/items">{{ item.name }}</router-link>
                   </p>
                 </div>
                 <div class="media-right">
@@ -110,7 +110,7 @@
                 </div>
               </div>
             </template>
-            <router-link to="/books" class="button is-link is-outlined">View all books</router-link>
+            <router-link to="/items" class="button is-link is-outlined">View all items</router-link>
           </div>
         </div>
       </div>
@@ -125,11 +125,11 @@
             <template :key="customer.id" v-for="(customer, key) in customers">
               <div class="media">
                 <div class="media-left is-marginless">
-                  <p class="number">{{ key +1  }}</p>
+                  <p class="number">{{ key + 1 }}</p>
                 </div>
                 <div class="media-content">
                   <p class="title is-5 is-spaced is-marginless">
-                    <router-link to="/edit-customer">{{ customer.name}}</router-link>
+                    <router-link to="/customers">{{ customer.name }}</router-link>
                   </p>
                   <p class="subtitle is-6">{{ customer.country }}</p>
                 </div>
@@ -149,10 +149,13 @@
 </template>
 
 <script>
-import orders from "@/views/Orders.vue";
+import ModalItem from "@/components/ModalItem.vue";
 
 export default {
   name: 'Dashboard',
+  components: {
+    ModalItem
+  },
   data() {
     return {
       customers: [
