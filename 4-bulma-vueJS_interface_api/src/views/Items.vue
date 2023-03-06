@@ -125,8 +125,11 @@ export default {
         UnitPrice: "",
         Milliseconds: "",
         Composer: "",
-        //coverImage: "",
-        publishDate: "",
+        TrackId: "",
+        AlbumId: "",
+        GenreId: "",
+        MediaTypeId: "",
+        Bytes: "",
       },
       showNewModal: false,
       showEditModal: false,
@@ -197,7 +200,9 @@ export default {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
       this.displayCutList();
-      axios.delete('http://51.91.76.245:8000/api/tracks')
+      // console.log(item)
+      // console.log(item.TrackId)
+      axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId)
           .then(response => {
             console.log(response);
           })
