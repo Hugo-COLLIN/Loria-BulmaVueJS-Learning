@@ -140,6 +140,8 @@ export default {
     sendModal() {
       this.resetErrors();
 
+      this.form.Milliseconds *= 60000;
+
       for (let key in this.form)
         if (this.form[key] === "")
         {
@@ -189,6 +191,7 @@ export default {
 
       for (let key in item)
         this.form[key] = item[key];
+      this.form.Milliseconds /= 60000;
     }
   },
 }
