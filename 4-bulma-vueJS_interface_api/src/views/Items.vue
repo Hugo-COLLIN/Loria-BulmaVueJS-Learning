@@ -196,6 +196,7 @@ export default {
     {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
+      this.displayCutList();
       axios.delete('http://51.91.76.245:8000/api/tracks')
           .then(response => {
             console.log(response);
@@ -204,6 +205,7 @@ export default {
             console.log(error);
             this.load();
           });
+
     },
 
     paginPrev()
