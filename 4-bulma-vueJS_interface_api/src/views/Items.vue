@@ -17,7 +17,7 @@
         <div class="level-item is-hidden-tablet-only">
           <div class="field has-addons">
             <p class="control">
-              <input class="input" type="text" placeholder="Item name, ISBN…" v-model="searchWord" v-on:keyup="search">
+              <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">
             </p>
             <p class="control">
               <button class="button" @click="search">Search</button>
@@ -34,8 +34,8 @@
           <div class="select">
             <select @change="sortItems">
               <option value="publishDate">Publish date</option>
-              <option value="price">Price</option>
-              <option value="pageCount">Page count</option>
+              <option value="UnitPrice">Price</option>
+              <option value="Milliseconds">Page count</option>
             </select>
           </div>
         </div>
@@ -48,19 +48,19 @@
           <article class="box">
             <div class="media">
               <aside class="media-left">
-                <img :src="require(`@/assets/images/${item.coverImage}`)" width="80">
+                <img src="@/assets/images/Speaker_Icon.svg.png" width="80">
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
                   <a @click="callEditItem(item)">{{item.Name}}</a>
                 </p>
                 <p class="subtitle is-marginless">
-                  ${{item.price}}
+                  ${{item.UnitPrice}}
                 </p>
                 <div class="content is-small">
-                  {{item.pageCount}} pages
+                  {{(item.Milliseconds / 60000).toFixed(2)}} minutes
                   <br>
-                  ISBN: {{item.ISBN}}
+                  Compositeur(s): {{item.Composer}}
                   <br>
                   <a @click="callEditItem(item)">Edit</a>
                   <span> | </span>
@@ -119,51 +119,51 @@ export default {
       allItems: [
         {
           Name: "TensorFlow For Machine Intelligence",
-          price: "22.99",
-          pageCount: 270,
-          ISBN: "9781939902351",
-          coverImage: "tensorflow.jpg",
+          UnitPrice: "22.99",
+          Milliseconds: 270,
+          Composer: "9781939902351",
+          //coverImage: "tensorflow.jpg",
           publishDate: 2017,
         },
         {
           Name: "Docker in Production",
-          price: "22.99",
-          pageCount: 156,
-          ISBN: "9781939902184",
-          coverImage: "docker.jpg",
+          UnitPrice: "22.99",
+          Milliseconds: 156,
+          Composer: "9781939902184",
+          //coverImage: "docker.jpg",
           publishDate: 2015,
         },
         {
           Name: "Learning Swift",
-          price: "22.99",
-          pageCount: 342,
-          ISBN: "9781939902115",
-          coverImage: "swift.jpg",
+          UnitPrice: "22.99",
+          Milliseconds: 342,
+          Composer: "9781939902115",
+          //coverImage: "swift.jpg",
           publishDate: 2015,
         },
         {
           Name: "Choosing a JavaScript Framework",
-          price: "19.99",
-          pageCount: 270,
-          ISBN: "9781939902092",
-          coverImage: "js-framework.jpg",
+          UnitPrice: "19.99",
+          Milliseconds: 270,
+          Composer: "9781939902092",
+          //coverImage: "js-framework.jpg",
           publishDate: 2016,
         },
         {
           Name: "Developing a Gulp.js Edge",
-          price: "22.99",
-          pageCount: 134,
-          ISBN: "9781939902146",
-          coverImage: "gulp.jpg",
+          UnitPrice: "22.99",
+          Milliseconds: 134,
+          Composer: "9781939902146",
+          //coverImage: "gulp.jpg",
           publishDate: 2014,
         },
       ],
       item: {
         Name: "",
-        price: "",
-        pageCount: "",
-        ISBN: "",
-        coverImage: "",
+        UnitPrice: "",
+        Milliseconds: "",
+        Composer: "",
+        //coverImage: "",
         publishDate: "",
       },
       showNewModal: false,
@@ -233,8 +233,8 @@ export default {
     //this.items = [];
     axios.get('http://51.91.76.245:8000/api/tracks')
         .then(response => {
-          // this.items = response.data;
-          // this.allItems = response.data;
+          this.items = response.data;
+          this.allItems = response.data;
           console.log(response.data);
           console.log(response.data[0].Name);
         })
