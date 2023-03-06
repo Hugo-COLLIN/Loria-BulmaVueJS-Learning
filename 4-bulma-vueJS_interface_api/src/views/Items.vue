@@ -75,8 +75,8 @@
     </div>
 
     <nav class="pagination">
-      <a class="pagination-previous">Previous</a>
-      <a class="pagination-next">Next page</a>
+      <a class="pagination-previous" @click="paginPrev">Previous</a>
+      <a class="pagination-next" @click="paginNext">Next page</a>
       <ul class="pagination-list">
         <li>
           <a class="pagination-link">1</a>
@@ -170,6 +170,12 @@ export default {
       showEditModal: false,
       searchWord: "",
       currentItem: null,
+
+      pagination: {
+        currentPage: 1,
+        perPage: 5,
+        totalItems: 0,
+      },
     };
   },
 
@@ -226,17 +232,57 @@ export default {
     deleteItem(item)
     {
       this.items.splice(this.items.indexOf(item), 1);
+    },
+
+    paginPrev()
+    {
+      if (this.pagination.currentPage > 1)
+      {
+        this.pagination.currentPage--;
+        this.displayCutList();
+        //this.items = this.allItems.slice(this.pagination.currentPage * this.pagination.perPage, this.pagination.perPage);
+      }
+      console.log(this.pagination.currentPage)
+      console.log(this.items)
+    },
+
+    paginNext()
+    {
+      console.log(this.pagination.currentPage * this.pagination.perPage)
+      console.log("BEFORE")
+      console.log(this.items)
+      console.log(this.allItems)
+      console.log(this.pagination.currentPage)
+      if (this.pagination.currentPage < this.allItems.length / this.pagination.perPage)
+      {
+        this.pagination.currentPage++;
+        this.displayCutList();
+      }
+      console.log("AFTER")
+      console.log(this.items)
+      console.log(this.allItems)
+      console.log(this.pagination.currentPage)
+    },
+
+    displayCutList()
+    {
+      const init = (this.pagination.currentPage - 1) * this.pagination.perPage;
+      for (let i = 0; i < this.pagination.perPage ; i++)
+      {
+        this.items[i] = this.allItems[init + i];
+      }
+      //this.items = this.allItems.slice((this.pagination.currentPage - 1) * this.pagination.perPage, this.pagination.perPage);
     }
   },
   mounted() {
-    this.items = this.allItems;
+    //this.items = this.allItems;
     //this.items = [];
     axios.get('http://51.91.76.245:8000/api/tracks')
         .then(response => {
-          this.items = response.data;
+          //this.items = response.data;
           this.allItems = response.data;
-          console.log(response.data);
-          console.log(response.data[0].Name);
+          //this.items = this.allItems.slice(0, this.pagination.perPage);
+          this.displayCutList();
         })
         .catch(error => {
           console.log(error);
