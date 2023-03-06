@@ -177,7 +177,6 @@ export default {
         this.currentItem[key] = i[key];
       }
       this.showNewModal = false;
-      console.log(this.items)
     },
 
     callNewItem()
@@ -197,6 +196,14 @@ export default {
     {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
+      axios.delete('http://51.91.76.245:8000/api/tracks')
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+            this.load();
+          });
     },
 
     paginPrev()
@@ -205,10 +212,7 @@ export default {
       {
         this.pagination.currentPage--;
         this.displayCutList();
-        //this.items = this.allItems.slice(this.pagination.currentPage * this.pagination.perPage, this.pagination.perPage);
       }
-      console.log(this.pagination.currentPage)
-      console.log(this.items)
     },
 
     paginNext()
@@ -218,8 +222,6 @@ export default {
         this.pagination.currentPage++;
         this.displayCutList();
       }
-      console.log(this.pagination.currentPage)
-      console.log(this.items)
     },
 
     displayCutList()
@@ -229,37 +231,35 @@ export default {
       let i = 0;
       while (this.allItems[this.pagination.startItem + i] !== undefined && i < this.pagination.perPage)
       {
-        console.log(this.allItems[this.pagination.startItem + i])
         this.items[i] = this.allItems[this.pagination.startItem + i];
         i++;
       }
-      // for (let i = 0; i < this.pagination.perPage ; i++)
-      // {
-      //   this.items[i] = this.allItems[this.pagination.startItem + i];
-      // }
     },
 
     displaySpecificCutList(page)
     {
       this.pagination.currentPage = page;
       this.displayCutList();
+    },
+
+    load()
+    {
+      axios.get('http://51.91.76.245:8000/api/tracks')
+          .then(response => {
+            this.allItems = response.data;
+            this.displayCutList();
+            this.pagination.totalItems = this.allItems.length;
+            this.pagination.totalPages = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
+            console.log(this.pagination.totalPages)
+            console.log(this.pagination.totalItems)
+          })
+          .catch(error => {
+            console.log(error);
+          })
     }
   },
   mounted() {
-    //this.items = this.allItems;
-    //this.items = [];
-    axios.get('http://51.91.76.245:8000/api/tracks')
-        .then(response => {
-          this.allItems = response.data;
-          this.displayCutList();
-          this.pagination.totalItems = this.allItems.length;
-          this.pagination.totalPages = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
-          console.log(this.pagination.totalPages)
-          console.log(this.pagination.totalItems)
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    this.load();
   }
 }
 </script>
