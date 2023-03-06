@@ -52,7 +52,7 @@
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
-                  <a @click="callEditItem(item)">{{item.title}}</a>
+                  <a @click="callEditItem(item)">{{item.Name}}</a>
                 </p>
                 <p class="subtitle is-marginless">
                   ${{item.price}}
@@ -114,51 +114,10 @@ export default {
   components: {ModalItem},
   data() {
     return {
-      items: [
-        {
-          title: "TensorFlow For Machine Intelligence",
-          price: "22.99",
-          pageCount: 270,
-          ISBN: "9781939902351",
-          coverImage: "tensorflow.jpg",
-          publishDate: 2017,
-        },
-        {
-          title: "Docker in Production",
-          price: "22.99",
-          pageCount: 156,
-          ISBN: "9781939902184",
-          coverImage: "docker.jpg",
-          publishDate: 2015,
-        },
-        {
-          title: "Learning Swift",
-          price: "24.99",
-          pageCount: 342,
-          ISBN: "9781939902115",
-          coverImage: "swift.jpg",
-          publishDate: 2015,
-        },
-        {
-          title: "Choosing a JavaScript Framework",
-          price: "19.99",
-          pageCount: 270,
-          ISBN: "9781939902092",
-          coverImage: "js-framework.jpg",
-          publishDate: 2016,
-        },
-        {
-          title: "Developing a Gulp.js Edge",
-          price: "15.99",
-          pageCount: 134,
-          ISBN: "9781939902146",
-          coverImage: "gulp.jpg",
-          publishDate: 2014,
-        },
-      ],
+      items: [],
       allItems: [
         {
-          title: "TensorFlow For Machine Intelligence",
+          Name: "TensorFlow For Machine Intelligence",
           price: "22.99",
           pageCount: 270,
           ISBN: "9781939902351",
@@ -166,7 +125,7 @@ export default {
           publishDate: 2017,
         },
         {
-          title: "Docker in Production",
+          Name: "Docker in Production",
           price: "22.99",
           pageCount: 156,
           ISBN: "9781939902184",
@@ -174,7 +133,7 @@ export default {
           publishDate: 2015,
         },
         {
-          title: "Learning Swift",
+          Name: "Learning Swift",
           price: "22.99",
           pageCount: 342,
           ISBN: "9781939902115",
@@ -182,7 +141,7 @@ export default {
           publishDate: 2015,
         },
         {
-          title: "Choosing a JavaScript Framework",
+          Name: "Choosing a JavaScript Framework",
           price: "19.99",
           pageCount: 270,
           ISBN: "9781939902092",
@@ -190,7 +149,7 @@ export default {
           publishDate: 2016,
         },
         {
-          title: "Developing a Gulp.js Edge",
+          Name: "Developing a Gulp.js Edge",
           price: "22.99",
           pageCount: 134,
           ISBN: "9781939902146",
@@ -199,7 +158,7 @@ export default {
         },
       ],
       item: {
-        title: "",
+        Name: "",
         price: "",
         pageCount: "",
         ISBN: "",
@@ -231,7 +190,7 @@ export default {
       }
 
       this.items = new Collect(this.allItems)
-          .filter((item) => item.title.toLowerCase().includes(this.searchWord.toLowerCase()))
+          .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
     },
 
@@ -269,7 +228,7 @@ export default {
     }
   },
   mounted() {
-    this.allItems = this.items;
+    this.items = this.allItems;
   }
 }
 </script>
