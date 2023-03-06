@@ -196,6 +196,7 @@ export default {
     deleteItem(item)
     {
       this.items.splice(this.items.indexOf(item), 1);
+      this.allItems.splice(this.allItems.indexOf(item), 1);
     },
 
     paginPrev()
