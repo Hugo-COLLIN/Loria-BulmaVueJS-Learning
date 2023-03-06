@@ -18,9 +18,9 @@
               <div class="field">
                 <label class="label">Title</label>
                 <div class="control">
-                  <input v-model="this.form.title" :class="{'is-danger': error.title}" class="input is-large" type="text" placeholder="e.g. Designing with Bulma" required>
+                  <input v-model="this.form.Name" :class="{'is-danger': error.Name}" class="input is-large" type="text" placeholder="e.g. Designing with Bulma" required>
                 </div>
-                <p class="help is-danger" v-if="error.title">Please enter a title</p>
+                <p class="help is-danger" v-if="error.Name">Please enter an item name</p>
               </div>
             </div>
 
@@ -28,28 +28,28 @@
               <div class="column">
                 <label class="label">Price</label>
                 <div class="control has-icons-left">
-                  <input v-model="this.form.price" class="input" type="number" placeholder="e.g. 22.99" required>
+                  <input v-model="this.form.UnitPrice" class="input" type="number" placeholder="e.g. 22.99" required>
                   <span class="icon is-small is-left">
                       <i class="fa fa-dollar"></i>
                   </span>
                 </div>
-                <p class="help is-danger" v-if="error.price">Please enter a price</p>
+                <p class="help is-danger" v-if="error.UnitPrice">Please enter a price</p>
               </div>
 
               <div class="column">
-                <label class="label">Pages</label>
+                <label class="label">Duration (milliseconds /to change)</label>
                 <div class="control">
-                  <input v-model="this.form.pageCount" class="input" type="number" placeholder="e.g. 270" required>
+                  <input v-model="this.form.Milliseconds" class="input" type="number" placeholder="e.g. 270" required>
                 </div>
-                <p class="help is-danger" v-if="error.pages">Please enter a title</p>
+                <p class="help is-danger" v-if="error.Milliseconds">Please enter a duration</p>
               </div>
 
               <div class="column">
-                <label class="label">ISBN</label>
+                <label class="label">Composers (comma separated)</label>
                 <div class="control">
-                  <input v-model="this.form.ISBN" class="input" type="text" placeholder="e.g. 9781939902351" required>
+                  <input v-model="this.form.Composer" class="input" type="text" placeholder="e.g. 9781939902351" required>
                 </div>
-                <p class="help is-danger" v-if="error.isbn">Please enter a title</p>
+                <p class="help is-danger" v-if="error.Composer">Please enter compositors</p>
               </div>
             </div>
 
@@ -72,7 +72,7 @@
                        No file chosen
                     </span>
                   </label>
-                  <p class="help is-danger" v-if="error.coverImage">Please enter a title</p>
+                  <p class="help is-danger" v-if="error.coverImage">Please choose a picture</p>
                 </div>
               </div>
 
@@ -103,18 +103,18 @@ export default {
       btnTitle: "",
 
       form: {
-        title: "",
-        price: "",
-        pageCount: "",
-        ISBN: "",
+        Name: "",
+        UnitPrice: "",
+        Milliseconds: "",
+        Composer: "",
         publishDate: 2017,
         coverImage: "newbook.jpg"
       },
       error: {
-        title: false,
-        price: false,
-        pages: false,
-        isbn: false,
+        Name: false,
+        UnitPrice: false,
+        Milliseconds: false,
+        Composer: false,
         publishDate: false,
         coverImage: false
       }
@@ -176,10 +176,10 @@ export default {
       for (let key in this.form)
         this.form[key] = "";
               */
-      this.form.title = "";
-      this.form.price = "";
-      this.form.pageCount = "";
-      this.form.ISBN = "";
+      this.form.Name = "";
+      this.form.UnitPrice = "";
+      this.form.Milliseconds = "";
+      this.form.Composer = "";
     },
 
     editForm(item)
