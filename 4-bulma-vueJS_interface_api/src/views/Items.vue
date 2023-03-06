@@ -6,7 +6,7 @@
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-            <strong>{{this.items.length}}</strong> / {{this.allItems.length}} items
+            <strong>{{(this.pagination.currentPage - 1) * this.pagination.perPage + 1}} - {{(this.pagination.currentPage - 1) * this.pagination.perPage + this.pagination.perPage}}</strong> / {{this.allItems.length}} items
           </p>
         </div>
 
@@ -74,30 +74,33 @@
 
     </div>
 
-    <nav class="pagination">
-      <a class="pagination-previous" @click="paginPrev">Previous</a>
-      <a class="pagination-next" @click="paginNext">Next page</a>
+    <nav class="pagination is-centered">
       <ul class="pagination-list">
         <li>
-          <a class="pagination-link">1</a>
+          <a class="pagination-link" @click="displaySpecificCutList(1)">&#60;&#60;</a>
         </li>
         <li>
+          <a class="pagination-previous" @click="paginPrev">Previous page</a>
+        </li>
+        <li>
+          <span class="pagination-ellipsis"></span>
+        </li>
+        <li v-if="this.pagination.currentPage > 1">
+          <span class="pagination-ellipsis">&hellip;</span>
+          <a class="pagination-link" @click="paginPrev">{{this.pagination.currentPage - 1}}</a>
+        </li>
+        <li>
+          <a class="pagination-link is-current">{{this.pagination.currentPage}}</a>
+        </li>
+        <li v-if="this.pagination.currentPage < this.pagination.totalPages">
+          <a class="pagination-link" @click="paginNext">{{this.pagination.currentPage + 1}}</a>
           <span class="pagination-ellipsis">&hellip;</span>
         </li>
         <li>
-          <a class="pagination-link">45</a>
+          <a class="pagination-next" @click="paginNext">Next page</a>
         </li>
         <li>
-          <a class="pagination-link is-current">46</a>
-        </li>
-        <li>
-          <a class="pagination-link">47</a>
-        </li>
-        <li>
-          <span class="pagination-ellipsis">&hellip;</span>
-        </li>
-        <li>
-          <a class="pagination-link">86</a>
+          <a class="pagination-link" @click="displaySpecificCutList(this.pagination.totalPages)">&#62;&#62;</a>
         </li>
       </ul>
     </nav>
@@ -116,48 +119,7 @@ export default {
   data() {
     return {
       items: [],
-      allItems: [
-        {
-          Name: "TensorFlow For Machine Intelligence",
-          UnitPrice: "22.99",
-          Milliseconds: 270,
-          Composer: "9781939902351",
-          //coverImage: "tensorflow.jpg",
-          publishDate: 2017,
-        },
-        {
-          Name: "Docker in Production",
-          UnitPrice: "22.99",
-          Milliseconds: 156,
-          Composer: "9781939902184",
-          //coverImage: "docker.jpg",
-          publishDate: 2015,
-        },
-        {
-          Name: "Learning Swift",
-          UnitPrice: "22.99",
-          Milliseconds: 342,
-          Composer: "9781939902115",
-          //coverImage: "swift.jpg",
-          publishDate: 2015,
-        },
-        {
-          Name: "Choosing a JavaScript Framework",
-          UnitPrice: "19.99",
-          Milliseconds: 270,
-          Composer: "9781939902092",
-          //coverImage: "js-framework.jpg",
-          publishDate: 2016,
-        },
-        {
-          Name: "Developing a Gulp.js Edge",
-          UnitPrice: "22.99",
-          Milliseconds: 134,
-          Composer: "9781939902146",
-          //coverImage: "gulp.jpg",
-          publishDate: 2014,
-        },
-      ],
+      allItems: [],
       item: {
         Name: "",
         UnitPrice: "",
@@ -175,6 +137,8 @@ export default {
         currentPage: 1,
         perPage: 5,
         totalItems: 0,
+        totalPages: 0,
+        startItem: 0,
       },
     };
   },
@@ -248,30 +212,36 @@ export default {
 
     paginNext()
     {
-      console.log(this.pagination.currentPage * this.pagination.perPage)
-      console.log("BEFORE")
-      console.log(this.items)
-      console.log(this.allItems)
-      console.log(this.pagination.currentPage)
       if (this.pagination.currentPage < this.allItems.length / this.pagination.perPage)
       {
         this.pagination.currentPage++;
         this.displayCutList();
       }
-      console.log("AFTER")
-      console.log(this.items)
-      console.log(this.allItems)
       console.log(this.pagination.currentPage)
+      console.log(this.items)
     },
 
     displayCutList()
     {
-      const init = (this.pagination.currentPage - 1) * this.pagination.perPage;
-      for (let i = 0; i < this.pagination.perPage ; i++)
+      this.items = [];
+      this.pagination.startItem = (this.pagination.currentPage - 1) * this.pagination.perPage;
+      let i = 0;
+      while (this.allItems[this.pagination.startItem + i] !== undefined && i < this.pagination.perPage)
       {
-        this.items[i] = this.allItems[init + i];
+        console.log(this.allItems[this.pagination.startItem + i])
+        this.items[i] = this.allItems[this.pagination.startItem + i];
+        i++;
       }
-      //this.items = this.allItems.slice((this.pagination.currentPage - 1) * this.pagination.perPage, this.pagination.perPage);
+      // for (let i = 0; i < this.pagination.perPage ; i++)
+      // {
+      //   this.items[i] = this.allItems[this.pagination.startItem + i];
+      // }
+    },
+
+    displaySpecificCutList(page)
+    {
+      this.pagination.currentPage = page;
+      this.displayCutList();
     }
   },
   mounted() {
@@ -279,10 +249,12 @@ export default {
     //this.items = [];
     axios.get('http://51.91.76.245:8000/api/tracks')
         .then(response => {
-          //this.items = response.data;
           this.allItems = response.data;
-          //this.items = this.allItems.slice(0, this.pagination.perPage);
           this.displayCutList();
+          this.pagination.totalItems = this.allItems.length;
+          this.pagination.totalPages = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
+          console.log(this.pagination.totalPages)
+          console.log(this.pagination.totalItems)
         })
         .catch(error => {
           console.log(error);
