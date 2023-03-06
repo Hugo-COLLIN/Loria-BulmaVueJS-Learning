@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo Axios - Intégration d'API</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <button @click="updatePosts">Change !</button>
+            <li v-for="post in posts">{{post.title}}</li>
+        </ul>
+    </div>
+
+    <script>
+        let vue = Vue.createApp({
+            data()
+            {
+                return {
+                    posts: []
+                }
+            },
+
+            methods: {
+                updatePosts()
+                {
+                    //this.posts = ["p5", "p6"];
+                    axios.get("https://api.com/badrequest")
+                        .then(response => {
+                            this.posts = response.data;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.posts = [{title: "Erreur de chargement"}];
+                        });
+                },
+
+                creerPost()
+                {
+                    axios.post("https://api.com/posts", {
+                        title: "Mon titre",
+                        body: "Mon corps",
+                        userId: 1
+                    })
+                        .then(response => {
+                            console.log(response);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+
+                    // axios.post('https://jsonplaceholder.typicode.com/posts', {
+                    //     id: 101,
+                    //     title: 'foo',
+                    //     body: 'bar',
+                    //     userId: 1
+                    //     })
+                    // .then( (response) => {
+                    //     console.log(response);
+                    // })
+                }
+            }
+        });
+
+        vue.mount("#app");
+    </script>
+</body>
+</html>
