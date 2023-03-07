@@ -48,7 +48,7 @@
           <article class="box">
             <div class="media">
               <aside class="media-left">
-                <img src="@/assets/images/Speaker_Icon.svg.png" width="80">
+                <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
