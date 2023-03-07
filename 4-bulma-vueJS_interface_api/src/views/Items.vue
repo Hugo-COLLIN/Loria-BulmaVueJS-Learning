@@ -202,7 +202,11 @@ export default {
       this.displayCutList();
       // console.log(item)
       // console.log(item.TrackId)
-      axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId)
+      axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId, {
+        headers:{
+          token: this.$store.state.tokenLogin
+        }
+      })
           .then(response => {
             console.log(response);
           })
