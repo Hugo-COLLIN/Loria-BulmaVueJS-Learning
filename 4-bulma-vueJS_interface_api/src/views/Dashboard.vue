@@ -276,6 +276,9 @@ export default {
     getImgPath(image) {
       return image ? require(`@/assets/images/${image}`) : "";
     }
+  },
+  mounted() {
+    console.log(this.$store.state.tokenLogin);
   }
 }
 </script>
