@@ -122,19 +122,20 @@ export default {
       let res = axios.get('http://51.91.76.245:8000/api/login', {
         headers: {
           token: this.$store.state.tokenLogin
+          // this.$cookies.get("tokenSession")
+              //.get("tokenSession") //
         }
       })
         .then((response) => {
           console.log(response);
-//          this.$store.commit('setTokenLogin', response.data.token);
         })
         .catch((error) => {
-          //console.log(error);
+          console.log(error);
           this.$store.state.tokenLogin = null;
-//            this.$router.push({name: 'login'});
+          //this.$cookies.remove("tokenSession");
         });
 
-      if (this.$store.state.tokenLogin === null) {
+      if (this.$store.state.tokenLogin /*this.$cookies.get("tokenSession")*/ === null) {
         this.$router.push({name: 'login'});
       }
     },
@@ -148,6 +149,7 @@ export default {
       })
         .then(() => {
           this.$store.commit('setTokenLogin', null);
+          this.$cookies.remove('tokenSession');
           this.$router.push({name: 'login'});
         })
           .catch((error) => {

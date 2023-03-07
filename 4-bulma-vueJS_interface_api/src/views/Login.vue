@@ -85,6 +85,7 @@ export default {
       })
           .then(response => {
             console.log(response.data);
+            //this.$cookies.set('tokenSession', response.data, '1D');
             this.$store.commit('setTokenLogin', response.data);
             console.log(this.$store.state.tokenLogin)
             this.$router.push({name: 'dashboard'});

@@ -59,6 +59,8 @@ router.beforeEach((to, from, next) => {
       next({ name: 'login' })
     else
       next() // go to wherever I'm going
+  } else if (store.state.tokenLogin != null && to.name === 'login') {
+    next({ name: '/' })
   } else {
     next() // does not require auth, make sure to always call next()!
   }
