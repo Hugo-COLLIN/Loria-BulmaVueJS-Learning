@@ -278,7 +278,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.tokenLogin);
+    //console.log(this.$store.state.tokenLogin);
   }
 }
 </script>

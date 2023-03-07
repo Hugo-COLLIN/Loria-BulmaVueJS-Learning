@@ -118,6 +118,26 @@ export default {
     return {openBugReport: false}
   },
   methods: {
+    loginState() {
+      let res = axios.get('http://51.91.76.245:8000/api/login', {
+        headers: {
+          token: this.$store.state.tokenLogin
+        }
+      })
+        .then((response) => {
+          console.log(response);
+//          this.$store.commit('setTokenLogin', response.data.token);
+        })
+        .catch((error) => {
+          //console.log(error);
+          this.$store.state.tokenLogin = null;
+//            this.$router.push({name: 'login'});
+        });
+
+      if (this.$store.state.tokenLogin === null) {
+        this.$router.push({name: 'login'});
+      }
+    },
     logout()
     {
       console.log(this.$store.state.tokenLogin)
@@ -137,6 +157,7 @@ export default {
   },
   mounted() {
     console.log(this.$store.state.tokenLogin)
+    this.loginState();
   }
 };
 </script>
