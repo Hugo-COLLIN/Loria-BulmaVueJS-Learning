@@ -41,7 +41,7 @@
                 </div>
               </a>
 
-              <a class="navbar-item">
+              <a class="navbar-item" @click="logout">
                 <div>
                 <span class="icon is-small">
                    <i class="fa fa-sign-out"></i>
@@ -116,6 +116,27 @@ export default {
   data()
   {
     return {openBugReport: false}
+  },
+  methods: {
+    logout()
+    {
+      console.log(this.$store.state.tokenLogin)
+      axios.delete('http://51.91.76.245:8000/api/login', {
+        headers: {
+          token: this.$store.state.tokenLogin
+        }
+      })
+        .then(() => {
+          this.$store.commit('setTokenLogin', null);
+          this.$router.push({name: 'login'});
+        })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
+  },
+  mounted() {
+    console.log(this.$store.state.tokenLogin)
   }
 };
 </script>
