@@ -177,9 +177,81 @@ export default {
     editItem(i)
     {
       for (let key in i) {
+        // console.log(key)
         this.currentItem[key] = i[key];
+        // console.log(this.currentItem[key])
       }
       this.showNewModal = false;
+      console.log("C'est ici")
+      console.log(i)
+      console.log(i.TrackId)
+      //console.log(this.$store.state.tokenLogin)
+      let l = this.$store.state.tokenLogin;
+      console.log(l)
+      console.log("--------------------------------")
+      axios.get('http://51.91.76.245:8000/api/login', {
+        headers: {
+          token: this.$store.state.tokenLogin
+          // this.$cookies.get("tokenSession")
+          //.get("tokenSession") //
+        }
+      })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$store.state.tokenLogin = null;
+            //this.$cookies.remove("tokenSession");
+          });
+      console.log("--------------------------------")
+
+
+
+      axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, {
+        headers:{
+          token: l,
+        },
+        Name: i.Name,
+        UnitPrice: i.UnitPrice,
+        Milliseconds: i.Milliseconds,
+        Composer: i.Composer,
+        AlbumId: i.AlbumId,
+        GenreId: i.GenreId,
+        MediaTypeId: i.MediaTypeId,
+        Bytes: i.Bytes,
+      })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+      // axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, // i
+      // {
+      //   headers:{
+      //     token: this.$store.state.tokenLogin
+      //   },
+      //   // headers: {
+      //   //   token: this.$store.state.tokenLogin //localStorage.getItem('token')
+      //   // },
+      //
+      //   Name: i.Name,
+      //   UnitPrice: i.UnitPrice,
+      //   Milliseconds: i.Milliseconds,
+      //   Composer: i.Composer,
+      //   AlbumId: i.AlbumId,
+      //   GenreId: i.GenreId,
+      //   MediaTypeId: i.MediaTypeId,
+      //   Bytes: i.Bytes,
+      // })
+      //     .then(response => {
+      //       console.log(response);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //     });
     },
 
     callNewItem()
@@ -261,8 +333,8 @@ export default {
             this.displayCutList();
             this.pagination.totalItems = this.allItems.length;
             this.pagination.totalPages = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
-            console.log(this.pagination.totalPages)
-            console.log(this.pagination.totalItems)
+            // console.log(this.pagination.totalPages)
+            // console.log(this.pagination.totalItems)
           })
           .catch(error => {
             console.log(error);

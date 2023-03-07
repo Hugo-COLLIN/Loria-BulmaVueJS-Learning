@@ -49,34 +49,34 @@
                 <div class="control">
                   <input v-model="this.form.Composer" class="input" type="text" placeholder="e.g. 9781939902351" required>
                 </div>
-                <p class="help is-danger" v-if="error.Composer">Please enter compositors</p>
+                <p class="help is-danger" v-if="error.Composer">Please enter composers</p>
               </div>
             </div>
 
-            <div class="field">
-              <label class="label">Cover image</label>
-              <div class="control">
-                <div class="file has-name">
-                  <label class="file-label">
-                    <input class="file-input" type="file"> <!-- v-model="this.form.title"-->
-                    <span class="file-cta">
-                       <span class="file-icon">
-                        <i class="fa fa-upload"></i>
-                       </span>
-                         <span class="file-label">
-                          Choose a file…
-                         </span>
-                       </span>
+<!--            <div class="field">-->
+<!--              <label class="label">Cover image</label>-->
+<!--              <div class="control">-->
+<!--                <div class="file has-name">-->
+<!--                  <label class="file-label">-->
+<!--                    <input class="file-input" type="file"> &lt;!&ndash; v-model="this.form.title"&ndash;&gt;-->
+<!--                    <span class="file-cta">-->
+<!--                       <span class="file-icon">-->
+<!--                        <i class="fa fa-upload"></i>-->
+<!--                       </span>-->
+<!--                         <span class="file-label">-->
+<!--                          Choose a file…-->
+<!--                         </span>-->
+<!--                       </span>-->
 
-                    <span class="file-name">
-                       No file chosen
-                    </span>
-                  </label>
-                  <p class="help is-danger" v-if="error.coverImage">Please choose a picture</p>
-                </div>
-              </div>
+<!--                    <span class="file-name">-->
+<!--                       No file chosen-->
+<!--                    </span>-->
+<!--                  </label>-->
+<!--                  <p class="help is-danger" v-if="error.coverImage">Please choose a picture</p>-->
+<!--                </div>-->
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
           </div>
         </section>
       </form>
@@ -107,16 +107,12 @@ export default {
         UnitPrice: "",
         Milliseconds: "",
         Composer: "",
-        publishDate: 2017,
-        coverImage: "newbook.jpg"
       },
       error: {
         Name: false,
         UnitPrice: false,
         Milliseconds: false,
         Composer: false,
-        publishDate: false,
-        coverImage: false
       }
     };
   },
