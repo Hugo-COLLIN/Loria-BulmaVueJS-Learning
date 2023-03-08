@@ -6,7 +6,7 @@
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-<!--            <strong>{{(this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + 1}} - {{(this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + this.$refs.pagination.perPage}}</strong> / {{this.allItems.length}} items-->
+            <strong>{{(this.pagination.currentPage - 1) * this.pagination.perPage + 1}} - {{(this.pagination.currentPage - 1) * this.pagination.perPage + this.pagination.perPage}}</strong> / {{this.allItems.length}} items
           </p>
         </div>
 
@@ -71,21 +71,51 @@
           </article>
         </div>
       </template>
+
     </div>
-    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>
+
+    <nav class="pagination is-centered">
+      <ul class="pagination-list">
+        <li>
+          <a class="pagination-link" @click="displaySpecificCutList(1)">&#60;&#60;</a>
+        </li>
+        <li>
+          <a class="pagination-previous" @click="paginPrev">Previous page</a>
+        </li>
+        <li>
+          <span class="pagination-ellipsis"></span>
+        </li>
+        <li v-if="this.pagination.currentPage > 1">
+          <span class="pagination-ellipsis">&hellip;</span>
+          <a class="pagination-link" @click="paginPrev">{{this.pagination.currentPage - 1}}</a>
+        </li>
+        <li>
+          <a class="pagination-link is-current">{{this.pagination.currentPage}}</a>
+        </li>
+        <li v-if="this.pagination.currentPage < this.pagination.totalPages">
+          <a class="pagination-link" @click="paginNext">{{this.pagination.currentPage + 1}}</a>
+          <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+          <a class="pagination-next" @click="paginNext">Next page</a>
+        </li>
+        <li>
+          <a class="pagination-link" @click="displaySpecificCutList(this.pagination.totalPages)">&#62;&#62;</a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
 
 <script>
-import axios from "axios";
 import Collect from 'collect.js';
 import ModalItem from "@/components/ModalItem.vue";
-import Pagination from "@/components/Pagination.vue";
+import axios from "axios";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination},
+  components: {ModalItem},
   data() {
     return {
       items: [],
@@ -106,13 +136,13 @@ export default {
       searchWord: "",
       currentItem: null,
 
-      // pagination: {
-      //   currentPage: 1,
-      //   perPage: 5,
-      //   totalItems: 0,
-      //   totalPages: 0,
-      //   startItem: 0,
-      // },TODO
+      pagination: {
+        currentPage: 1,
+        perPage: 5,
+        totalItems: 0,
+        totalPages: 0,
+        startItem: 0,
+      },
     };
   },
 
@@ -243,43 +273,39 @@ export default {
 
     },
 
-    // paginPrev()
-    // {
-    //   if (this.pagination.currentPage > 1)
-    //   {
-    //     this.pagination.currentPage--;
-    //     this.displayCutList();
-    //   }
-    // },
-    //
-    // paginNext()
-    // {
-    //   if (this.pagination.currentPage < this.allItems.length / this.pagination.perPage)
-    //   {
-    //     this.pagination.currentPage++;
-    //     this.displayCutList();
-    //   }
-    // },
+    paginPrev()
+    {
+      if (this.pagination.currentPage > 1)
+      {
+        this.pagination.currentPage--;
+        this.displayCutList();
+      }
+    },
+
+    paginNext()
+    {
+      if (this.pagination.currentPage < this.allItems.length / this.pagination.perPage)
+      {
+        this.pagination.currentPage++;
+        this.displayCutList();
+      }
+    },
 
     displayCutList()
     {
-      console.log("Ca passe !!!")
       this.items = [];
-      let startItem = this.$refs.pagination.startingItem();
-      console.log(startItem)
-      //this.pagination.startItem = (this.pagination.currentPage - 1) * this.pagination.perPage;
+      this.pagination.startItem = (this.pagination.currentPage - 1) * this.pagination.perPage;
       let i = 0;
-      while (this.allItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
+      while (this.allItems[this.pagination.startItem + i] !== undefined && i < this.pagination.perPage)
       {
-        this.items[i] = this.allItems[startItem + i];
+        this.items[i] = this.allItems[this.pagination.startItem + i];
         i++;
       }
-      console.log(this.items)
     },
 
     displaySpecificCutList(page)
     {
-      this.setPage(page);
+      this.pagination.currentPage = page;
       this.displayCutList();
     },
 
@@ -289,10 +315,10 @@ export default {
           .then(response => {
             this.allItems = response.data;
             this.displayCutList();
-            this.$refs.pagination.setTotalItems(this.allItems.length);
-            this.$refs.pagination.setTotalPages();
-            console.log(this.$refs.pagination.totalPages)
-            console.log(this.$refs.pagination.totalItems)
+            this.pagination.totalItems = this.allItems.length;
+            this.pagination.totalPages = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
+            // console.log(this.pagination.totalPages)
+            // console.log(this.pagination.totalItems)
           })
           .catch(error => {
             console.log(error);
@@ -300,7 +326,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs.pagination)
     this.load();
   }
 }
