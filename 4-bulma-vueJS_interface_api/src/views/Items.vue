@@ -6,7 +6,7 @@
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-<!--            <strong>{{(this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + 1}} - {{(this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + this.$refs.pagination.perPage}}</strong> / {{this.allItems.length}} items-->
+            <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.allItems.length}} items
           </p>
         </div>
 
@@ -42,6 +42,7 @@
       </div>
     </nav>
 
+<!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Error, bad initialization-->
     <div class="columns is-multiline">
       <template v-for="(item, key) in items">
         <div class="column is-12-tablet is-6-desktop is-4-widescreen">
@@ -105,6 +106,8 @@ export default {
       showEditModal: false,
       searchWord: "",
       currentItem: null,
+      initItem: 0,
+      lastItem: 0,
 
       // pagination: {
       //   currentPage: 1,
@@ -263,7 +266,6 @@ export default {
 
     displayCutList()
     {
-      console.log("Ca passe !!!")
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
       console.log(startItem)
@@ -274,14 +276,16 @@ export default {
         this.items[i] = this.allItems[startItem + i];
         i++;
       }
+      this.initCountItems();
       console.log(this.items)
     },
 
-    displaySpecificCutList(page)
-    {
-      this.setPage(page);
-      this.displayCutList();
-    },
+
+    // displaySpecificCutList(page)
+    // {
+    //   this.setPage(page);
+    //   this.displayCutList();
+    // },
 
     load()
     {
@@ -291,16 +295,22 @@ export default {
             this.displayCutList();
             this.$refs.pagination.setTotalItems(this.allItems.length);
             this.$refs.pagination.setTotalPages();
+            this.initCountItems();
             console.log(this.$refs.pagination.totalPages)
             console.log(this.$refs.pagination.totalItems)
           })
           .catch(error => {
             console.log(error);
           })
-    }
+    },
+
+    initCountItems()
+    {
+      this.initItem = (this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + 1;
+      this.lastItem = (this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + this.$refs.pagination.perPage;
+    },
   },
   mounted() {
-    console.log(this.$refs.pagination)
     this.load();
   }
 }

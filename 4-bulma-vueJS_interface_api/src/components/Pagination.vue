@@ -55,6 +55,16 @@ export default {
       this.totalPages = Math.ceil(this.totalItems / this.perPage);
     },
 
+    getCurrentPage()
+    {
+      return this.currentPage;
+    },
+
+    getPerPage()
+    {
+      return this.perPage;
+    },
+
     paginPrev()
     {
       console.log(this.currentPage)
