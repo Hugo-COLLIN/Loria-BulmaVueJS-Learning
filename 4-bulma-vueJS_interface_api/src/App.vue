@@ -3,7 +3,7 @@
     <nav class="navbar has-shadow">
       <div class="navbar-brand">
         <a class="navbar-item">
-          <img src="./assets/logo.png">
+          <img src="./assets/logo.png" alt="logo">
         </a>
         <div class="navbar-burger">
           <span></span>
@@ -127,7 +127,7 @@ export default {
      * Check if the user is logged in
      */
     loginState() {
-      let res = axios.get('http://51.91.76.245:8000/api/login', {
+      axios.get('http://51.91.76.245:8000/api/login', {
         headers: {
           token: this.$store.state.tokenLogin
           // this.$cookies.get("tokenSession")
