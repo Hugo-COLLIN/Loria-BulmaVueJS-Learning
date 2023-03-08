@@ -6,7 +6,7 @@
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-            <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.allItems.length}} items
+            <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
           </p>
         </div>
 
@@ -75,7 +75,7 @@
         </div>
       </template>
     </div>
-    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>
+    <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
   </div>
   <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
@@ -111,6 +111,7 @@ export default {
       currentItem: null,
       initItem: 0,
       lastItem: 0,
+      totalItems: 0,
 
       // pagination: {
       //   currentPage: 1,
@@ -134,16 +135,11 @@ export default {
     },
 
     search() {
-      if (this.searchWord === '') {
-        //this.items = this.allItems;
-        this.displayCutList();
-        return;
-      }
-
-      this.searchItems = new Collect(this.allItems)
+      if (this.searchWord !== '')
+        this.searchItems = new Collect(this.allItems)
           .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
-      this.displayCutSearchList();
+      this.displayCutAllList();
     },
 
     addItem(i)
@@ -227,7 +223,7 @@ export default {
     {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
-      this.displayCutList();
+      this.displayCutAllList();
       // console.log(item)
       // console.log(item.TrackId)
       axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId, {
@@ -245,33 +241,27 @@ export default {
 
     },
 
-    displayCutList()
+    displayCutList(list)
     {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
       // console.log(startItem)
       let i = 0;
-      while (this.allItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
+      while (list[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
       {
-        this.items[i] = this.allItems[startItem + i];
+        this.items[i] = list[startItem + i];
         i++;
       }
       this.updateCountItems();
       console.log(this.items)
     },
 
-    displayCutSearchList()
+    displayCutAllList()
     {
-      this.items = [];
-      let startItem = this.$refs.pagination.startingItem();
-      let i = 0;
-      while (this.searchItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
-      {
-        this.items[i] = this.searchItems[startItem + i];
-        i++;
-      }
-      this.updateCountItems();
-      console.log(this.items)
+      if (this.searchWord === '')
+        this.displayCutList(this.allItems);
+      else
+        this.displayCutList(this.searchItems);
     },
 
     load()
@@ -279,7 +269,7 @@ export default {
       axios.get('http://51.91.76.245:8000/api/tracks')
           .then(response => {
             this.allItems = response.data;
-            this.displayCutList();
+            this.displayCutAllList();
             this.$refs.pagination.setTotalItems(this.allItems.length);
             this.$refs.pagination.setTotalPages();
             this.updateCountItems();
@@ -295,7 +285,10 @@ export default {
     {
       this.initItem = this.$refs.pagination.startingItem() + 1;
       this.lastItem = this.items.length + this.initItem - 1;
-      // this.
+      if (this.searchWord === '')
+        this.totalItems = this.allItems.length;
+      else
+        this.totalItems = this.searchItems.length;
     },
   },
   mounted() {
