@@ -18,7 +18,7 @@
               <div class="field">
                 <label class="label">Title</label>
                 <div class="control">
-                  <input v-model="this.form.Name" :class="{'is-danger': error.Name}" class="input is-large" type="text" placeholder="e.g. Designing with Bulma" required>
+                  <input v-model="this.form.Name" :class="{'is-danger': error.Name}" class="input is-large" type="text" placeholder="Title" name="title" required>
                 </div>
                 <p class="help is-danger" v-if="error.Name">Please enter an item name</p>
               </div>
@@ -28,7 +28,7 @@
               <div class="column">
                 <label class="label">Price</label>
                 <div class="control has-icons-left">
-                  <input v-model="this.form.UnitPrice" class="input" type="number" placeholder="e.g. 22.99" required>
+                  <input v-model="this.form.UnitPrice" class="input" type="number" placeholder="e.g. 22.99" name="price" required>
                   <span class="icon is-small is-left">
                       <i class="fa fa-dollar"></i>
                   </span>
@@ -39,7 +39,7 @@
               <div class="column">
                 <label class="label">Duration (milliseconds /to change)</label>
                 <div class="control">
-                  <input v-model="this.form.Milliseconds" class="input" type="number" placeholder="e.g. 270" required>
+                  <input v-model="this.form.Milliseconds" class="input" type="number" placeholder="e.g. 270" name="duration" required>
                 </div>
                 <p class="help is-danger" v-if="error.Milliseconds">Please enter a duration</p>
               </div>
@@ -47,7 +47,7 @@
               <div class="column">
                 <label class="label">Composers (comma separated)</label>
                 <div class="control">
-                  <input v-model="this.form.Composer" class="input" type="text" placeholder="e.g. 9781939902351" required>
+                  <input v-model="this.form.Composer" class="input" type="text" placeholder="e.g. 9781939902351" name="composer" required>
                 </div>
                 <p class="help is-danger" v-if="error.Composer">Please enter composers</p>
               </div>
