@@ -43,6 +43,7 @@
     </nav>
 
 <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Error, bad initialization-->
+
     <div class="columns is-multiline">
       <template v-for="(item, key) in items">
         <div class="column is-12-tablet is-6-desktop is-4-widescreen">
@@ -144,6 +145,7 @@ export default {
     addItem(i)
     {
       this.items.push(i);
+      this.allItems.push(i);
       this.showNewModal = false;
 
       // let data = {};
@@ -170,14 +172,6 @@ export default {
             this.load();
             //this.errorMsg("Erreur lors de la modification de l'item");
           });
-      // axios.post('http://51.91.76.245:8000/api/tracks/', i, config)
-      //     .then(response => {
-      //       console.log(response);
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //       this.load();
-      //     });
     },
 
     editItem(i)
@@ -246,46 +240,20 @@ export default {
 
     },
 
-    // paginPrev()
-    // {
-    //   if (this.pagination.currentPage > 1)
-    //   {
-    //     this.pagination.currentPage--;
-    //     this.displayCutList();
-    //   }
-    // },
-    //
-    // paginNext()
-    // {
-    //   if (this.pagination.currentPage < this.allItems.length / this.pagination.perPage)
-    //   {
-    //     this.pagination.currentPage++;
-    //     this.displayCutList();
-    //   }
-    // },
-
     displayCutList()
     {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
       console.log(startItem)
-      //this.pagination.startItem = (this.pagination.currentPage - 1) * this.pagination.perPage;
       let i = 0;
       while (this.allItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
       {
         this.items[i] = this.allItems[startItem + i];
         i++;
       }
-      this.initCountItems();
+      this.updateCountItems();
       console.log(this.items)
     },
-
-
-    // displaySpecificCutList(page)
-    // {
-    //   this.setPage(page);
-    //   this.displayCutList();
-    // },
 
     load()
     {
@@ -295,7 +263,7 @@ export default {
             this.displayCutList();
             this.$refs.pagination.setTotalItems(this.allItems.length);
             this.$refs.pagination.setTotalPages();
-            this.initCountItems();
+            this.updateCountItems();
             console.log(this.$refs.pagination.totalPages)
             console.log(this.$refs.pagination.totalItems)
           })
@@ -304,10 +272,11 @@ export default {
           })
     },
 
-    initCountItems()
+    updateCountItems()
     {
-      this.initItem = (this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + 1;
-      this.lastItem = (this.$refs.pagination.currentPage - 1) * this.$refs.pagination.perPage + this.$refs.pagination.perPage;
+      this.initItem = this.$refs.pagination.startingItem() + 1;
+      this.lastItem = this.items.length + this.initItem - 1;
+      // this.
     },
   },
   mounted() {

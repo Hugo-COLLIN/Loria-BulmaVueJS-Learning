@@ -111,15 +111,11 @@ export default {
       return (this.currentPage - 1) * this.perPage;
     },
 
-    dataSent()
+    endingItem()
     {
-      return {
-        currentPage: this.currentPage,
-        perPage: this.perPage,
-        totalItems: data.length,
-        totalPages: Math.ceil(data.length / this.perPage),
-        startItem: this.startingItem(),
-      }
+      // return (this.currentPage) * (this.perPage) - (this.totalItems % this.perPage);
+      // return (this.totalItems % this.perPage);
+      return this.currentPage * this.perPage;
     },
 
     setPage(page)
