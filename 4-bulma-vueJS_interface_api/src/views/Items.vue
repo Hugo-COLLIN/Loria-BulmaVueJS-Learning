@@ -42,7 +42,7 @@
       </div>
     </nav>
 
-<!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Error, bad initialization-->
+<!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
     <div class="columns is-multiline">
       <template v-for="(item, key) in items">
@@ -139,7 +139,7 @@ export default {
         this.searchItems = new Collect(this.allItems)
           .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
-      this.displayCutAllList();
+      this.updateList();
     },
 
     addItem(i)
@@ -147,12 +147,6 @@ export default {
       this.items.push(i);
       this.allItems.push(i);
       this.showNewModal = false;
-
-      // let data = {};
-      // for (let key in this.currentItem)
-      //   if (key !== "TrackId")
-      //     data[key] = i[key];
-
 
       const config = {
           token: sessionStorage.getItem('tokenSession')
@@ -269,16 +263,26 @@ export default {
       axios.get('http://51.91.76.245:8000/api/tracks')
           .then(response => {
             this.allItems = response.data;
-            this.displayCutAllList();
-            this.$refs.pagination.setTotalItems(this.allItems.length);
-            this.$refs.pagination.setTotalPages();
-            this.updateCountItems();
-            console.log(this.$refs.pagination.totalPages)
-            console.log(this.$refs.pagination.totalItems)
+            this.updateList();
           })
           .catch(error => {
             console.log(error);
           })
+    },
+
+    updateList()
+    {
+      this.displayCutAllList();
+
+      if (this.searchWord === '')
+        this.$refs.pagination.setTotalItems(this.allItems.length);
+      else
+        this.$refs.pagination.setTotalItems(this.searchItems.length);
+
+      this.$refs.pagination.setTotalPages();
+      this.updateCountItems();
+      console.log(this.$refs.pagination.totalPages)
+      console.log(this.$refs.pagination.totalItems)
     },
 
     updateCountItems()
