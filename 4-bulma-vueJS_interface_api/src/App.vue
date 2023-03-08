@@ -149,7 +149,7 @@ export default {
       })
         .then(() => {
           this.$store.commit('setTokenLogin', null);
-          this.$cookies.remove('tokenSession');
+          //this.$cookies.remove('tokenSession');
           this.$router.push({name: 'login'});
         })
           .catch((error) => {

@@ -206,27 +206,44 @@ export default {
           });
       console.log("--------------------------------")
 
+      console.log(i.Name)
+
+      let data = {
+            Name: i.Name,
+            UnitPrice: i.UnitPrice,
+            Milliseconds: i.Milliseconds,
+            Composer: i.Composer,
+            AlbumId: i.AlbumId,
+            GenreId: i.GenreId,
+            MediaTypeId: i.MediaTypeId,
+            Bytes: i.Bytes,
+          };
+      let config =
+        {
+          token: this.$store.state.tokenLogin
+        };
 
 
-      axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, {
-        headers:{
-          token: l,
-        },
-        Name: i.Name,
-        UnitPrice: i.UnitPrice,
-        Milliseconds: i.Milliseconds,
-        Composer: i.Composer,
-        AlbumId: i.AlbumId,
-        GenreId: i.GenreId,
-        MediaTypeId: i.MediaTypeId,
-        Bytes: i.Bytes,
+      // axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, data, config)
+      //     .then(response => {
+      //       console.log(response);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //     });
+
+      axios({
+        method: 'put',
+        url: 'http://51.91.76.245:8000/api/tracks/' + i.TrackId,
+        data: data,
+        headers: config
       })
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
 
       // axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, // i
       // {
