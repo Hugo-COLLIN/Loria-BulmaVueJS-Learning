@@ -115,9 +115,17 @@ export default {
   },
   data()
   {
-    return {openBugReport: false}
+    return {
+      /**
+       * "Bug report modal" display state
+       */
+      openBugReport: false
+    }
   },
   methods: {
+    /**
+     * Check if the user is logged in
+     */
     loginState() {
       let res = axios.get('http://51.91.76.245:8000/api/login', {
         headers: {
@@ -139,6 +147,10 @@ export default {
         this.$router.push({name: 'login'});
       }
     },
+
+    /**
+     * Logout the user by deleting the token
+     */
     logout()
     {
       console.log(this.$store.state.tokenLogin)
