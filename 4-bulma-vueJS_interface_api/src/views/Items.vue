@@ -1,6 +1,6 @@
 <template>
   <div class="items">
-    <h1 class="title">Items</h1>
+    <h1 class="title">Tracks</h1>
 
     <nav class="level">
       <div class="level-left">
@@ -91,6 +91,7 @@ export default {
   data() {
     return {
       items: [],
+      searchItems: [],
       allItems: [],
       item: {
         Name: "",
@@ -133,13 +134,15 @@ export default {
 
     search() {
       if (this.searchWord === '') {
-        this.items = this.allItems;
+        //this.items = this.allItems;
+        this.displayCutList();
         return;
       }
 
-      this.items = new Collect(this.allItems)
+      this.searchItems = new Collect(this.allItems)
           .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
+      this.displayCutSearchList();
     },
 
     addItem(i)
@@ -155,7 +158,7 @@ export default {
 
 
       const config = {
-          token: this.$store.state.tokenLogin
+          token: sessionStorage.getItem('tokenSession')
         };
       console.log(i)
       axios({
@@ -170,6 +173,7 @@ export default {
           .catch(error => {
             console.log(error);
             this.load();
+            // this.displayCutList();
             //this.errorMsg("Erreur lors de la modification de l'item");
           });
     },
@@ -185,7 +189,7 @@ export default {
       this.showNewModal = false;
 
       const config = {
-          token: this.$store.state.tokenLogin
+          token: sessionStorage.getItem('tokenSession')
         };
 
       axios({
@@ -227,7 +231,7 @@ export default {
       // console.log(item.TrackId)
       axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId, {
         headers:{
-          token: this.$store.state.tokenLogin
+          token: sessionStorage.getItem('tokenSession')
         }
       })
           .then(response => {
@@ -244,11 +248,25 @@ export default {
     {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
-      console.log(startItem)
+      // console.log(startItem)
       let i = 0;
       while (this.allItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
       {
         this.items[i] = this.allItems[startItem + i];
+        i++;
+      }
+      this.updateCountItems();
+      console.log(this.items)
+    },
+
+    displayCutSearchList()
+    {
+      this.items = [];
+      let startItem = this.$refs.pagination.startingItem();
+      let i = 0;
+      while (this.searchItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
+      {
+        this.items[i] = this.searchItems[startItem + i];
         i++;
       }
       this.updateCountItems();

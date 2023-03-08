@@ -129,7 +129,7 @@ export default {
     loginState() {
       let res = axios.get('http://51.91.76.245:8000/api/login', {
         headers: {
-          token: this.$store.state.tokenLogin
+          token: sessionStorage.getItem('tokenSession')
           // this.$cookies.get("tokenSession")
               //.get("tokenSession") //
         }
@@ -139,11 +139,12 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$store.state.tokenLogin = null;
+          // this.$store.state.tokenLogin = null;
+          sessionStorage.setItem('tokenSession', null);
           //this.$cookies.remove("tokenSession");
         });
 
-      if (this.$store.state.tokenLogin /*this.$cookies.get("tokenSession")*/ === null) {
+      if (sessionStorage.getItem('tokenSession') /*this.$store.state.tokenLogin*/ /*this.$cookies.get("tokenSession")*/ === null) {
         this.$router.push({name: 'login'});
       }
     },
@@ -153,14 +154,15 @@ export default {
      */
     logout()
     {
-      console.log(this.$store.state.tokenLogin)
+      console.log(sessionStorage.getItem('tokenSession'))
       axios.delete('http://51.91.76.245:8000/api/login', {
         headers: {
-          token: this.$store.state.tokenLogin
+          token: sessionStorage.getItem('tokenSession')
         }
       })
         .then(() => {
           this.$store.commit('setTokenLogin', null);
+          sessionStorage.setItem('tokenSession', null);
           //this.$cookies.remove('tokenSession');
           this.$router.push({name: 'login'});
         })
@@ -170,7 +172,8 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.tokenLogin)
+    // console.log(this.$store.state.tokenLogin)
+    console.log(sessionStorage.getItem('tokenSession'))
     this.loginState();
   }
 };
