@@ -178,6 +178,10 @@ export default {
       this.form.UnitPrice = "";
       this.form.Milliseconds = "";
       this.form.Composer = "";
+      this.form.AlbumId = 5;
+      this.form.MediaTypeId = 1;
+      this.form.GenreId = 1;
+      this.form.Bytes = 1111;
     },
 
     editForm(item)

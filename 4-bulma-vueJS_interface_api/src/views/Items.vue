@@ -172,65 +172,54 @@ export default {
     {
       this.items.push(i);
       this.showNewModal = false;
-    },
 
-    editItem(i)
-    {
-      for (let key in i) {
-        // console.log(key)
-        this.currentItem[key] = i[key];
-        // console.log(this.currentItem[key])
-      }
-      this.showNewModal = false;
-      console.log("C'est ici")
-      console.log(i)
-      console.log(i.TrackId)
-      //console.log(this.$store.state.tokenLogin)
-      let l = this.$store.state.tokenLogin;
-      console.log(l)
-      console.log("--------------------------------")
-      axios.get('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: this.$store.state.tokenLogin
-          // this.$cookies.get("tokenSession")
-          //.get("tokenSession") //
-        }
-      })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$store.state.tokenLogin = null;
-            //this.$cookies.remove("tokenSession");
-          });
-      console.log("--------------------------------")
+      // let data = {};
+      // for (let key in this.currentItem)
+      //   if (key !== "TrackId")
+      //     data[key] = i[key];
 
-      console.log(i.Name)
 
-      let data = {
-            Name: i.Name,
-            UnitPrice: i.UnitPrice,
-            Milliseconds: i.Milliseconds,
-            Composer: i.Composer,
-            AlbumId: i.AlbumId,
-            GenreId: i.GenreId,
-            MediaTypeId: i.MediaTypeId,
-            Bytes: i.Bytes,
-          };
-      let config =
-        {
+      const config = {
           token: this.$store.state.tokenLogin
         };
-
-
-      // axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, data, config)
+      console.log(i)
+      axios({
+        method: 'post',
+        url: 'http://51.91.76.245:8000/api/tracks',
+        data: i,
+        headers: config
+      })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+            this.load();
+            //this.errorMsg("Erreur lors de la modification de l'item");
+          });
+      // axios.post('http://51.91.76.245:8000/api/tracks/', i, config)
       //     .then(response => {
       //       console.log(response);
       //     })
       //     .catch(error => {
       //       console.log(error);
+      //       this.load();
       //     });
+    },
+
+    editItem(i)
+    {
+      let data = {};
+      for (let key in this.currentItem) {
+        this.currentItem[key] = i[key];
+        if (key !== "TrackId")
+          data[key] = i[key];
+      }
+      this.showNewModal = false;
+
+      const config = {
+          token: this.$store.state.tokenLogin
+        };
 
       axios({
         method: 'put',
@@ -243,32 +232,10 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          this.load();
+          //this.errorMsg("Erreur lors de la modification de l'item");
         });
 
-      // axios.put("http://51.91.76.245:8000/api/tracks/" + i.TrackId, // i
-      // {
-      //   headers:{
-      //     token: this.$store.state.tokenLogin
-      //   },
-      //   // headers: {
-      //   //   token: this.$store.state.tokenLogin //localStorage.getItem('token')
-      //   // },
-      //
-      //   Name: i.Name,
-      //   UnitPrice: i.UnitPrice,
-      //   Milliseconds: i.Milliseconds,
-      //   Composer: i.Composer,
-      //   AlbumId: i.AlbumId,
-      //   GenreId: i.GenreId,
-      //   MediaTypeId: i.MediaTypeId,
-      //   Bytes: i.Bytes,
-      // })
-      //     .then(response => {
-      //       console.log(response);
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
     },
 
     callNewItem()
