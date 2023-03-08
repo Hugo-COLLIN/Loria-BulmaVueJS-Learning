@@ -1,12 +1,12 @@
 <template>
   <div class="items">
-    <h1 class="title">Tracks</h1>
+    <h1 class="title">Items</h1>
 
     <nav class="level">
       <div class="level-left">
         <div class="level-item">
           <p class="subtitle is-5">
-            <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.allItems.length}} items
+            <strong>{{(this.pagination.currentPage - 1) * this.pagination.perPage + 1}} - {{(this.pagination.currentPage - 1) * this.pagination.perPage + this.pagination.perPage}}</strong> / {{this.allItems.length}} items
           </p>
         </div>
 
@@ -42,8 +42,6 @@
       </div>
     </nav>
 
-<!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Error, bad initialization-->
-
     <div class="columns is-multiline">
       <template v-for="(item, key) in items">
         <div class="column is-12-tablet is-6-desktop is-4-widescreen">
@@ -60,8 +58,7 @@
                   ${{item.UnitPrice}}
                 </p>
                 <div class="content is-small">
-                  <!-- convert milliseconds to minutes and second -->
-                  {{Math.floor(item.Milliseconds / 60000)}} min {{Math.floor((item.Milliseconds % 60000) / 1000)}} sec
+                  {{(item.Milliseconds / 60000).toFixed(2)}} minutes
                   <br>
                   Compositeur(s): {{item.Composer}}
                   <br>
@@ -74,25 +71,54 @@
           </article>
         </div>
       </template>
+
     </div>
-    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>
+
+    <nav class="pagination is-centered">
+      <ul class="pagination-list">
+        <li>
+          <a class="pagination-link" @click="displaySpecificCutList(1)">&#60;&#60;</a>
+        </li>
+        <li>
+          <a class="pagination-previous" @click="paginPrev">Previous page</a>
+        </li>
+        <li>
+          <span class="pagination-ellipsis"></span>
+        </li>
+        <li v-if="this.pagination.currentPage > 1">
+          <span class="pagination-ellipsis">&hellip;</span>
+          <a class="pagination-link" @click="paginPrev">{{this.pagination.currentPage - 1}}</a>
+        </li>
+        <li>
+          <a class="pagination-link is-current">{{this.pagination.currentPage}}</a>
+        </li>
+        <li v-if="this.pagination.currentPage < this.pagination.totalPages">
+          <a class="pagination-link" @click="paginNext">{{this.pagination.currentPage + 1}}</a>
+          <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+          <a class="pagination-next" @click="paginNext">Next page</a>
+        </li>
+        <li>
+          <a class="pagination-link" @click="displaySpecificCutList(this.pagination.totalPages)">&#62;&#62;</a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
 
 <script>
-import axios from "axios";
 import Collect from 'collect.js';
 import ModalItem from "@/components/ModalItem.vue";
-import Pagination from "@/components/Pagination.vue";
+import axios from "axios";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination},
+  components: {ModalItem},
   data() {
     return {
       items: [],
-      searchItems: [],
       allItems: [],
       item: {
         Name: "",
@@ -109,16 +135,14 @@ export default {
       showEditModal: false,
       searchWord: "",
       currentItem: null,
-      initItem: 0,
-      lastItem: 0,
 
-      // pagination: {
-      //   currentPage: 1,
-      //   perPage: 5,
-      //   totalItems: 0,
-      //   totalPages: 0,
-      //   startItem: 0,
-      // },TODO
+      pagination: {
+        currentPage: 1,
+        perPage: 5,
+        totalItems: 0,
+        totalPages: 0,
+        startItem: 0,
+      },
     };
   },
 
@@ -135,21 +159,18 @@ export default {
 
     search() {
       if (this.searchWord === '') {
-        //this.items = this.allItems;
-        this.displayCutList();
+        this.items = this.allItems;
         return;
       }
 
-      this.searchItems = new Collect(this.allItems)
+      this.items = new Collect(this.allItems)
           .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
-      this.displayCutSearchList();
     },
 
     addItem(i)
     {
       this.items.push(i);
-      this.allItems.push(i);
       this.showNewModal = false;
 
       // let data = {};
@@ -159,7 +180,7 @@ export default {
 
 
       const config = {
-          token: sessionStorage.getItem('tokenSession')
+          token: this.$store.state.tokenLogin
         };
       console.log(i)
       axios({
@@ -174,9 +195,16 @@ export default {
           .catch(error => {
             console.log(error);
             this.load();
-            // this.displayCutList();
             //this.errorMsg("Erreur lors de la modification de l'item");
           });
+      // axios.post('http://51.91.76.245:8000/api/tracks/', i, config)
+      //     .then(response => {
+      //       console.log(response);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //       this.load();
+      //     });
     },
 
     editItem(i)
@@ -190,7 +218,7 @@ export default {
       this.showNewModal = false;
 
       const config = {
-          token: sessionStorage.getItem('tokenSession')
+          token: this.$store.state.tokenLogin
         };
 
       axios({
@@ -232,7 +260,7 @@ export default {
       // console.log(item.TrackId)
       axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId, {
         headers:{
-          token: sessionStorage.getItem('tokenSession')
+          token: this.$store.state.tokenLogin
         }
       })
           .then(response => {
@@ -245,33 +273,40 @@ export default {
 
     },
 
+    paginPrev()
+    {
+      if (this.pagination.currentPage > 1)
+      {
+        this.pagination.currentPage--;
+        this.displayCutList();
+      }
+    },
+
+    paginNext()
+    {
+      if (this.pagination.currentPage < this.allItems.length / this.pagination.perPage)
+      {
+        this.pagination.currentPage++;
+        this.displayCutList();
+      }
+    },
+
     displayCutList()
     {
       this.items = [];
-      let startItem = this.$refs.pagination.startingItem();
-      // console.log(startItem)
+      this.pagination.startItem = (this.pagination.currentPage - 1) * this.pagination.perPage;
       let i = 0;
-      while (this.allItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
+      while (this.allItems[this.pagination.startItem + i] !== undefined && i < this.pagination.perPage)
       {
-        this.items[i] = this.allItems[startItem + i];
+        this.items[i] = this.allItems[this.pagination.startItem + i];
         i++;
       }
-      this.updateCountItems();
-      console.log(this.items)
     },
 
-    displayCutSearchList()
+    displaySpecificCutList(page)
     {
-      this.items = [];
-      let startItem = this.$refs.pagination.startingItem();
-      let i = 0;
-      while (this.searchItems[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
-      {
-        this.items[i] = this.searchItems[startItem + i];
-        i++;
-      }
-      this.updateCountItems();
-      console.log(this.items)
+      this.pagination.currentPage = page;
+      this.displayCutList();
     },
 
     load()
@@ -280,23 +315,15 @@ export default {
           .then(response => {
             this.allItems = response.data;
             this.displayCutList();
-            this.$refs.pagination.setTotalItems(this.allItems.length);
-            this.$refs.pagination.setTotalPages();
-            this.updateCountItems();
-            console.log(this.$refs.pagination.totalPages)
-            console.log(this.$refs.pagination.totalItems)
+            this.pagination.totalItems = this.allItems.length;
+            this.pagination.totalPages = Math.ceil(this.pagination.totalItems / this.pagination.perPage);
+            // console.log(this.pagination.totalPages)
+            // console.log(this.pagination.totalItems)
           })
           .catch(error => {
             console.log(error);
           })
-    },
-
-    updateCountItems()
-    {
-      this.initItem = this.$refs.pagination.startingItem() + 1;
-      this.lastItem = this.items.length + this.initItem - 1;
-      // this.
-    },
+    }
   },
   mounted() {
     this.load();
