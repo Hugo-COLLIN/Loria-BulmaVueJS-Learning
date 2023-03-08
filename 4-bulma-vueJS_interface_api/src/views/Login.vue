@@ -94,14 +94,6 @@ export default {
           .catch(error => {
             console.log(error);
           });
-
-      // if (this.form.email !== "user@bulma.com")
-      //   return this.error.email = true;
-      // if(this.form.password !== "password")
-      //   return this.error.password = true;
-
-      // this.resetErrors();
-      // this.$router.push({name: 'dashboard'});
     },
     resetErrors() {
       this.error.email = false;
