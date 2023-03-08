@@ -58,7 +58,8 @@
                   ${{item.UnitPrice}}
                 </p>
                 <div class="content is-small">
-                  {{(item.Milliseconds / 60000).toFixed(2)}} minutes
+                  <!-- convert milliseconds to minutes and second -->
+                  {{Math.floor(item.Milliseconds / 60000)}} min {{Math.floor((item.Milliseconds % 60000) / 1000)}} sec
                   <br>
                   Compositeur(s): {{item.Composer}}
                   <br>
