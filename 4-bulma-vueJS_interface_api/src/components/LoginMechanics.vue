@@ -16,12 +16,10 @@ export default {
       axios.get('http://51.91.76.245:8000/api/login', {
         headers: {
           token: sessionStorage.getItem('tokenSession')
-          // this.$cookies.get("tokenSession")
-          //.get("tokenSession") //
         }
       })
           .then((response) => {
-            console.log(response);
+            // console.log(response);
           })
           .catch((error) => {
             console.log(error);
@@ -46,9 +44,7 @@ export default {
         }
       })
           .then(() => {
-            // this.$store.commit('setTokenLogin', null);
             sessionStorage.setItem('tokenSession', null);
-            //this.$cookies.remove('tokenSession');
             this.$router.push({name: 'login'});
           })
           .catch((error) => {

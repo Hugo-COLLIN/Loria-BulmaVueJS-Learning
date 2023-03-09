@@ -33,12 +33,12 @@
                   <p class="help is-danger" v-if="error.password">Oops... wrong password!</p>
                 </div>
 
-                <div class="field">
-                  <label class="checkbox">
-                    <input type="checkbox">
-                    Remember me
-                  </label>
-                </div>
+<!--                <div class="field">-->
+<!--                  <label class="checkbox">-->
+<!--                    <input type="checkbox">-->
+<!--                    Remember me-->
+<!--                  </label>-->
+<!--                </div>-->
 
                 <div class="field">
                   <button class="button is-success" @click.prevent="tryLogin">
