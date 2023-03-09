@@ -13,9 +13,12 @@ exports.config = {
   helpers: {
     Playwright: {
       url: 'http://localhost:8080',
-      show: false,
+      show: true,
       browser: 'chromium',
       video: {
+        enabled: true,
+      },
+      subtitle: {
         enabled: true,
       }
     }
