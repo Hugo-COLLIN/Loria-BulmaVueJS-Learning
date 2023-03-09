@@ -26,9 +26,10 @@ Scenario('search tracks',  ({ I }) => {
     I.click("Items");
     I.waitForText("items");
     I.fillField("input[placeholder='Item name, Composer…']", 'Concerto for V');
+    I.pressKey(['Shift', 'Home']);
     // search for a track
     I.waitForText("Concerto for Violin", 5);
-    I.fillField("input[placeholder='Item name, Composer…']", 'Mozart');
+    I.pressKey(['Shift', 'Home']);
     // search for a track
     I.waitForText("Concerto for", 5);
 
