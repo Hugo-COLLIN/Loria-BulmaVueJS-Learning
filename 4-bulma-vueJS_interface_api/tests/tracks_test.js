@@ -2,10 +2,14 @@ Feature('tracks');
 
 function login(I) {
     I.amOnPage('/login');
-    I.fillField("input[type='email']", 'andrew@chinookcorp.com');
-    I.fillField("input[type='password']", 'admin');
-    I.click('Login');
-    I.see("Dashboard");
+    // check if we are on the login page
+    if (I.grabCurrentUrl() === 'http://localhost:8080/login') {
+        I.see("Login");
+        I.fillField("input[type='email']", 'andrew@chinookcorp.com');
+        I.fillField("input[type='password']", 'admin');
+        I.click('Login');
+        I.see("Dashboard");
+    }
 }
 
 Scenario('show tracks',  ({ I }) => {
