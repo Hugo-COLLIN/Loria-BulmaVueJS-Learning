@@ -13,18 +13,27 @@ exports.config = {
   helpers: {
     Playwright: {
       url: 'http://localhost:8080',
-      show: false,
+      show: true,
       browser: 'webkit',
       video: {
         enabled: true,
       },
       subtitle: {
         enabled: true,
-      }
+      },
     }
   },
   include: {
     I: './steps_file.js'
   },
-  name: 'tests'
+  name: 'tests',
+  plugins: {
+    subtitles: {
+      enabled: true
+    },
+    autoDelay: {
+      enabled: true,
+      delayAfter: 3000
+    },
+  }
 }
