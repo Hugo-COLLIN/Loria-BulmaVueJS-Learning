@@ -43,7 +43,10 @@ const routes = [
       requiresAuth: true, // this route requires auth
     },
     component: () => import(/* webpackChunkName: "orders" */ '../views/Orders.vue')
-  }
+  },
+  { path: '/:catchAll(.*)',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '../views/404.vue') },
 ]
 
 const router = createRouter({
@@ -53,26 +56,21 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isCorrectToken =  LoginMechanics.methods.loginStateRouter(); //if true router login
-  console.log('isCorrectToken: ' + isCorrectToken)
-  // if (!isCorrectToken) {
-  //   next({ name: 'login' })
-  // }
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  LoginMechanics.methods.loginStateRouter();
+  if (to.matched.some(record => record.meta.requiresAuth))
+  {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    console.log('tokenSession: ' + sessionStorage.getItem('tokenSession'));
-    console.log(sessionStorage.getItem('tokenSession') === "null");
-    // LoginMechanics.methods.loginState();
-    if ((sessionStorage.getItem('tokenSession') === null /*|| !isCorrectToken*/) && to.name !== 'login')
+    if ((sessionStorage.getItem('tokenSession') === null) && to.name !== 'login')
       next({ name: 'login' })
     else
       next() // go to wherever I'm going
-  } else if (to.name === 'login' && sessionStorage.getItem('tokenSession') !== null) {
-    next('/') // does not require auth, make sure to always call next()!
+  }
+  else if (to.name === 'login' && sessionStorage.getItem('tokenSession') !== null) {
+    next('/') // already logged in, redirect to dashboard
   }
   else {
-    next() // does not require auth, make sure to always call next()!
+    next() // does not require auth
   }
   console.log(sessionStorage.getItem('tokenSession'));
 });

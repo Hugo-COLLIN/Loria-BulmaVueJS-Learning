@@ -1,5 +1,5 @@
 <template>
-  <template v-if="$route.name !== 'login'">
+  <template v-if="$route.name !== 'login' && $route.name !== '404'">
     <LoginMechanics ref="loginMechanics"></LoginMechanics>
     <nav class="navbar has-shadow">
       <div class="navbar-brand">
