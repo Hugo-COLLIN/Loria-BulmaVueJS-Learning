@@ -12,9 +12,12 @@ exports.config = {
   output: './output',
   helpers: {
     Playwright: {
-      url: 'http://localhost:8082/',
-      show: true,
-      browser: 'chromium'
+      url: 'http://localhost:8080',
+      show: false,
+      browser: 'chromium',
+      video: {
+        enabled: true,
+      }
     }
   },
   include: {
