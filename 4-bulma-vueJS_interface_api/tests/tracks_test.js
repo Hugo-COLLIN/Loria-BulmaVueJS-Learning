@@ -3,13 +3,12 @@ Feature('tracks');
 function login(I) {
     I.amOnPage('/login');
     // check if we are on the login page
-    if (I.grabCurrentUrl() === 'http://localhost:8080/login') {
-        I.see("Login");
-        I.fillField("input[type='email']", 'andrew@chinookcorp.com');
-        I.fillField("input[type='password']", 'admin');
-        I.click('Login');
-        I.see("Dashboard");
-    }
+    I.see("Login");
+    I.fillField("input[type='email']", 'andrew@chinookcorp.com');
+    I.fillField("input[type='password']", 'admin');
+    I.click('Login');
+    I.see("Dashboard");
+
 }
 
 Scenario('show tracks',  ({ I }) => {
@@ -30,10 +29,9 @@ Scenario('search tracks',  ({ I }) => {
     I.click("Items");
     I.waitForText("items");
     I.fillField("input[placeholder='Item name, Composer…']", 'Concerto for V');
-    I.pressKey(['Shift', 'Home']);
     // search for a track
     I.waitForText("Concerto for Violin", 5);
-    I.pressKey(['Shift', 'Home']);
+    I.fillField("input[placeholder='Item name, Composer…']", 'Mozart');
     // search for a track
     I.waitForText("Concerto for", 5);
 

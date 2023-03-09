@@ -13,6 +13,11 @@ export default {
      * Log in the user
      */
     login(email, password) {
+      // TODO : Mettre un message d'erreur correcte
+      if (!email || !password){
+        alert("Please enter email and password");
+        return
+      }
       axios.post('http://51.91.76.245:8000/api/login', {
         username: email,
         password: password,
@@ -22,7 +27,11 @@ export default {
             this.$router.push({name: 'dashboard'});
           })
           .catch(error => {
-            console.log(error);
+            // TODO : Same as above
+            if (error.response.status === 401)
+              alert("Please enter a valid password and email");
+            else
+              console.log(error);
           });
     },
     /**

@@ -159,9 +159,11 @@ export default {
         headers: config
       })
           .then(response => {
+            i.TrackId = response.data.TrackId;
             // console.log(response);
           })
           .catch(error => {
+            alert("Please reload the page")
             console.log(error);
             this.load();
             // this.displayCutList();
@@ -191,8 +193,10 @@ export default {
       })
         .then(response => {
           console.log(response);
+          this.search();
         })
         .catch(error => {
+          alert("Please reload the page")
           console.log(error);
           this.load();
           //this.errorMsg("Erreur lors de la modification de l'item");
@@ -227,8 +231,10 @@ export default {
       })
           .then(response => {
             console.log(response);
+            this.search();
           })
           .catch(error => {
+            alert("Please reload the page")
             console.log(error);
             this.load();
           });
