@@ -133,7 +133,7 @@ export default {
       // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
       this.allItems = new Collect(this.allItems).sortBy(filter).all();
       this.searchItems = new Collect(this.searchItems).sortBy(filter).all();
-      // this.updateList();
+      this.updateList();
     },
 
     search() {
@@ -243,7 +243,7 @@ export default {
 
     },
 
-    displayCutList(list)
+    displayCutList(list) // A modif pour le filtre
     {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
