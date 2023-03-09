@@ -130,7 +130,7 @@ export default {
   mounted() {
     // console.log(this.$store.state.tokenLogin)
     // console.log(sessionStorage.getItem('tokenSession'))
-    this.$refs.loginMechanics.loginState();
+    // this.$refs.loginMechanics.loginState();
   }
 };
 </script>

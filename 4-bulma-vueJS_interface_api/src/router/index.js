@@ -53,6 +53,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  LoginMechanics.methods.loginState();
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
@@ -63,8 +64,6 @@ router.beforeEach((to, from, next) => {
       next({ name: 'login' })
     else
       next() // go to wherever I'm going
-  // } else if (/*store.state.tokenLogin*/ sessionStorage.getItem('tokenSession') !== null && to.name === 'login') {
-  //   next({ name: '' })
   } else if (to.name === 'login' && sessionStorage.getItem('tokenSession') !== "null") {
     next('/') // does not require auth, make sure to always call next()!
   }

@@ -19,7 +19,7 @@ export default {
         }
       })
           .then((response) => {
-            // console.log(response);
+            console.log(response);
           })
           .catch((error) => {
             console.log(error);
@@ -46,6 +46,7 @@ export default {
           .then(() => {
             sessionStorage.setItem('tokenSession', null);
             this.$router.push({name: 'login'});
+            //message = "Logout successfully";
           })
           .catch((error) => {
             console.log(error);
