@@ -85,6 +85,18 @@ Scenario('update track',  ({ I }) => {
     I.click("Update item");
     I.fillField("input[placeholder='Item name, Composer…']", 'testUpdate');
     I.waitForText("testCompoUpdate", 5,".media-content");
+    // bulk update
+    I.click("Edit");
+    I.fillField("input[name='title']", 'testUpdate');
+    I.fillField("input[name='price']", '1');
+    I.fillField("input[name='duration']", '1');
+    I.fillField("input[name='composer']", 'testCompo2');
+    I.click("Update item");
+    I.fillField("input[placeholder='Item name, Composer…']", 'testUpdate');
+    I.waitForText("testUpdate", 5,".media-content");
+    I.see("$1");
+    I.see("1 min");
+    I.see("testCompo2");
 });
 
 Scenario('delete old track',  ({ I }) => {
@@ -97,6 +109,7 @@ Scenario('delete old track',  ({ I }) => {
     I.fillField("input[placeholder='Item name, Composer…']", 'testUpdate');
     I.waitForText("testUpdate", 5,".media-content");
     I.click("Delete");
+    I.wait(2);
     I.dontSee("testUpdate");
 });
 
