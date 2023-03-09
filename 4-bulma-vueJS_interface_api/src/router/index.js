@@ -53,7 +53,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  /*const isCorrectToken = */ LoginMechanics.methods.loginStateRouter(); //if true router login
+  const isCorrectToken =  LoginMechanics.methods.loginStateRouter(); //if true router login
+  console.log('isCorrectToken: ' + isCorrectToken)
+  // if (!isCorrectToken) {
+  //   next({ name: 'login' })
+  // }
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
@@ -70,7 +74,7 @@ router.beforeEach((to, from, next) => {
   else {
     next() // does not require auth, make sure to always call next()!
   }
-  console.log(sessionStorage.getItem('tokenSession'))
+  console.log(sessionStorage.getItem('tokenSession'));
 });
 
 export default router
