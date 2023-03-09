@@ -72,17 +72,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (sessionStorage.getItem('tokenSession') === "null")
-//       next({ name: 'login' })
-//     else
-//       next() // go to wherever I'm going
-//   } else if (sessionStorage.getItem('tokenSession') !== null && to.name === 'login') {
-//     next(false) // do not redirect if already on login page
-//   } else {
-//     next() // does not require auth, make sure to always call next()!
-//   }
-// });
-
 export default router
