@@ -162,6 +162,7 @@ export default {
             // console.log(response);
           })
           .catch(error => {
+            alert("Please reload the page")
             console.log(error);
             this.load();
             // this.displayCutList();
@@ -193,6 +194,7 @@ export default {
           console.log(response);
         })
         .catch(error => {
+          alert("Please reload the page")
           console.log(error);
           this.load();
           //this.errorMsg("Erreur lors de la modification de l'item");
@@ -229,6 +231,7 @@ export default {
             console.log(response);
           })
           .catch(error => {
+            alert("Please reload the page")
             console.log(error);
             this.load();
           });
