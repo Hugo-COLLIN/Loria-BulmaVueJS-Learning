@@ -51,6 +51,12 @@ export default {
       return res;
     },
 
+    // loginState()
+    // {
+    //   this.loginStateRouter();
+    //   this.$router.push({name: 'login'});
+    // },
+
     /**
      * Logout the user by deleting the token
      */

@@ -128,7 +128,7 @@ export default {
 
   },
   mounted() {
-    this.$refs.loginMechanics.loginStateRouter();
+    // this.$refs.loginMechanics.loginState();
   }
 };
 </script>
