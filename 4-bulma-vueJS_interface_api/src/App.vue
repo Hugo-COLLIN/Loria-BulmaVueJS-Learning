@@ -1,6 +1,6 @@
 <template>
-  <LoginMechanics ref="loginMechanics"></LoginMechanics>
   <template v-if="$route.name !== 'login'">
+    <LoginMechanics ref="loginMechanics"></LoginMechanics>
     <nav class="navbar has-shadow">
       <div class="navbar-brand">
         <a class="navbar-item">

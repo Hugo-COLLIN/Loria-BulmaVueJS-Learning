@@ -53,14 +53,17 @@
       </div>
     </section>
   </div>
+  <LoginMechanics ref="logup"></LoginMechanics>
 </template>
 
 <script>
 import axios from "axios";
+import LoginMechanics from "@/components/LoginMechanics.vue";
 
 
 export default {
   name: 'Login',
+  components: {LoginMechanics},
   data() {
     return {
       form: {
@@ -76,27 +79,8 @@ export default {
   methods: {
     tryLogin() {
       this.resetErrors();
-
-      console.log(this.form.email);
-      console.log(this.form.password)
-
-      axios.post('http://51.91.76.245:8000/api/login', {
-        username: this.form.email,
-        password: this.form.password,
-      })
-          .then(response => {
-            console.log(response.data);
-            //this.$cookies.set('tokenSession', response.data, '1D');
-            this.$store.commit('setTokenLogin', response.data);
-            sessionStorage.setItem('tokenSession', response.data);
-
-            //console.log(this.$store.state.tokenLogin)
-            this.$router.push({name: 'dashboard'});
-            this.resetErrors();
-          })
-          .catch(error => {
-            console.log(error);
-          });
+      this.$refs.logup.login(this.form.email, this.form.password);
+      this.resetErrors();
     },
     resetErrors() {
       this.error.email = false;

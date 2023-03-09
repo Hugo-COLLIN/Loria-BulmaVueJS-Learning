@@ -13,6 +13,27 @@ export default {
   },
   methods: {
     /**
+     * Login the user
+     */
+    login(email, password) {
+      axios.post('http://51.91.76.245:8000/api/login', {
+        username: email,
+        password: password,
+      })
+          .then(response => {
+            // console.log(response.data);
+            //this.$cookies.set('tokenSession', response.data, '1D');
+            // this.$store.commit('setTokenLogin', response.data);
+            sessionStorage.setItem('tokenSession', response.data);
+
+            //console.log(this.$store.state.tokenLogin)
+            this.$router.push({name: 'dashboard'});
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+    /**
      * Check if the user is logged in
      */
     loginState() {
