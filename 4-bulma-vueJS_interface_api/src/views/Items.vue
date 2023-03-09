@@ -159,6 +159,7 @@ export default {
         headers: config
       })
           .then(response => {
+            i.TrackId = response.data.TrackId;
             // console.log(response);
           })
           .catch(error => {
