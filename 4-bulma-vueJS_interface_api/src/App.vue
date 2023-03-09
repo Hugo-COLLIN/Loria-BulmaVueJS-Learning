@@ -1,4 +1,5 @@
 <template>
+  <LoginMechanics ref="loginMechanics"></LoginMechanics>
   <template v-if="$route.name !== 'login'">
     <nav class="navbar has-shadow">
       <div class="navbar-brand">
@@ -41,7 +42,7 @@
                 </div>
               </a>
 
-              <a class="navbar-item" @click="logout">
+              <a class="navbar-item" @click="this.$refs.loginMechanics.logout">
                 <div>
                 <span class="icon is-small">
                    <i class="fa fa-sign-out"></i>
@@ -106,12 +107,13 @@
 
 <script>
 import BugReport from "@/components/BugReport.vue";
+import LoginMechanics from "@/components/LoginMechanics.vue";
 import axios from "axios";
 
 export default {
   name: "App",
   components: {
-    BugReport
+    BugReport, LoginMechanics
   },
   data()
   {
@@ -123,58 +125,12 @@ export default {
     }
   },
   methods: {
-    /**
-     * Check if the user is logged in
-     */
-    loginState() {
-      axios.get('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-          // this.$cookies.get("tokenSession")
-              //.get("tokenSession") //
-        }
-      })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-          // this.$store.state.tokenLogin = null;
-          sessionStorage.setItem('tokenSession', null);
-          //this.$cookies.remove("tokenSession");
-        });
 
-      if (sessionStorage.getItem('tokenSession') /*this.$store.state.tokenLogin*/ /*this.$cookies.get("tokenSession")*/ === null) {
-        this.$router.push({name: 'login'});
-      }
-    },
-
-    /**
-     * Logout the user by deleting the token
-     */
-    logout()
-    {
-      console.log(sessionStorage.getItem('tokenSession'))
-      axios.delete('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-        }
-      })
-        .then(() => {
-          this.$store.commit('setTokenLogin', null);
-          sessionStorage.setItem('tokenSession', null);
-          //this.$cookies.remove('tokenSession');
-          this.$router.push({name: 'login'});
-        })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
   },
   mounted() {
     // console.log(this.$store.state.tokenLogin)
-    console.log(sessionStorage.getItem('tokenSession'))
-    this.loginState();
+    // console.log(sessionStorage.getItem('tokenSession'))
+    this.$refs.loginMechanics.loginState();
   }
 };
 </script>
