@@ -28,8 +28,10 @@ export default {
     /**
      * Check if the user is logged in
      */
-    loginState() {
-      console.log(sessionStorage.getItem('tokenSession'));
+    loginStateRouter()
+    {
+      let res = false;
+      // console.log(sessionStorage.getItem('tokenSession'));
       axios.get('http://51.91.76.245:8000/api/login', {
         headers: {
           token: sessionStorage.getItem('tokenSession')
@@ -37,16 +39,16 @@ export default {
       })
           .then((response) => {
             console.log(response);
+            res = true;
           })
           .catch((error) => {
             console.log(error);
-            this.logout();
+            sessionStorage.removeItem('tokenSession');
+            res = false;
           });
-
+      // console.log("Res : " + res)
       console.log(sessionStorage.getItem('tokenSession'));
-      if (sessionStorage.getItem('tokenSession') /*this.$store.state.tokenLogin*/ /*this.$cookies.get("tokenSession")*/ === null) {
-        this.$router.push({name: 'login'});
-      }
+      return res;
     },
 
     /**
@@ -61,8 +63,7 @@ export default {
         }
       })
           .then(() => {
-            sessionStorage.removeItem('tokenSession');
-            this.$router.push({name: 'login'});
+            this.loginRequired();
             //message = "Loggged out successfully";
           })
           .catch((error) => {
@@ -70,24 +71,12 @@ export default {
           });
     },
 
-
-    loginStateRouter() {
-      console.log(sessionStorage.getItem('tokenSession'));
-      axios.get('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-        }
-      })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.logoutRouter();
-          });
-
-      console.log(sessionStorage.getItem('tokenSession'));
+    loginRequired()
+    {
+      sessionStorage.removeItem('tokenSession');
+      this.$router.push({name: 'login'});
     },
+
     logoutRouter()
     {
       console.log(sessionStorage.getItem('tokenSession'))
