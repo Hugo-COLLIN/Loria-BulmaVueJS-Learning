@@ -55,20 +55,13 @@ export default {
               console.log(error);
               sessionStorage.removeItem('tokenSession');
               router.push({name: 'login'});
+              // alert("Disconnected");
               res = false;
             });
-        // console.log("Res : " + res)
-        console.log(sessionStorage.getItem('tokenSession'));
       }
 
       return res;
     },
-
-    // loginState()
-    // {
-    //   this.loginStateRouter();
-    //   this.$router.push({name: 'login'});
-    // },
 
     /**
      * Logout the user by deleting the token
@@ -95,24 +88,6 @@ export default {
     {
       sessionStorage.removeItem('tokenSession');
       this.$router.push({name: 'login'});
-    },
-
-    logoutRouter()
-    {
-      console.log(sessionStorage.getItem('tokenSession'))
-      axios.delete('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-        }
-      })
-          .then(() => {
-            sessionStorage.removeItem('tokenSession');
-            // this.$router.push({name: 'login'});
-            //message = "Logout successfully";
-          })
-          .catch((error) => {
-            console.log(error);
-          });
     },
   }
 }
