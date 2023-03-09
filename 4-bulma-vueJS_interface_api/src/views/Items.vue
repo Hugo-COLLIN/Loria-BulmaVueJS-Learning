@@ -192,6 +192,7 @@ export default {
       })
         .then(response => {
           console.log(response);
+          this.search();
         })
         .catch(error => {
           alert("Please reload the page")
@@ -229,6 +230,7 @@ export default {
       })
           .then(response => {
             console.log(response);
+            this.search();
           })
           .catch(error => {
             alert("Please reload the page")
