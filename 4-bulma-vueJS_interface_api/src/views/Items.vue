@@ -137,7 +137,7 @@ export default {
     search() {
       if (this.searchWord !== '')
         this.searchItems = new Collect(this.allItems)
-          .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()) || (!item.Composer?'':item.Composer).toLowerCase().includes(this.searchWord.toLowerCase()))
+          .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()) || (!item.Composer ? '' : item.Composer).toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
       this.updateList();
     },
