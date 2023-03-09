@@ -1,5 +1,5 @@
 <template>
-  <template v-if="$route.name !== 'login' && $route.name !== '404'">
+  <template v-if="$route.name !== 'login'">
     <LoginMechanics ref="loginMechanics"></LoginMechanics>
     <nav class="navbar has-shadow">
       <div class="navbar-brand">
@@ -59,7 +59,7 @@
 
     <section class="section">
       <div class="columns">
-        <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+        <div class="column is-4-tablet is-3-desktop is-2-widescreen" v-if="$route.name !== '404'">
           <aside class="menu">
             <p class="menu-label">Menu</p>
             <ul class="menu-list">
@@ -143,7 +143,7 @@ export default {
 }
 
 nav {
-  padding: 30px;
+  //padding: 30px;
 
   a {
     font-weight: bold;
