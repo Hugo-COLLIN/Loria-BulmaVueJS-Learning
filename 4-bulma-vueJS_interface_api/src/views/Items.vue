@@ -9,11 +9,10 @@
             <p class="subtitle is-5">
               <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
             </p>
+            <p class="level-item ml-2">
+              <button class="button is-success" @click="callNewItem">New</button>
+            </p>
           </div>
-
-          <p class="level-item">
-            <button class="button is-success" @click="callNewItem">New</button>
-          </p>
 
           <div class="level-item">
             <div class="field has-addons">
