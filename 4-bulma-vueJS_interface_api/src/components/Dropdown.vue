@@ -1,5 +1,5 @@
 <template>
-  <div class="level-item">
+  <div class="level-item mr-2">
     {{ this.label }}
   </div>
   <div class="level-item">

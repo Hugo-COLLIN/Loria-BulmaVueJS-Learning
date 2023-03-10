@@ -1,35 +1,42 @@
 <template>
   <div class="items">
-    <h1 class="title">Tracks</h1>
+    <h1 class="title is-center">Tracks</h1>
 
-    <nav class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <p class="subtitle is-5">
-            <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
+    <nav>
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <p class="subtitle is-5">
+              <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
+            </p>
+          </div>
+
+          <p class="level-item">
+            <button class="button is-success" @click="callNewItem">New</button>
           </p>
-        </div>
 
-        <p class="level-item">
-          <button class="button is-success" @click="callNewItem">New</button>
-        </p>
-
-        <div class="level-item is-hidden-tablet-only">
-          <div class="field has-addons">
-            <p class="control">
-              <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">
-            </p>
-            <p class="control">
-              <button class="button" @click="search">Search</button>
-            </p>
+          <div class="level-item">
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">
+              </p>
+              <p class="control">
+                <button class="button" @click="search">Search</button>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="level-right">
-        <Dropdown ref="sortList" @update="sortItems"></Dropdown>
-        <Dropdown ref="orderList" @update="orderItems"></Dropdown>
+      <div class="level">
+        <div class="level-right">
+          <div class="level-item">
+            <Dropdown ref="sortList" @update="sortItems"></Dropdown>
+            <Dropdown ref="orderList" @update="orderItems"></Dropdown>
+            <div></div>
+          </div>
+        </div>
       </div>
+      <div></div>
     </nav>
 
 <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
