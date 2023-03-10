@@ -212,9 +212,7 @@ export default {
         headers: config
       })
         .then(response => {
-          // console.log(response);
           this.updateList();
-          //this.search();
         })
         .catch(error => {
           alert("Please reload the page")
@@ -243,17 +241,13 @@ export default {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
       this.displayCutAllList();
-      // console.log(item)
-      // console.log(item.TrackId)
       axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId, {
         headers:{
           token: sessionStorage.getItem('tokenSession')
         }
       })
           .then(response => {
-            // console.log(response);
             this.updateList();
-            //this.search();
           })
           .catch(error => {
             alert("Please reload the page")
@@ -275,7 +269,6 @@ export default {
         i++;
       }
       this.updateCountItems();
-      // console.log(this.items)
     },
 
     displayCutAllList()
@@ -335,7 +328,7 @@ export default {
     },
 
     setSearch() {
-      this.$refs.search.setSearchAttributes("Name", "Composer");
+      this.$refs.search.init(["Name", "Composer"], "Search");
       // this.$refs.search.create("Search");
     },
   },

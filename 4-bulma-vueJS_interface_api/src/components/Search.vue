@@ -4,7 +4,7 @@
       <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="emitSearch">
     </p>
     <p class="control">
-      <button class="button" @click="executeSearch">Search</button>
+      <button class="button" @click="executeSearch">{{ this.label }}</button>
     </p>
   </div>
 </template>
@@ -20,7 +20,8 @@ export default {
     return {
       searchWord: '',
       searchList: [],
-      searchAttributes: ["Name", "Composer"]
+      searchAttributes: [],
+      label: '',
     }
   },
   methods: {
@@ -41,8 +42,9 @@ export default {
             .all();
       return list;
     },
-    setSearchAttributes(attributes) {
+    init(attributes, label) {
       this.searchAttributes = attributes;
+      this.label = label;
     },
   }
 }
