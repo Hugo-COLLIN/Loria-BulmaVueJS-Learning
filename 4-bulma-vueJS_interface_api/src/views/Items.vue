@@ -147,8 +147,8 @@ export default {
       this.sortItems(this.$refs.sortList.selected);
     },
 
-    search(word) {
-      this.searchItems = this.$refs.search.executeSearch(word, this.allItems);
+    search() {
+      this.searchItems = this.$refs.search.executeSearch(this.allItems);
       console.log(this.searchItems)
       this.$refs.pagination.setPage(1);
       this.updateList();
@@ -212,8 +212,9 @@ export default {
         headers: config
       })
         .then(response => {
-          console.log(response);
-          this.search();
+          // console.log(response);
+          this.updateList();
+          //this.search();
         })
         .catch(error => {
           alert("Please reload the page")
@@ -250,8 +251,9 @@ export default {
         }
       })
           .then(response => {
-            console.log(response);
-            this.search();
+            // console.log(response);
+            this.updateList();
+            //this.search();
           })
           .catch(error => {
             alert("Please reload the page")
