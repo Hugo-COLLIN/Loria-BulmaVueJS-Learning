@@ -13,8 +13,8 @@
 
 <script>
 export default {
-  name: "FilterDropdown",
-  emits: ["filter-update"],
+  name: "Dropdown",
+  emits: ["sort-update"],
   data() {
     return {
       listOptions: {}
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     sortItems(event) {
-      this.$emit("filter-update", event.target.value);
+      this.$emit("sort-update", event.target.value, );
       // console.log("Event : " + event.target.value);
     },
 

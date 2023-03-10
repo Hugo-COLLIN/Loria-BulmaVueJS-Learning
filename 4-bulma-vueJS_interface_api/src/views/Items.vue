@@ -27,7 +27,7 @@
       </div>
 
       <div class="level-right">
-        <FilterDropdown ref="filterList" @filter-update="sortItems"></FilterDropdown>
+        <Dropdown ref="sortList" @sort-update="sortItems"></Dropdown>
       </div>
     </nav>
 
@@ -74,11 +74,11 @@ import axios from "axios";
 import Collect from 'collect.js';
 import ModalItem from "@/components/ModalItem.vue";
 import Pagination from "@/components/Pagination.vue";
-import FilterDropdown from "@/components/FilterDropdown.vue";
+import Dropdown from "@/components/Dropdown.vue";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination, FilterDropdown},
+  components: {ModalItem, Pagination, Dropdown},
   data() {
     return {
       items: [],
@@ -103,7 +103,7 @@ export default {
       lastItem: 0,
       totalItems: 0,
 
-      filters: [
+      sorts: [
         { fullName: "Name", shortName: "Name" },
         { fullName: "Unit Price", shortName: "UnitPrice" },
         { fullName: "Duration", shortName: "Milliseconds" },
@@ -128,11 +128,11 @@ export default {
     //
     //   this.items = Object.assign([], sortedBooks.all())
     // },
-    sortItems(filter) {
-      console.log("F: " + filter)
+    sortItems(sort) {
+      console.log("F: " + sort)
       // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
-      this.allItems = new Collect(this.allItems).sortBy(filter).all();
-      this.searchItems = new Collect(this.searchItems).sortBy(filter).all();
+      this.allItems = new Collect(this.allItems).sortBy(sort).all();
+      this.searchItems = new Collect(this.searchItems).sortBy(sort).all();
       this.updateList();
     },
 
@@ -271,6 +271,7 @@ export default {
       axios.get('http://51.91.76.245:8000/api/tracks')
           .then(response => {
             this.allItems = response.data;
+            this.sortItems("Name");
             this.updateList();
           })
           .catch(error => {
@@ -305,13 +306,13 @@ export default {
     },
 
     setFilterList() {
-      this.$refs.filterList.createFilters(this.filters);
+      this.$refs.sortList.createFilters(this.sorts);
     },
   },
   mounted() {
     this.setFilterList();
     this.loadList();
-    //this.$refs.filterList.sortBy('Name');
+    //this.$refs.sortList.sortBy('Name');
   },
 }
 </script>
