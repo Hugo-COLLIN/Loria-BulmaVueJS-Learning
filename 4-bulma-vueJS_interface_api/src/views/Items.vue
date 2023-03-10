@@ -14,14 +14,15 @@
 
           <div class="level-left">
             <div class="level-item">
-              <div class="field has-addons">
-                <p class="control">
-                  <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">
-                </p>
-                <p class="control">
-                  <button class="button" @click="search">Search</button>
-                </p>
-              </div>
+              <Search ref="search" @search="search"></Search>
+<!--              <div class="field has-addons">-->
+<!--                <p class="control">-->
+<!--                  <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">-->
+<!--                </p>-->
+<!--                <p class="control">-->
+<!--                  <button class="button" @click="search">Search</button>-->
+<!--                </p>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -81,10 +82,11 @@ import ModalItem from "@/components/ModalItem.vue";
 import Pagination from "@/components/Pagination.vue";
 import Dropdown from "@/components/Dropdown.vue";
 import CounterList from "@/components/CounterList.vue";
+import Search from "@/components/Search.vue";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination, Dropdown, CounterList},
+  components: {ModalItem, Pagination, Dropdown, CounterList, Search},
   data() {
     return {
       items: [],
@@ -102,7 +104,7 @@ export default {
         Bytes: "",
       },
       showModal: false,
-      searchWord: "",
+      // searchWord: "",
       currentItem: null,
 
       isDescOrder: false,
@@ -116,7 +118,6 @@ export default {
         { fullName: "Genre Id", shortName: "GenreId" },
         { fullName: "Media Type", shortName: "MediaTypeId" },
       ],
-
       orders: [
         { fullName: "Ascending", shortName: "asc" },
         { fullName: "Descending", shortName: "desc" },
@@ -146,14 +147,21 @@ export default {
       this.sortItems(this.$refs.sortList.selected);
     },
 
-    search() {
-      if (this.searchWord !== '')
-        this.searchItems = new Collect(this.allItems)
-          .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()) || (!item.Composer ? '' : item.Composer).toLowerCase().includes(this.searchWord.toLowerCase()))
-          .all();
+    search(word) {
+      this.searchItems = this.$refs.search.executeSearch(word, this.allItems);
+      console.log(this.searchItems)
       this.$refs.pagination.setPage(1);
       this.updateList();
     },
+
+    // search() {
+    //   if (this.searchWord !== '')
+    //     this.searchItems = new Collect(this.allItems)
+    //       .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()) || (!item.Composer ? '' : item.Composer).toLowerCase().includes(this.searchWord.toLowerCase()))
+    //       .all();
+    //   this.$refs.pagination.setPage(1);
+    //   this.updateList();
+    // },
 
     addItem(i)
     {
@@ -270,7 +278,7 @@ export default {
 
     displayCutAllList()
     {
-      if (this.searchWord === '')
+      if (!this.$refs.search.isSearching())
         this.displayCutList(this.allItems);
       else
         this.displayCutList(this.searchItems);
@@ -294,7 +302,7 @@ export default {
     {
       this.displayCutAllList();
 
-      if (this.searchWord === '')
+      if (!this.$refs.search.isSearching())
         this.$refs.pagination.setTotalItems(this.allItems.length);
       else
         this.$refs.pagination.setTotalItems(this.searchItems.length);
@@ -309,7 +317,7 @@ export default {
     {
       const init = this.$refs.pagination.startingItem() + 1;
       const last = this.items.length + init - 1;
-      if (this.searchWord === '')
+      if (!this.$refs.search.isSearching())
         this.$refs.counterList.updateCounter(init, last, this.allItems.length);
       else
         this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
@@ -323,11 +331,20 @@ export default {
     setCounter() {
       this.$refs.counterList.create("tracks");
     },
+
+    setSearch() {
+      this.$refs.search.setSearchAttributes("Name", "Composer");
+      // this.$refs.search.create("Search");
+    },
   },
   mounted() {
     this.setSortList();
     this.setCounter();
+    this.setSearch();
     this.loadList();
+    console.log(this.items)
+    console.log(this.searchItems)
+    console.log(this.allItems)
     //this.$refs.sortList.sortBy('Name');
   },
 }
