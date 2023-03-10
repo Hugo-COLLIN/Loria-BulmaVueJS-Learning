@@ -3,8 +3,8 @@
     <h1 class="title is-center">Tracks</h1>
 
     <nav>
-      <div class="level">
-        <div class="level-left">
+      <div class="level is-flex-wrap-wrap is-ancestor">
+        <div class="level-left mb-4">
           <div class="level-item">
             <p class="subtitle is-5">
               <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
@@ -14,36 +14,36 @@
             </p>
           </div>
 
-          <div class="level-item">
-            <div class="field has-addons">
-              <p class="control">
-                <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">
-              </p>
-              <p class="control">
-                <button class="button" @click="search">Search</button>
-              </p>
+          <div class="level-left">
+            <div class="level-item">
+              <div class="field has-addons">
+                <p class="control">
+                  <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">
+                </p>
+                <p class="control">
+                  <button class="button" @click="search">Search</button>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="level">
-        <div class="level-right">
-          <div class="level-item">
+
+        <div class="level-right mb-4">
+          <div class="level-item is-flex-wrap-wrap">
             <Dropdown ref="sortList" @update="sortItems"></Dropdown>
             <Dropdown ref="orderList" @update="orderItems"></Dropdown>
             <div></div>
           </div>
         </div>
       </div>
-      <div></div>
     </nav>
 
 <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline  is-align-items-stretch">
       <template v-for="(item, key) in items">
         <div class="column is-12-tablet is-6-desktop is-4-widescreen">
-          <article class="box">
+          <article class="box" style="height: 100%;">
             <div class="media">
               <aside class="media-left">
                 <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
