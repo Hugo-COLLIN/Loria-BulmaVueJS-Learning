@@ -1,6 +1,6 @@
 <template>
   <div class="level-item">
-    Order by
+    {{ this.label }}
   </div>
   <div class="level-item">
     <div class="select">
@@ -14,20 +14,25 @@
 <script>
 export default {
   name: "Dropdown",
-  emits: ["sort-update"],
+  emits: ["update"],
   data() {
     return {
-      listOptions: {}
+      label: "",
+      listOptions: {},
+      selected: "",
     };
   },
   methods: {
     sortItems(event) {
-      this.$emit("sort-update", event.target.value, );
+      this.selected = event.target.value;
+      this.$emit("update", this.selected);
       // console.log("Event : " + event.target.value);
     },
 
-    createFilters(list) {
+    create(list, label) {
+      this.label = label;
       this.listOptions = list;
+      this.selected = list[0].shortName;
     },
 
     // createFilter(name, short)

@@ -51,7 +51,7 @@ export default {
 
     setTotalPages()
     {
-      console.log("Per page: " + this.perPage)
+      // console.log("Per page: " + this.perPage)
       this.totalPages = Math.ceil(this.totalItems / this.perPage);
     },
 
@@ -67,7 +67,7 @@ export default {
 
     paginPrev()
     {
-      console.log(this.currentPage)
+      // console.log(this.currentPage)
       if (this.currentPage > 1)
       {
         this.currentPage--;
@@ -80,13 +80,13 @@ export default {
     {
       //console.log(this.currentPage)
       // console.log(this.totalItems / this.perPage)
-      console.log("Next page")
+      // console.log("Next page")
       if (this.currentPage < this.totalItems / this.perPage)
       {
         this.currentPage++;
         // this.$emit('pagin-next');
         this.$emit('pagin-update');
-        console.log(this.currentPage)
+        // console.log(this.currentPage)
       }
     },
 
@@ -129,7 +129,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this)
+    // console.log(this)
   }
 }
 </script>

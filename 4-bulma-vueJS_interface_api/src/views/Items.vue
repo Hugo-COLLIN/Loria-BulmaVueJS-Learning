@@ -27,7 +27,8 @@
       </div>
 
       <div class="level-right">
-        <Dropdown ref="sortList" @sort-update="sortItems"></Dropdown>
+        <Dropdown ref="sortList" @update="sortItems"></Dropdown>
+        <Dropdown ref="orderList" @update="orderItems"></Dropdown>
       </div>
     </nav>
 
@@ -103,6 +104,7 @@ export default {
       lastItem: 0,
       totalItems: 0,
 
+      isChangeOrder: false,
       sorts: [
         { fullName: "Name", shortName: "Name" },
         { fullName: "Unit Price", shortName: "UnitPrice" },
@@ -112,6 +114,11 @@ export default {
         { fullName: "Album Id", shortName: "AlbumId" },
         { fullName: "Genre Id", shortName: "GenreId" },
         { fullName: "Media Type", shortName: "MediaTypeId" },
+      ],
+
+      orders: [
+        { fullName: "Ascending", shortName: "asc" },
+        { fullName: "Descending", shortName: "desc" },
       ],
     };
   },
@@ -128,12 +135,29 @@ export default {
     //
     //   this.items = Object.assign([], sortedBooks.all())
     // },
-    sortItems(sort) {
+    sortItems(sort, changeOrder = false) {
       console.log("F: " + sort)
       // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
-      this.allItems = new Collect(this.allItems).sortBy(sort).all();
-      this.searchItems = new Collect(this.searchItems).sortBy(sort).all();
+      if (changeOrder)
+      {
+        this.allItems = new Collect(this.allItems).sortByDesc(sort).all();
+        this.searchItems = new Collect(this.searchItems).sortByDesc(sort).all();
+      }
+      else
+      {
+        this.allItems = new Collect(this.allItems).sortBy(sort).all();
+        this.searchItems = new Collect(this.searchItems).sortBy(sort).all();
+      }
+
       this.updateList();
+    },
+
+    orderItems(order) {
+      console.log("O: " + order)
+      // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
+      // this.isChangeOrder = (order === "desc");
+      console.log("Selected: " + this.$refs.sortList.selected)
+      this.sortItems(this.$refs.sortList.selected, true);
     },
 
     search() {
@@ -255,7 +279,7 @@ export default {
         i++;
       }
       this.updateCountItems();
-      console.log(this.items)
+      // console.log(this.items)
     },
 
     displayCutAllList()
@@ -291,8 +315,8 @@ export default {
 
       this.$refs.pagination.setTotalPages();
       this.updateCountItems();
-      console.log(this.$refs.pagination.totalPages)
-      console.log(this.$refs.pagination.totalItems)
+      // console.log(this.$refs.pagination.totalPages)
+      // console.log(this.$refs.pagination.totalItems)
     },
 
     updateCountItems()
@@ -306,7 +330,8 @@ export default {
     },
 
     setFilterList() {
-      this.$refs.sortList.createFilters(this.sorts);
+      this.$refs.orderList.create(this.orders);
+      this.$refs.sortList.create(this.sorts,"Order by");
     },
   },
   mounted() {
