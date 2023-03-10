@@ -318,29 +318,20 @@ export default {
         this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
     },
 
-    setSortList() {
+    initComponents() {
       this.$refs.orderList.create(this.orders);
       this.$refs.sortList.create(this.sorts,"Order by");
-    },
 
-    setCounter() {
       this.$refs.counterList.create("tracks");
-    },
-
-    setSearch() {
       this.$refs.search.init(["Name", "Composer"], "Search");
-      // this.$refs.search.create("Search");
     },
   },
   mounted() {
-    this.setSortList();
-    this.setCounter();
-    this.setSearch();
+    this.initComponents();
     this.loadList();
-    console.log(this.items)
-    console.log(this.searchItems)
-    console.log(this.allItems)
-    //this.$refs.sortList.sortBy('Name');
+    // console.log(this.items)
+    // console.log(this.searchItems)
+    // console.log(this.allItems)
   },
 }
 </script>
