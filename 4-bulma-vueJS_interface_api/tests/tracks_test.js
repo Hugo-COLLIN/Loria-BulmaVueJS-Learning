@@ -15,19 +15,15 @@ Scenario('show tracks',  ({ I }) => {
     login(I);
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
-    I.makeApiRequest('GET', 'http://51.91.76.245:8000/api/tracks', (response) => {
-        I.see(response.data[0].name);
-        // check if the size is correct
-        I.see(response.data.length);
-    });
+    I.waitForText("tracks");
+    I.see("40");
 });
 
 Scenario('search tracks',  ({ I }) => {
     login(I);
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
+    I.waitForText("tracks");
     I.fillField("input[placeholder='Item name, Composer…']", 'Concerto for V');
     // search for a track
     I.waitForText("Concerto for Violin", 5);
@@ -41,7 +37,7 @@ Scenario('create track',  ({ I }) => {
     login(I);
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
+    I.waitForText("tracks");
     I.click("New");
     I.fillField("input[name='title']", 'testCreate');
     I.fillField("input[name='price']", '1');
@@ -58,7 +54,7 @@ Scenario('update track',  ({ I }) => {
     I.say("I need create test to have been successful");
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
+    I.waitForText("tracks");
     I.fillField("input[placeholder='Item name, Composer…']", 'testCreate');
     I.waitForText("testCreate", 5,".media-content");
     // update title
@@ -105,7 +101,7 @@ Scenario('delete old track',  ({ I }) => {
     I.say("I need update test to have been successful");
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
+    I.waitForText("tracks");
     I.fillField("input[placeholder='Item name, Composer…']", 'testUpdate');
     I.waitForText("testUpdate", 5,".media-content");
     I.click("Delete");
@@ -118,7 +114,7 @@ Scenario('delete new track',  ({ I }) => {
     login(I);
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
+    I.waitForText("tracks");
     I.click("New");
     I.fillField("input[name='title']", 'testDelete');
     I.fillField("input[name='price']", '1');
@@ -136,11 +132,27 @@ Scenario('Change page',  ({ I }) => {
     login(I);
     I.see("Items");
     I.click("Items");
-    I.waitForText("items");
+    I.waitForText("tracks");
     I.click("2");
-    I.makeApiRequest('GET', 'http://51.91.76.245:8000/api/tracks', (response) => {
-        I.see(response.data[5].name);
-        // check if the size is correct
-        I.see(response.data.length);
-    });
+    I.see("Midnight")
+});
+
+Scenario('Change Order',  ({ I }) => {
+    login(I);
+    I.see("Items");
+    I.click("Items");
+    I.waitForText("tracks");
+    // get the <select>
+    let select = locate("select")
+    I.selectOption(select,"Duration");
+    I.see("1 sec",".media-content");
+    I.selectOption(select,"Composer");
+    I.see("Iron Man",".media-content");
+
+    I.selectOption(select,"Unit Price");
+    // select the next select
+    select = locate("select").at(2)
+    I.selectOption(select,"Descending");
+
+    I.see("$1.99",".media-content");
 });
