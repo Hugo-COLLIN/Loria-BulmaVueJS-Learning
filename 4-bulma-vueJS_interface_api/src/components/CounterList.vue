@@ -1,6 +1,6 @@
 <template>
   <p class="subtitle is-5">
-    <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
+    <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} {{ this.label }}
   </p>
 </template>
 
@@ -9,6 +9,7 @@ export default {
   name: "CounterList",
   data() {
     return {
+      label: "",
       initItem: 0,
       lastItem: 0,
       totalItems: 0
@@ -19,6 +20,10 @@ export default {
       this.initItem = initItem;
       this.lastItem = lastItem;
       this.totalItems = totalItems;
+    },
+
+    create(label) {
+      this.label = label;
     }
   }
 }

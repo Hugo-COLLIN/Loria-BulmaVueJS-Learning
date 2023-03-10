@@ -327,9 +327,14 @@ export default {
       this.$refs.orderList.create(this.orders);
       this.$refs.sortList.create(this.sorts,"Order by");
     },
+
+    setCounter() {
+      this.$refs.counterList.create("tracks");
+    },
   },
   mounted() {
     this.setSortList();
+    this.setCounter();
     this.loadList();
     //this.$refs.sortList.sortBy('Name');
   },
