@@ -6,12 +6,10 @@
       <div class="level is-flex-wrap-wrap is-ancestor">
         <div class="level-left mb-4">
           <div class="level-item">
-            <p class="subtitle is-5">
-              <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} items
-            </p>
-            <p class="level-item ml-2">
-              <button class="button is-success" @click="callNewItem">New</button>
-            </p>
+          <CounterList ref="counterList"></CounterList>
+          <p class="level-item ml-2">
+            <button class="button is-success" @click="callNewItem">New</button>
+          </p>
           </div>
 
           <div class="level-left">
@@ -82,10 +80,11 @@ import Collect from 'collect.js';
 import ModalItem from "@/components/ModalItem.vue";
 import Pagination from "@/components/Pagination.vue";
 import Dropdown from "@/components/Dropdown.vue";
+import CounterList from "@/components/CounterList.vue";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination, Dropdown},
+  components: {ModalItem, Pagination, Dropdown, CounterList},
   data() {
     return {
       items: [],
@@ -106,9 +105,6 @@ export default {
       showEditModal: false,
       searchWord: "",
       currentItem: null,
-      initItem: 0,
-      lastItem: 0,
-      totalItems: 0,
 
       isDescOrder: false,
       sorts: [
@@ -319,12 +315,12 @@ export default {
 
     updateCountItems()
     {
-      this.initItem = this.$refs.pagination.startingItem() + 1;
-      this.lastItem = this.items.length + this.initItem - 1;
+      const init = this.$refs.pagination.startingItem() + 1;
+      const last = this.items.length + init - 1;
       if (this.searchWord === '')
-        this.totalItems = this.allItems.length;
+        this.$refs.counterList.updateCounter(init, last, this.allItems.length);
       else
-        this.totalItems = this.searchItems.length;
+        this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
     },
 
     setSortList() {
