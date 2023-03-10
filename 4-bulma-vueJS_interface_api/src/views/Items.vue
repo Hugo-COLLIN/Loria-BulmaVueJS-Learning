@@ -127,6 +127,9 @@ export default {
 
   methods:
   {
+    /*
+    --- ITEMS FILTERING METHODS ---
+     */
     sortItems(sort) {
       if (this.isDescOrder)
       {
@@ -149,20 +152,14 @@ export default {
 
     search() {
       this.searchItems = this.$refs.search.executeSearch(this.allItems);
-      console.log(this.searchItems)
+      // console.log(this.searchItems)
       this.$refs.pagination.setPage(1);
       this.updateList();
     },
 
-    // search() {
-    //   if (this.searchWord !== '')
-    //     this.searchItems = new Collect(this.allItems)
-    //       .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()) || (!item.Composer ? '' : item.Composer).toLowerCase().includes(this.searchWord.toLowerCase()))
-    //       .all();
-    //   this.$refs.pagination.setPage(1);
-    //   this.updateList();
-    // },
-
+    /*
+    --- ITEM EDITION METHODS ---
+     */
     addItem(i)
     {
       this.items.push(i);
@@ -223,19 +220,6 @@ export default {
 
     },
 
-    callNewItem()
-    {
-      this.showModal = true;
-      this.$refs.modalItem.newForm();
-    },
-
-    callEditItem(item)
-    {
-      this.showModal = true;
-      this.$refs.modalItem.editForm(item);
-      this.currentItem = item;
-    },
-
     deleteItem(item)
     {
       this.items.splice(this.items.indexOf(item), 1);
@@ -257,7 +241,27 @@ export default {
 
     },
 
-    displayCutList(list) // A modif pour le filtre
+
+    /*
+    --- MODAL CONFIGURATION ---
+     */
+    callNewItem()
+    {
+      this.showModal = true;
+      this.$refs.modalItem.newForm();
+    },
+
+    callEditItem(item)
+    {
+      this.showModal = true;
+      this.$refs.modalItem.editForm(item);
+      this.currentItem = item;
+    },
+
+    /*
+    --- LIST METHODS ---
+     */
+    displayCutList(list)
     {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
@@ -308,6 +312,9 @@ export default {
       // console.log(this.$refs.pagination.totalItems)
     },
 
+    /*
+    --- OTHER COMPONENTS METHODS ---
+     */
     updateCountItems()
     {
       const init = this.$refs.pagination.startingItem() + 1;
