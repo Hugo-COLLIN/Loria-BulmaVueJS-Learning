@@ -165,6 +165,7 @@ export default {
         this.searchItems = new Collect(this.allItems)
           .filter((item) => item.Name.toLowerCase().includes(this.searchWord.toLowerCase()) || (!item.Composer ? '' : item.Composer).toLowerCase().includes(this.searchWord.toLowerCase()))
           .all();
+      this.$refs.pagination.setPage(1);
       this.updateList();
     },
 
@@ -329,13 +330,13 @@ export default {
         this.totalItems = this.searchItems.length;
     },
 
-    setFilterList() {
+    setSortList() {
       this.$refs.orderList.create(this.orders);
       this.$refs.sortList.create(this.sorts,"Order by");
     },
   },
   mounted() {
-    this.setFilterList();
+    this.setSortList();
     this.loadList();
     //this.$refs.sortList.sortBy('Name');
   },
