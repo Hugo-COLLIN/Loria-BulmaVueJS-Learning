@@ -104,7 +104,7 @@ export default {
       lastItem: 0,
       totalItems: 0,
 
-      isChangeOrder: false,
+      isDescOrder: false,
       sorts: [
         { fullName: "Name", shortName: "Name" },
         { fullName: "Unit Price", shortName: "UnitPrice" },
@@ -125,21 +125,12 @@ export default {
 
   methods:
   {
-    // sortItems(event)
-    // {
-    //   console.log(event.target.value)
-    //   let selectValue = String(event.target.value);
-    //   let collection = Collect(this.allItems);
-    //   console.log(collection)
-    //   let sortedBooks = collection.sortBy(selectValue);
-    //
-    //   this.items = Object.assign([], sortedBooks.all())
-    // },
-    sortItems(sort, changeOrder = false) {
+    sortItems(sort) {
       console.log("F: " + sort)
       // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
-      if (changeOrder)
+      if (this.isDescOrder)
       {
+        console.log("on change l'ordre")
         this.allItems = new Collect(this.allItems).sortByDesc(sort).all();
         this.searchItems = new Collect(this.searchItems).sortByDesc(sort).all();
       }
@@ -155,9 +146,9 @@ export default {
     orderItems(order) {
       console.log("O: " + order)
       // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
-      // this.isChangeOrder = (order === "desc");
+      this.isDescOrder = (order === "desc");
       console.log("Selected: " + this.$refs.sortList.selected)
-      this.sortItems(this.$refs.sortList.selected, true);
+      this.sortItems(this.$refs.sortList.selected);
     },
 
     search() {
