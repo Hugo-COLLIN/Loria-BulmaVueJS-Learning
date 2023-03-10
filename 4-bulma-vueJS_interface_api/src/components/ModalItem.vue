@@ -37,7 +37,7 @@
               </div>
 
               <div class="column">
-                <label class="label">Duration (milliseconds /to change)</label>
+                <label class="label">Duration (minutes)</label>
                 <div class="control">
                   <input v-model="this.form.Milliseconds" class="input" type="number" placeholder="e.g. 270" name="duration" required>
                 </div>

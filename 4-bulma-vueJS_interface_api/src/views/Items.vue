@@ -71,7 +71,7 @@
     </div>
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
   </div>
-  <ModalItem ref="modalItem" :show-modal="showNewModal" @close="showNewModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
+  <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
 
 <script>
@@ -101,8 +101,7 @@ export default {
         MediaTypeId: "",
         Bytes: "",
       },
-      showNewModal: false,
-      showEditModal: false,
+      showModal: false,
       searchWord: "",
       currentItem: null,
 
@@ -128,11 +127,8 @@ export default {
   methods:
   {
     sortItems(sort) {
-      console.log("F: " + sort)
-      // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
       if (this.isDescOrder)
       {
-        console.log("on change l'ordre")
         this.allItems = new Collect(this.allItems).sortByDesc(sort).all();
         this.searchItems = new Collect(this.searchItems).sortByDesc(sort).all();
       }
@@ -146,10 +142,7 @@ export default {
     },
 
     orderItems(order) {
-      console.log("O: " + order)
-      // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
       this.isDescOrder = (order === "desc");
-      console.log("Selected: " + this.$refs.sortList.selected)
       this.sortItems(this.$refs.sortList.selected);
     },
 
@@ -166,12 +159,11 @@ export default {
     {
       this.items.push(i);
       this.allItems.push(i);
-      this.showNewModal = false;
+      this.showModal = false;
 
       const config = {
           token: sessionStorage.getItem('tokenSession')
         };
-      console.log(i)
       axios({
         method: 'post',
         url: 'http://51.91.76.245:8000/api/tracks',
@@ -199,7 +191,7 @@ export default {
         if (key !== "TrackId")
           data[key] = i[key];
       }
-      this.showNewModal = false;
+      this.showModal = false;
 
       const config = {
           token: sessionStorage.getItem('tokenSession')
@@ -226,13 +218,13 @@ export default {
 
     callNewItem()
     {
-      this.showNewModal = true;
+      this.showModal = true;
       this.$refs.modalItem.newForm();
     },
 
     callEditItem(item)
     {
-      this.showNewModal = true;
+      this.showModal = true;
       this.$refs.modalItem.editForm(item);
       this.currentItem = item;
     },
