@@ -59,7 +59,7 @@
 
     <section class="section">
       <div class="columns">
-        <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+        <div class="column is-4-tablet is-3-desktop is-2-widescreen" v-if="$route.name !== '404'">
           <aside class="menu">
             <p class="menu-label">Menu</p>
             <ul class="menu-list">
@@ -128,7 +128,7 @@ export default {
 
   },
   mounted() {
-    this.$refs.loginMechanics.loginStateRouter();
+    // this.$refs.loginMechanics.loginState();
   }
 };
 </script>
@@ -143,7 +143,7 @@ export default {
 }
 
 nav {
-  padding: 30px;
+  //padding: 30px;
 
   a {
     font-weight: bold;

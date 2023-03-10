@@ -27,18 +27,7 @@
       </div>
 
       <div class="level-right">
-        <div class="level-item">
-          Order by
-        </div>
-        <div class="level-item">
-          <div class="select">
-            <select @change="sortItems">
-              <option value="publishDate">Publish date</option>
-              <option value="UnitPrice">Price</option>
-              <option value="Milliseconds">Page count</option>
-            </select>
-          </div>
-        </div>
+        <FilterDropdown ref="filterList" @filter-update="sortItems"></FilterDropdown>
       </div>
     </nav>
 
@@ -85,10 +74,11 @@ import axios from "axios";
 import Collect from 'collect.js';
 import ModalItem from "@/components/ModalItem.vue";
 import Pagination from "@/components/Pagination.vue";
+import FilterDropdown from "@/components/FilterDropdown.vue";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination},
+  components: {ModalItem, Pagination, FilterDropdown},
   data() {
     return {
       items: [],
@@ -113,25 +103,37 @@ export default {
       lastItem: 0,
       totalItems: 0,
 
-      // pagination: {
-      //   currentPage: 1,
-      //   perPage: 5,
-      //   totalItems: 0,
-      //   totalPages: 0,
-      //   startItem: 0,
-      // },TODO
+      filters: [
+        { fullName: "Name", shortName: "Name" },
+        { fullName: "Unit Price", shortName: "UnitPrice" },
+        { fullName: "Duration", shortName: "Milliseconds" },
+        { fullName: "Composer", shortName: "Composer" },
+        { fullName: "Track Id", shortName: "TrackId" },
+        { fullName: "Album Id", shortName: "AlbumId" },
+        { fullName: "Genre Id", shortName: "GenreId" },
+        { fullName: "Media Type", shortName: "MediaTypeId" },
+      ],
     };
   },
 
   methods:
   {
-    sortItems(event)
-    {
-      let selectValue = String(event.target.value);
-      let collection = Collect(this.items);
-      let sortedBooks = collection.sortBy(selectValue);
-
-      this.items = Object.assign([], sortedBooks.all())
+    // sortItems(event)
+    // {
+    //   console.log(event.target.value)
+    //   let selectValue = String(event.target.value);
+    //   let collection = Collect(this.allItems);
+    //   console.log(collection)
+    //   let sortedBooks = collection.sortBy(selectValue);
+    //
+    //   this.items = Object.assign([], sortedBooks.all())
+    // },
+    sortItems(filter) {
+      console.log("F: " + filter)
+      // let collection = (this.searchWord === '') ? new Collect(this.allItems) : new Collect(this.searchItems);
+      this.allItems = new Collect(this.allItems).sortBy(filter).all();
+      this.searchItems = new Collect(this.searchItems).sortBy(filter).all();
+      this.updateList();
     },
 
     search() {
@@ -165,7 +167,7 @@ export default {
           .catch(error => {
             alert("Please reload the page")
             console.log(error);
-            this.load();
+            this.loadList();
             // this.displayCutList();
             //this.errorMsg("Erreur lors de la modification de l'item");
           });
@@ -198,7 +200,7 @@ export default {
         .catch(error => {
           alert("Please reload the page")
           console.log(error);
-          this.load();
+          this.loadList();
           //this.errorMsg("Erreur lors de la modification de l'item");
         });
 
@@ -236,12 +238,12 @@ export default {
           .catch(error => {
             alert("Please reload the page")
             console.log(error);
-            this.load();
+            this.loadList();
           });
 
     },
 
-    displayCutList(list)
+    displayCutList(list) // A modif pour le filtre
     {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
@@ -264,7 +266,7 @@ export default {
         this.displayCutList(this.searchItems);
     },
 
-    load()
+    loadList()
     {
       axios.get('http://51.91.76.245:8000/api/tracks')
           .then(response => {
@@ -274,6 +276,7 @@ export default {
           .catch(error => {
             console.log(error);
           })
+      this.sortItems("Name");
     },
 
     updateList()
@@ -300,10 +303,16 @@ export default {
       else
         this.totalItems = this.searchItems.length;
     },
+
+    setFilterList() {
+      this.$refs.filterList.createFilters(this.filters);
+    },
   },
   mounted() {
-    this.load();
-  }
+    this.setFilterList();
+    this.loadList();
+    //this.$refs.filterList.sortBy('Name');
+  },
 }
 </script>
 

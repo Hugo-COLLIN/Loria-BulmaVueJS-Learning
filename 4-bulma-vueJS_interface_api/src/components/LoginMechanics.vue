@@ -41,22 +41,25 @@ export default {
     {
       let res = false;
       // console.log(sessionStorage.getItem('tokenSession'));
-      axios.get('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-        }
-      })
-          .then((response) => {
-            console.log(response);
-            res = true;
-          })
-          .catch((error) => {
-            console.log(error);
-            sessionStorage.removeItem('tokenSession');
-            res = false;
-          });
-      // console.log("Res : " + res)
-      console.log(sessionStorage.getItem('tokenSession'));
+      if (sessionStorage.getItem('tokenSession') !== null) {
+        axios.get('http://51.91.76.245:8000/api/login', {
+          headers: {
+            token: sessionStorage.getItem('tokenSession')
+          }
+        })
+            .then((response) => {
+              console.log(response);
+              res = true;
+            })
+            .catch((error) => {
+              console.log(error);
+              sessionStorage.removeItem('tokenSession');
+              router.push({name: 'login'});
+              // alert("Disconnected");
+              res = false;
+            });
+      }
+
       return res;
     },
 
@@ -72,36 +75,19 @@ export default {
         }
       })
           .then(() => {
-            this.loginRequired();
             //message = "Loggged out successfully";
+            this.loginRequired();
           })
           .catch((error) => {
             console.log(error);
           });
+      this.loginRequired();
     },
 
     loginRequired()
     {
       sessionStorage.removeItem('tokenSession');
       this.$router.push({name: 'login'});
-    },
-
-    logoutRouter()
-    {
-      console.log(sessionStorage.getItem('tokenSession'))
-      axios.delete('http://51.91.76.245:8000/api/login', {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-        }
-      })
-          .then(() => {
-            sessionStorage.removeItem('tokenSession');
-            // this.$router.push({name: 'login'});
-            //message = "Logout successfully";
-          })
-          .catch((error) => {
-            console.log(error);
-          });
     },
   }
 }
