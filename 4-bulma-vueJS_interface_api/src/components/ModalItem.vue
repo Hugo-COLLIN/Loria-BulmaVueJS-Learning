@@ -143,12 +143,13 @@ export default {
       this.form.Milliseconds *= 60000;
 
       // Check if all fields are filled else return error
-      for (let key in this.form)
-        if (this.form[key] === "")
-        {
+      for (let key in this.form) {
+        // console.log(key)
+        if (this.form[key] === "") {
           console.log(key)
           return this.error[key] = true;
         }
+      }
 
       this.resetErrors();
 
@@ -182,13 +183,13 @@ export default {
       this.btnTitle = "Create item";
 
       // Reset all fields
-      for (let key in this.form)
-        if (typeof(this.form[key]) === "string")
-          this.form[key] = "";
-      /*this.form.Name = "";
+      // for (let key in this.form)
+      //   if (typeof(this.form[key]) === "string")
+      //     this.form[key] = "";
+      this.form.Name = "";
       this.form.UnitPrice = "";
       this.form.Milliseconds = "";
-      this.form.Composer = "";*/
+      this.form.Composer = "";
       //TODO : implement these fields and set them by default to error value (-1)
       this.form.AlbumId = 5;
       this.form.MediaTypeId = 1;
