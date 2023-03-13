@@ -1,5 +1,5 @@
 <template>
-  <LoginMechanics ref="loginMechanics"></LoginMechanics>
+  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>
   <nav class="navbar has-shadow">
     <div class="navbar-brand">
       <a class="navbar-item">
@@ -63,7 +63,7 @@ import bugReport from "@/components/BugReport.vue";
 export default {
   name: 'HeaderBar',
   components: {LoginMechanics},
-  emits: ['open-bug-report'],
+  emits: ['open-bug-report', 'login'],
   data() {
     return {
       openBugReport: false
@@ -73,6 +73,10 @@ export default {
     bugReport() {
       console.log('bugReport');
       this.$emit('open-bug-report', true);
+    },
+
+    login() {
+      this.$emit('login');
     }
   }
 }

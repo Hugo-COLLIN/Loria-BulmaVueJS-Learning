@@ -27,8 +27,10 @@ export default {
           .then(response => {
             // save the token in the session storage
             sessionStorage.setItem('tokenSession', response.data[0]);
+
+            this.$router.go(0) // refresh page : loading side menu temporary solution
             // redirect to the dashboard
-            this.$router.push({name: 'dashboard'});
+            // this.$router.push({name: 'dashboard'});
           })
           .catch(error => {
             // TODO : Remplacer les alert par des messages d'erreur
