@@ -20,12 +20,38 @@ export default {
         {fullName: "Genre Id", shortName: "GenreId"},
         {fullName: "Media Type", shortName: "MediaTypeId"},
       ],
+
+      cards: {
+        title: {
+          label: "Name",
+          pre: "",
+          post: ""
+        },
+        subtitle: {
+          label: "UnitPrice",
+          pre: "",
+          post: ""
+        },
+        infos: [
+          {
+            label: "Milliseconds",
+            pre: "",
+            post: ""
+          },
+          {
+            label: "Composer",
+            pre: "Compositeur(s): ",
+            post: ""
+          }],
+      },
     }
   },
   mounted() {
     this.$refs.viewList.setSortOptions(this.sorts);
+    this.$refs.viewList.setCards(this.cards);
     this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/tracks");
-
+    // this.$refs.viewList.setCardsTitle("Name");
+    this.$refs.viewList.init();
   },
 }
 </script>

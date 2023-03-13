@@ -41,17 +41,18 @@
               </aside>
               <div class="media-content">
                 <p class="title is-5 is-spaced is-marginless">
-                  <a @click="callEditItem(item)">{{item.Name}}</a>
+                  <a @click="callEditItem(item)">{{item[this.cards.title.label]}}</a>
                 </p>
                 <p class="subtitle is-marginless">
-                  ${{item.UnitPrice}}
+                  ${{item[this.cards.subtitle.label]}}
                 </p>
                 <div class="content is-small">
-                  <!-- convert milliseconds to minutes and second -->
-                  {{Math.floor(item.Milliseconds / 60000)}} min {{Math.floor((item.Milliseconds % 60000) / 1000)}} sec
-                  <br>
-                  Compositeur(s): {{item.Composer}}
-                  <br>
+                  <div v-for="info in this.cards.infos">
+                    <!-- convert milliseconds to minutes and second -->
+                    <span v-if="info.label === 'Milliseconds'">{{Math.floor(item[info.label] / 60000)}} min {{Math.floor((item[info.label] % 60000) / 1000)}} sec</span>
+                    <span v-else>{{info.pre}} {{item[info.label]}} {{info.post}}</span>
+                    <br>
+                  </div>
                   <a @click="callEditItem(item)">Edit</a>
                   <span> | </span>
                   <a @click="deleteItem(item)">Delete</a>
@@ -107,214 +108,242 @@ export default {
       ],
 
       urlAPI: "",
+
+      cards: {},
     };
   },
 
   methods:
-      {
+  {
         /*
     --- ITEMS FILTERING METHODS ---
      */
-        sortItems(sort) {
-          if (this.isDescOrder) {
-            this.allItems = new Collect(this.allItems).sortByDesc(sort).all();
-            this.searchItems = new Collect(this.searchItems).sortByDesc(sort).all();
-          } else {
-            this.allItems = new Collect(this.allItems).sortBy(sort).all();
-            this.searchItems = new Collect(this.searchItems).sortBy(sort).all();
-          }
+    sortItems(sort) {
+      if (this.isDescOrder) {
+        this.allItems = new Collect(this.allItems).sortByDesc(sort).all();
+        this.searchItems = new Collect(this.searchItems).sortByDesc(sort).all();
+      } else {
+        this.allItems = new Collect(this.allItems).sortBy(sort).all();
+        this.searchItems = new Collect(this.searchItems).sortBy(sort).all();
+      }
 
-          this.updateList();
-        },
+      this.updateList();
+    },
 
-        orderItems(order) {
-          this.isDescOrder = (order === "desc");
-          this.sortItems(this.$refs.sortList.selected);
-        },
+    orderItems(order) {
+      this.isDescOrder = (order === "desc");
+      this.sortItems(this.$refs.sortList.selected);
+    },
 
-        search() {
-          this.searchItems = this.$refs.search.executeSearch(this.allItems);
-          // console.log(this.searchItems)
-          this.$refs.pagination.setPage(1);
-          this.updateList();
-        },
+    search() {
+      this.searchItems = this.$refs.search.executeSearch(this.allItems);
+      // console.log(this.searchItems)
+      this.$refs.pagination.setPage(1);
+      this.updateList();
+    },
 
         /*
     --- ITEM EDITION METHODS ---
      */
-        addItem(i) {
-          this.items.push(i);
-          this.allItems.push(i);
-          this.showModal = false;
+    addItem(i) {
+      this.items.push(i);
+      this.allItems.push(i);
+      this.showModal = false;
 
-          const config = {
-            token: sessionStorage.getItem('tokenSession')
-          };
-          axios({
-            method: 'post',
-            url: this.urlAPI,
-            data: i,
-            headers: config
+      const config = {
+        token: sessionStorage.getItem('tokenSession')
+      };
+      axios({
+        method: 'post',
+        url: this.urlAPI,
+        data: i,
+        headers: config
+      })
+          .then(response => {
+            i.TrackId = response.data.TrackId;
+            // console.log(response);
           })
-              .then(response => {
-                i.TrackId = response.data.TrackId;
-                // console.log(response);
-              })
-              .catch(error => {
-                alert("Please reload the page")
-                console.log(error);
-                this.loadList();
-                // this.displayCutList();
-                //this.errorMsg("Erreur lors de la modification de l'item");
-              });
-        },
+          .catch(error => {
+            alert("Please reload the page")
+            console.log(error);
+            this.loadList();
+            // this.displayCutList();
+            //this.errorMsg("Erreur lors de la modification de l'item");
+          });
+    },
 
-        editItem(i) {
-          let data = {};
-          for (let key in this.currentItem) {
-            this.currentItem[key] = i[key];
-            if (key !== "TrackId" && i[key] !== null)
-              data[key] = i[key];
-          }
-          this.showModal = false;
+    editItem(i) {
+      let data = {};
+      for (let key in this.currentItem) {
+        this.currentItem[key] = i[key];
+        if (key !== "TrackId" && i[key] !== null)
+          data[key] = i[key];
+      }
+      this.showModal = false;
 
-          const config = {
-            token: sessionStorage.getItem('tokenSession')
-          };
+      const config = {
+        token: sessionStorage.getItem('tokenSession')
+      };
 
-          axios({
-            method: 'put',
-            url: this.urlAPI + '/' + i.TrackId,
-            data: data,
-            headers: config
+      axios({
+        method: 'put',
+        url: this.urlAPI + '/' + i.TrackId,
+        data: data,
+        headers: config
+      })
+          .then(response => {
+            this.updateList();
           })
-              .then(response => {
-                this.updateList();
-              })
-              .catch(error => {
-                alert("Please reload the page")
-                console.log(error);
-                this.loadList();
-                //this.errorMsg("Erreur lors de la modification de l'item");
-              });
+          .catch(error => {
+            alert("Please reload the page")
+            console.log(error);
+            this.loadList();
+            //this.errorMsg("Erreur lors de la modification de l'item");
+          });
 
-        },
+    },
 
-        deleteItem(item) {
-          this.items.splice(this.items.indexOf(item), 1);
-          this.allItems.splice(this.allItems.indexOf(item), 1);
-          this.displayCutAllList();
-          axios.delete(this.urlAPI + '/' + item.TrackId, {
-            headers: {
-              token: sessionStorage.getItem('tokenSession')
-            }
+    deleteItem(item) {
+      this.items.splice(this.items.indexOf(item), 1);
+      this.allItems.splice(this.allItems.indexOf(item), 1);
+      this.displayCutAllList();
+      axios.delete(this.urlAPI + '/' + item.TrackId, {
+        headers: {
+          token: sessionStorage.getItem('tokenSession')
+        }
+      })
+          .then(response => {
+            this.updateList();
           })
-              .then(response => {
-                this.updateList();
-              })
-              .catch(error => {
-                alert("Please reload the page")
-                console.log(error);
-                this.loadList();
-              });
+          .catch(error => {
+            alert("Please reload the page")
+            console.log(error);
+            this.loadList();
+          });
 
-        },
+    },
 
 
         /*
     --- MODAL CONFIGURATION ---
      */
-        callNewItem() {
-          this.showModal = true;
-          this.$refs.modalItem.newForm();
-        },
+    callNewItem() {
+      this.showModal = true;
+      this.$refs.modalItem.newForm();
+    },
 
-        callEditItem(item) {
-          this.showModal = true;
-          this.$refs.modalItem.editForm(item);
-          this.currentItem = item;
-        },
+    callEditItem(item) {
+      this.showModal = true;
+      this.$refs.modalItem.editForm(item);
+      this.currentItem = item;
+    },
 
         /*
     --- LIST METHODS ---
      */
-        displayCutList(list) {
-          this.items = [];
-          let startItem = this.$refs.pagination.startingItem();
-          // console.log(startItem)
-          let i = 0;
-          while (list[startItem + i] !== undefined && i < this.$refs.pagination.perPage) {
-            this.items[i] = list[startItem + i];
-            i++;
-          }
-          this.updateCountItems();
-        },
+    displayCutList(list) {
+      this.items = [];
+      let startItem = this.$refs.pagination.startingItem();
+      // console.log(startItem)
+      let i = 0;
+      while (list[startItem + i] !== undefined && i < this.$refs.pagination.perPage) {
+        this.items[i] = list[startItem + i];
+        i++;
+      }
+      this.updateCountItems();
+    },
 
-        displayCutAllList() {
-          if (!this.$refs.search.isSearching())
-            this.displayCutList(this.allItems);
-          else
-            this.displayCutList(this.searchItems);
-        },
+    displayCutAllList() {
+      if (!this.$refs.search.isSearching())
+        this.displayCutList(this.allItems);
+      else
+        this.displayCutList(this.searchItems);
+    },
 
-        loadList() {
-          axios.get(this.urlAPI)
-              .then(response => {
-                this.allItems = response.data;
-                this.sortItems("Name");
-                this.updateList();
-              })
-              .catch(error => {
-                console.log(error);
-              })
-          this.sortItems("Name");
-        },
+    loadList() {
+      axios.get(this.urlAPI)
+          .then(response => {
+            this.allItems = response.data;
+            this.sortItems("Name");
+            this.updateList();
+            // this.setCardsTitle("Name");
+            console.log()
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      this.sortItems("Name");
+    },
 
-        updateList() {
-          this.displayCutAllList();
+    updateList() {
+      this.displayCutAllList();
 
-          if (!this.$refs.search.isSearching())
-            this.$refs.pagination.setTotalItems(this.allItems.length);
-          else
-            this.$refs.pagination.setTotalItems(this.searchItems.length);
+      if (!this.$refs.search.isSearching())
+        this.$refs.pagination.setTotalItems(this.allItems.length);
+      else
+        this.$refs.pagination.setTotalItems(this.searchItems.length);
 
-          this.$refs.pagination.setTotalPages();
-          this.updateCountItems();
-          // console.log(this.$refs.pagination.totalPages)
-          // console.log(this.$refs.pagination.totalItems)
-        },
+      this.$refs.pagination.setTotalPages();
+      this.updateCountItems();
+      // console.log(this.$refs.pagination.totalPages)
+      // console.log(this.$refs.pagination.totalItems)
+    },
 
-        /*
-    --- OTHER COMPONENTS METHODS ---
+      /*
+      --- OTHER COMPONENTS METHODS ---
      */
-        updateCountItems() {
-          const init = this.$refs.pagination.startingItem() + 1;
-          const last = this.items.length + init - 1;
-          if (!this.$refs.search.isSearching())
-            this.$refs.counterList.updateCounter(init, last, this.allItems.length);
-          else
-            this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
-        },
+    updateCountItems() {
+      const init = this.$refs.pagination.startingItem() + 1;
+      const last = this.items.length + init - 1;
+      if (!this.$refs.search.isSearching())
+        this.$refs.counterList.updateCounter(init, last, this.allItems.length);
+      else
+        this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
+    },
 
-        initComponents() {
-          this.$refs.orderList.create(this.orders);
-          this.$refs.sortList.create(this.sorts, "Order by");
+    initComponents() {
+      this.$refs.orderList.create(this.orders);
+      this.$refs.sortList.create(this.sorts, "Order by");
 
-          this.$refs.counterList.create("tracks");
-          this.$refs.search.init(["Name", "Composer"], "Search");
-        },
+      this.$refs.counterList.create("tracks");
+      this.$refs.search.init(["Name", "Composer"], "Search");
+    },
 
-        setDataSet(url) {
-          this.urlAPI = url;
-          console.log(this.urlAPI)
-          this.initComponents();
-          this.loadList();
-        },
+    setDataSet(url) {
+      this.urlAPI = url;
+      console.log(this.urlAPI)
+    },
 
-        setSortOptions(sorts) {
-          this.sorts = sorts;
-        },
-      },
+    setSortOptions(sorts) {
+      this.sorts = sorts;
+    },
+
+    init() {
+      this.initComponents();
+      this.loadList();
+    },
+
+    /*
+    --- CARDS LIST METHODS ---
+     */
+    setCards(cards) {
+      // this.cards.title = this.allItems[0][title];
+      this.cards = cards;
+    },
+    setCardsTitle(title, pre = "", post = "") {
+      this.cards.title = title;
+      this.cards.pre = pre;
+      this.cards.post = post;
+    },
+    setCardsSubtitle(subtitle, pre = "", post = "") {
+      this.cards.title = title;
+      this.cards.pre = pre;
+      this.cards.post = post;
+    },
+    addCardsInfo(label, pre = "", post = "") {
+      this.cards.infos.push({label: label, pre: pre, post: post});
+    },
+  },
   mounted() {
     // this.initComponents();
     // this.loadList();
