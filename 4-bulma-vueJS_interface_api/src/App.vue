@@ -1,6 +1,6 @@
 <template>
   <template v-if="$route.name !== 'login'">
-    <HeaderBar @open-bug-report="bugReport"/>
+    <HeaderBar @open-bug-report="bugReport" @login="init"/>
 
     <section class="section">
       <div class="columns">
@@ -70,6 +70,10 @@ export default {
     bugReport(status) {
       console.log(status)
       this.openBugReport = status;
+    },
+
+    init() {
+      this.$refs.sideMenu.init(this.menuItems);
     }
 
   },
