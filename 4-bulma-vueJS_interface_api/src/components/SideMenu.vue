@@ -2,33 +2,12 @@
   <aside class="menu">
     <p class="menu-label">Menu</p>
     <ul class="menu-list">
-      <li>
-        <router-link to="/dashboard">
-              <span class="icon ">
-                <i class="fa fa-tachometer"></i>
-              </span>Dashboard
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/items">
-              <span class="icon">
-                <i class="fa fa-book"></i>
-              </span> Items
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/customers">
-              <span class="icon">
-                <i class="fa fa-address-book"></i>
-              </span> Customers
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/orders">
-              <span class="icon">
-                <i class="fa fa-file-text-o"></i>
-              </span>
-          Orders
+      <li v-for="item in menuItems">
+        <router-link :to="item.link">
+          <span class="icon ">
+            <i :class="item.icon"></i>
+          </span>
+          {{item.name}}
         </router-link>
       </li>
     </ul>
@@ -36,7 +15,33 @@
 </template>
 <script>
 export default {
-  name: 'SideMenu'
+  name: 'SideMenu',
+  data() {
+    return {
+      menuItems: [
+        {
+          name: 'Dashboard',
+          icon: 'fa fa-tachometer',
+          link: '/dashboard'
+        },
+        {
+          name: 'Items',
+          icon: 'fa fa-book',
+          link: '/items'
+        },
+        {
+          name: 'Customers',
+          icon: 'fa fa-address-book',
+          link: '/customers'
+        },
+        {
+          name: 'Orders',
+          icon: 'fa fa-file-text-o',
+          link: '/orders'
+        }
+      ]
+    }
+  }
 }
 </script>
 <style lang="scss">
