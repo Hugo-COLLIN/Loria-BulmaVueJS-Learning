@@ -93,6 +93,9 @@
 </template>
 
 <script>
+/*
+  This component is used to create a new item or edit an existing one.
+ */
 export default {
   name: "ModalItem",
   data() {
@@ -136,8 +139,10 @@ export default {
     sendModal() {
       this.resetErrors();
 
+      // Convert minutes to milliseconds
       this.form.Milliseconds *= 60000;
 
+      // Check if all fields are filled else return error
       for (let key in this.form)
         if (this.form[key] === "")
         {
@@ -149,6 +154,7 @@ export default {
 
       //this.hideNotification = false;
 
+      // Send data to parent component
       if (this.edit)
         this.$emit("edit-data", this.form);
       else
@@ -161,23 +167,29 @@ export default {
       }, 3000);*/
     },
 
+    /*
+      Reset all errors
+     */
     resetErrors() {
       for (let key in this.error)
         this.error[key] = false;
     },
-
+    /*
+      Reset all fields
+     */
     newForm() {
       this.edit = false;
       this.btnTitle = "Create item";
 
-      /*
+      // Reset all fields
       for (let key in this.form)
-        this.form[key] = "";
-              */
-      this.form.Name = "";
+        if (typeof(this.form[key]) === "string")
+          this.form[key] = "";
+      /*this.form.Name = "";
       this.form.UnitPrice = "";
       this.form.Milliseconds = "";
-      this.form.Composer = "";
+      this.form.Composer = "";*/
+      //TODO : implement these fields and set them by default to error value (-1)
       this.form.AlbumId = 5;
       this.form.MediaTypeId = 1;
       this.form.GenreId = 1;

@@ -10,6 +10,9 @@
 </template>
 
 <script>
+/*
+ * This component is used to create a search bar.
+ */
 import Collect from "collect.js";
 import Items from "@/views/Items.vue";
 
@@ -18,29 +21,47 @@ export default {
   components: {Items},
   data() {
     return {
+      // The word to search
       searchWord: '',
+      // The list of items that has been searched
       searchList: [],
+      // The list of attributes to search
       searchAttributes: [],
+      // The label of the button
       label: '',
     }
   },
   methods: {
+    /*
+      * Check if the search bar is empty or not.
+     */
     isSearching() {
       return (this.searchWord !== '');
     },
+
+    /*
+      * Emit the search event.
+     */
     emitSearch() {
       this.$emit('search');
     },
+
+    /*
+      * Execute the search in a given list.
+     */
     executeSearch(list) {
-      if (this.searchWord !== '')
-        list = new Collect(list)
-            .filter((item) => {
-              for (let att in item)
-                if (item[att] !== null && this.searchAttributes.indexOf(att) !== -1) //(att === "Name" || att === "Composer")
-                  if (item[att].toLowerCase().includes(this.searchWord.toLowerCase())) return true;
-            })
-            .all();
-      return list;
+      if (!this.isSearching())
+        return list;
+      // Filter the list
+      list = new Collect(list)
+          .filter((item) => {
+            for (let att in item)
+              // Check if the attribute is in the list of attributes to search
+              if (item[att] !== null && this.searchAttributes.indexOf(att) !== -1) //(att === "Name" || att === "Composer")
+                // Check if the attribute contains the search word
+                if (item[att].toLowerCase().includes(this.searchWord.toLowerCase())) return true;
+          })
+          .all();
     },
     init(attributes, label) {
       this.searchAttributes = attributes;
