@@ -15,14 +15,6 @@
           <div class="level-left">
             <div class="level-item">
               <Search ref="search" @search="search"></Search>
-<!--              <div class="field has-addons">-->
-<!--                <p class="control">-->
-<!--                  <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="search">-->
-<!--                </p>-->
-<!--                <p class="control">-->
-<!--                  <button class="button" @click="search">Search</button>-->
-<!--                </p>-->
-<!--              </div>-->
             </div>
           </div>
         </div>
