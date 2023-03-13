@@ -68,6 +68,7 @@ router.beforeEach((to, from, next) => {
   }
   else if (to.name === 'login' && sessionStorage.getItem('tokenSession') !== null) {
     next('/') // already logged in, redirect to dashboard
+    // router.go(0) // refresh page
   }
   else {
     next() // does not require auth

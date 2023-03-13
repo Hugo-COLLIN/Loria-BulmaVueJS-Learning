@@ -59,10 +59,12 @@
 <script>
 import axios from "axios";
 import LoginMechanics from "@/components/LoginMechanics.vue";
+import router from "@/router";
 
 
 export default {
   name: 'Login',
+  emits: ['login'],
   components: {LoginMechanics},
   data() {
     return {
@@ -81,6 +83,7 @@ export default {
       this.resetErrors();
       this.$refs.logup.login(this.form.email, this.form.password);
       this.resetErrors();
+      this.$emit('login');
     },
     resetErrors() {
       this.error.email = false;

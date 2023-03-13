@@ -1,6 +1,6 @@
 <template>
   <template v-if="$route.name !== 'login'">
-    <HeaderBar @open-bug-report="bugReport"/>
+    <HeaderBar @open-bug-report="bugReport" @login="init"/>
 
     <section class="section">
       <div class="columns">
@@ -20,7 +20,7 @@
 <script>
 import BugReport from "@/components/BugReport.vue";
 import SideMenu from "@/components/SideMenu.vue";
-import HeaderBar from "@/HeaderBar.vue";
+import HeaderBar from "@/components/HeaderBar.vue";
 
 export default {
   name: "App",
@@ -70,6 +70,10 @@ export default {
     bugReport(status) {
       console.log(status)
       this.openBugReport = status;
+    },
+
+    init() {
+      this.$refs.sideMenu.init(this.menuItems);
     }
 
   },

@@ -50,18 +50,21 @@ export default {
       * Execute the search in a given list.
      */
     executeSearch(list) {
+      // console.log(list)
       if (!this.isSearching())
         return list;
       // Filter the list
       list = new Collect(list)
           .filter((item) => {
-            for (let att in item)
+            for (let att in item) {
               // Check if the attribute is in the list of attributes to search
               if (item[att] !== null && this.searchAttributes.indexOf(att) !== -1) //(att === "Name" || att === "Composer")
-                // Check if the attribute contains the search word
+                  // Check if the attribute contains the search word
                 if (item[att].toLowerCase().includes(this.searchWord.toLowerCase())) return true;
+            }
           })
           .all();
+      return list;
     },
     init(attributes, label) {
       this.searchAttributes = attributes;
