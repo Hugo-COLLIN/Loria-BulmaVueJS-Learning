@@ -26,7 +26,7 @@ export default {
       this.totalItems = totalItems;
     },
 
-    create(label) {
+    init(label) {
       this.label = label;
     }
   }
