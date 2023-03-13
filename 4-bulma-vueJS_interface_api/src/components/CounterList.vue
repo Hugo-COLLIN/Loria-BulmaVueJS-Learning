@@ -5,6 +5,10 @@
 </template>
 
 <script>
+/*
+  This component is used to show the number of items in the list
+  and the number of items that are currently being displayed.
+ */
 export default {
   name: "CounterList",
   data() {

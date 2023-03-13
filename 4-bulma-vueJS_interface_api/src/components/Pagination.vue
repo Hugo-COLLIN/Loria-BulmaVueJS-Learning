@@ -32,14 +32,22 @@
 </template>
 
 <script>
+/*
+  This component is used to paginate a list of items.
+ */
 export default {
   name: "Pagination",
   data() {
     return {
+      // the page the user is currently on
       currentPage: 1,
+      // the number of items per page
       perPage: 5,
+      // the total number of items in the list
       totalItems: 0,
+      // the total number of pages
       totalPages: 0,
+      // the first item on the current page
       startItem: 0,
     };
   },
@@ -65,6 +73,9 @@ export default {
       return this.perPage;
     },
 
+    /*
+      Get to the previous page
+     */
     paginPrev()
     {
       // console.log(this.currentPage)
@@ -76,6 +87,9 @@ export default {
       }
     },
 
+    /*
+      Get to the next page
+     */
     paginNext()
     {
       //console.log(this.currentPage)
@@ -90,6 +104,9 @@ export default {
       }
     },
 
+    /*
+      Get to the first page
+     */
     paginStart()
     {
       this.currentPage = 1;
@@ -97,6 +114,9 @@ export default {
       this.$emit('pagin-update');
     },
 
+    /*
+      Get to the last page
+     */
     paginEnd()
     {
       this.currentPage = this.totalPages;
@@ -106,11 +126,17 @@ export default {
 
     //Items.length / this.perPage
 
+    /*
+      Get the first item on the current page
+     */
     startingItem()
     {
       return (this.currentPage - 1) * this.perPage;
     },
 
+    /*
+      Get the last item on the current page
+     */
     endingItem()
     {
       // return (this.currentPage) * (this.perPage) - (this.totalItems % this.perPage);
