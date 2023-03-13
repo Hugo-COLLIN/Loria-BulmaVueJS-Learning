@@ -58,42 +58,9 @@
     </nav>
 
     <section class="section">
-      <div class="columns">
+      <div class="columns"> <!-- vv SideMenu vv -->
         <div class="column is-4-tablet is-3-desktop is-2-widescreen" v-if="$route.name !== '404'">
-          <aside class="menu">
-            <p class="menu-label">Menu</p>
-            <ul class="menu-list">
-              <li>
-                <router-link to="/dashboard">
-              <span class="icon ">
-                <i class="fa fa-tachometer"></i>
-              </span>Dashboard</router-link>
-              </li>
-              <li>
-                <router-link to="/items">
-              <span class="icon">
-                <i class="fa fa-book"></i>
-              </span> Items
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/customers">
-              <span class="icon">
-                <i class="fa fa-address-book"></i>
-              </span> Customers
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/orders">
-              <span class="icon">
-                <i class="fa fa-file-text-o"></i>
-              </span>
-                  Orders
-                </router-link>
-              </li>
-            </ul>
-          </aside>
-
+          <SideMenu/>
         </div>
         <main class="column">
           <router-view/>
@@ -108,12 +75,14 @@
 <script>
 import BugReport from "@/components/BugReport.vue";
 import LoginMechanics from "@/components/LoginMechanics.vue";
-import axios from "axios";
+import SideMenu from "@/components/SideMenu.vue";
 
 export default {
   name: "App",
   components: {
-    BugReport, LoginMechanics
+    SideMenu,
+    BugReport,
+    LoginMechanics
   },
   data()
   {
