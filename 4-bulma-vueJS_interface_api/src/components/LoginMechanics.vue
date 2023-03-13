@@ -26,7 +26,7 @@ export default {
       })
           .then(response => {
             // save the token in the session storage
-            sessionStorage.setItem('tokenSession', response.data);
+            sessionStorage.setItem('tokenSession', response.data[0]);
             // redirect to the dashboard
             this.$router.push({name: 'dashboard'});
           })
