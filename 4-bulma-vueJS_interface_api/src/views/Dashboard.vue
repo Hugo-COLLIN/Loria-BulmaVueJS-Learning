@@ -38,7 +38,7 @@
       <div class="column is-12-tablet is-6-desktop is-3-widescreen">
         <div class="notification is-primary has-text">
           <p class="title is-1">{{ selectedStats.visitors }}</p>
-          <p class="subtitle is-4">Visitors</p>
+          <p class="subtitle is-4">Member</p>
         </div>
       </div>
 
@@ -56,15 +56,15 @@
               Latest orders
             </h2>
 
-            <template :key="order.id" v-for="(order, key) in this.orders">
+            <template :key="order.InvoiceId" v-for="(order, key) in this.orders">
               <div class="level" >
                 <div class="level-left">
                   <div>
                     <p class="title is-5 is-marginless">
-                      <router-link to="/orders">{{order.id}}</router-link>
+                      <router-link to="/orders">{{order.InvoiceId}}</router-link>
                     </p>
                     <small>
-                      {{order.date}} by <router-link to="/customers">{{order.purchasedBy}}</router-link>
+                      {{order.InvoiceDate}} by <router-link to="/customers">{{order.name}}</router-link>
                     </small>
                   </div>
                 </div>
@@ -72,9 +72,8 @@
                 <div class="level-right">
                   <div class="has-text-right">
                     <p class="title is-5 is-marginless">
-                      $ {{order.price}}
+                      $ {{order.Total}}
                     </p>
-                    <span class="tag" :class="order.status.class">{{ order.status.label }}</span>
                   </div>
                 </div>
               </div>
@@ -92,21 +91,21 @@
               Most popular items
             </h2>
 
-            <template v-for="(item, key) in items" :key="item.id">
+            <template v-for="(item, key) in items" :key="item.TrackId">
               <div class="media" >
                 <div class="media-left is-marginless">
                   <p class="number">{{ key + 1 }}</p>
                 </div>
-                <div class="media-left">
+                <!--<div class="media-left">
                   <img :src="require(`@/assets/${item.image}`)" width="40">
-                </div>
+                </div>-->
                 <div class="media-content">
                   <p class="title is-5 is-spaced is-marginless">
-                    <router-link to="/items">{{ item.name }}</router-link>
+                    <router-link to="/items">{{ item.Name }}</router-link>
                   </p>
                 </div>
                 <div class="media-right">
-                  {{ item.copiesSold}} sold
+                  {{ item.Sold}} sold
                 </div>
               </div>
             </template>
@@ -122,18 +121,18 @@
             <h2 class="title is-4">
               Most loyal customers
             </h2>
-            <template :key="customer.id" v-for="(customer, key) in customers">
+            <template :key="customer.CustomerId" v-for="(customer, key) in customers">
               <div class="media">
                 <div class="media-left is-marginless">
                   <p class="number">{{ key + 1 }}</p>
                 </div>
                 <div class="media-content">
                   <p class="title is-5 is-spaced is-marginless">
-                    <router-link to="/customers">{{ customer.name }}</router-link>
+                    <router-link to="/customers">{{ customer.FirstName  }} {{ customer.LastName }}</router-link>
                   </p>
-                  <p class="subtitle is-6">{{ customer.country }}</p>
+                  <p class="subtitle is-6">{{ customer.Country }}</p>
                 </div>
-                <div class="media-right">{{ customer.orderCount }} orders
+                <div class="media-right">{{ customer.OrderCount }} orders
                 </div>
               </div>
             </template>
@@ -150,6 +149,8 @@
 
 <script>
 import ModalItem from "@/components/ModalItem.vue";
+import axios from "axios";
+import customers from "@/views/Customers.vue";
 
 export default {
   name: 'Dashboard',
@@ -160,79 +161,44 @@ export default {
     return {
       customers: [
         {
-          id: 1,
-          name: "John Miller",
-          country: "United States",
-          orderCount: 7
+          "Address": "Av. Brigadeiro Faria Lima, 2170",
+          "City": "S\u00e3o Jos\u00e9 dos Campos",
+          "Company": "Embraer - Empresa Brasileira de Aeron\u00e1utica S.A.",
+          "Country": "Brazil",
+          "CustomerId": 1,
+          "Email": "luisg@embraer.com.br",
+          "Fax": "+55 (12) 3923-5566",
+          "FirstName": "Lu\u00eds",
+          "LastName": "Gon\u00e7alves",
+          "Phone": "+55 (12) 3923-5555",
+          "PostalCode": "12227-000",
+          "State": "SP",
+          "SupportRepId": 3
         },
-        {
-          id: 2,
-          name: "Samantha Rogers",
-          country: "United Kingdom",
-          orderCount: 5
-        },
-        {
-          id: 3,
-          name: "Mikko Mikkonen",
-          country: "Finland",
-          orderCount: 2
-        }
       ],
       items: [
         {
-          id: 1,
-          name: "Learning Swift",
-          copiesSold: 146,
-          image: "images/swift.jpg"
+          "Count": -1,
+          "Name": "Loading",
+          "TrackId": 1,
         },
-        {
-          id: 2,
-          name: "TensorFlow for Machine Intelligence",
-          copiesSold: 56,
-          image: "images/tensorflow.jpg"
-        },
-        {
-          id: 3,
-          name: "Choosing a Javascript Framework",
-          copiesSold: 47,
-          image: "images/js-framework.jpg"
-        }
       ],
       orders: [
         {
-          id: 787352,
-          date: "Nov 18, 17:38",
-          purchasedBy: "John Miller",
-          price: "56.98",
-          status: {
-            label: "In Progress",
-            class: "is-warning"
-          }
+          "BillingAddress": "Theodor-Heuss-Stra\u00dfe 34",
+          "BillingCity": "Stuttgart",
+          "BillingCountry": "Germany",
+          "BillingPostalCode": "70174",
+          "BillingState": null,
+          "CustomerId": 2,
+          "InvoiceDate": "2009-01-01T00:00:00",
+          "InvoiceId": 1,
+          "Total": 1.98
         },
-        {
-          id: 289050,
-          date: "Nov 16, 11:45",
-          purchasedBy: "Samantha Rogers",
-          price: "22.99",
-          status: {
-            label: "Successful",
-            class: "is-success"
-          }
-        },
-        {
-          id: 918478,
-          date: "Nov 12, 21:57",
-          purchasedBy: "Mikko Mikkonen",
-          price: "22.99",
-          status: {
-            label: "failed",
-            class: "is-danger"
-          }
-        }
       ],
       stats: {
         today: {
-          orders: "232",
+          orders: "0",
           revenue: "7,648",
           visitors: "1,678",
           pageViews: "20,756"
@@ -275,10 +241,78 @@ export default {
     },
     getImgPath(image) {
       return image ? require(`@/assets/images/${image}`) : "";
+    },
+    setCustomer() {
+      axios.get("http://51.91.76.245:8000/api/customers")
+          .then(response => {
+            this.customers = response.data;
+            this.customers.sort((a, b) => {
+              return b.OrderCount - a.OrderCount;
+            });
+            for (let stats in this.stats) {
+              this.stats[stats].visitors = response.data.length;
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+    setOrder() {
+      axios.get("http://51.91.76.245:8000/api/invoices" )
+          .then(response => {
+            response.data.sort((a, b) => {
+              return new Date(b.InvoiceDate) - new Date(a.InvoiceDate);
+            });
+            for (let stats in this.stats) {
+              this.stats[stats].orders = response.data.length;
+            }
+            // get only the 3 first orders
+            response.data = response.data.slice(0, 3);
+            // replace customer id by customer name
+            this.orders = response.data;
+            for (let i = 0; i < this.orders.length; i++) {
+              let c = this.customers.find(customer => customer.CustomerId === this.orders[i].CustomerId);
+              if (!c) continue;
+              this.orders[i].name = c.FirstName + " " + c.LastName;
+            }
+            this.customers = this.customers.slice(0, 3);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+    setItem() {
+      axios.get("http://51.91.76.245:8000/api/tracks")
+          .then(response => {
+            this.items = response.data;
+            this.items.sort((a, b) => {
+              return b.Sold - a.Sold;
+            });
+            // get the total revenue
+            let total = 0;
+            for (let i = 0; i < this.items.length; i++) {
+              total += this.items[i].Sold * this.items[i].UnitPrice;
+            }
+            // round the total
+            total = Math.round(total * 100) / 100;
+            for (let stats in this.stats) {
+
+              this.stats[stats].revenue = total;
+            }
+            // get only the 3 first items
+            this.items = this.items.slice(0, 3);
+            this.changeStats({target: {value: "today"}})
+          })
+          .catch(error => {
+            console.error(error);
+          });
     }
   },
   mounted() {
     //console.log(this.$store.state.tokenLogin);
+    this.setCustomer();
+    this.setOrder();
+    this.setItem();
   }
 }
 </script>
