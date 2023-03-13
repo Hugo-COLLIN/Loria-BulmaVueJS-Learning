@@ -20,7 +20,7 @@
 <script>
 import BugReport from "@/components/BugReport.vue";
 import SideMenu from "@/components/SideMenu.vue";
-import HeaderBar from "@/HeaderBar.vue";
+import HeaderBar from "@/components/HeaderBar.vue";
 
 export default {
   name: "App",
