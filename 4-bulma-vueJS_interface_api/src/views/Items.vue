@@ -330,7 +330,7 @@ export default {
       this.$refs.sortList.create(this.sorts,"Order by");
 
       this.$refs.counterList.create("tracks");
-      this.$refs.search.init(["Name", "Composer"], "Search");
+      this.$refs.search.init(["Name", "Composer"], "Name, Composer");
     },
   },
   mounted() {

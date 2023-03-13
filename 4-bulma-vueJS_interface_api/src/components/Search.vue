@@ -1,10 +1,10 @@
 <template>
   <div class="field has-addons">
     <p class="control">
-      <input class="input" type="text" placeholder="Item name, Composer…" v-model="searchWord" v-on:keyup="emitSearch">
+      <input class="input" type="text" :placeholder="this.label" v-model="searchWord" v-on:keyup="emitSearch">
     </p>
     <p class="control">
-      <button class="button" @click="executeSearch">{{ this.label }}</button>
+      <button class="button" @click="executeSearch">Search</button>
     </p>
   </div>
 </template>

@@ -42,13 +42,6 @@
         </div>
       </div>
 
-      <div class="column is-12-tablet is-6-desktop is-3-widescreen">
-        <div class="notification is-success has-text">
-          <p class="title is-1">{{ selectedStats.pageViews }}</p>
-          <p class="subtitle is-4">Pageviews</p>
-        </div>
-      </div>
-
       <div class="column is-12-tablet is-6-desktop is-4-fullhd">
         <div class="card">
           <div class="card-content">
