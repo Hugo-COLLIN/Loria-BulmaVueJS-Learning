@@ -60,7 +60,7 @@
     <section class="section">
       <div class="columns"> <!-- vv SideMenu vv -->
         <div class="column is-4-tablet is-3-desktop is-2-widescreen" v-if="$route.name !== '404'">
-          <SideMenu/>
+          <SideMenu ref="sideMenu"/>
         </div>
         <main class="column">
           <router-view/>
@@ -90,14 +90,39 @@ export default {
       /**
        * "Bug report modal" display state
        */
-      openBugReport: false
+      openBugReport: false,
+      /**
+       * Menu items
+       */
+      menuItems: [
+        {
+          name: 'Dashboard',
+          icon: 'fa fa-tachometer',
+          link: '/dashboard'
+        },
+        {
+          name: 'Items',
+          icon: 'fa fa-book',
+          link: '/items'
+        },
+        {
+          name: 'Customers',
+          icon: 'fa fa-address-book',
+          link: '/customers'
+        },
+        {
+          name: 'Orders',
+          icon: 'fa fa-file-text-o',
+          link: '/orders'
+        }
+      ]
     }
   },
   methods: {
 
   },
   mounted() {
-    // this.$refs.loginMechanics.loginState();
+    this.$refs.sideMenu.init(this.menuItems);
   }
 };
 </script>

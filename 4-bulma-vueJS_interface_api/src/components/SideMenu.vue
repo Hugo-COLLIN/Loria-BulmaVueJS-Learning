@@ -18,41 +18,17 @@ export default {
   name: 'SideMenu',
   data() {
     return {
-      menuItems: [
-        {
-          name: 'Dashboard',
-          icon: 'fa fa-tachometer',
-          link: '/dashboard'
-        },
-        {
-          name: 'Items',
-          icon: 'fa fa-book',
-          link: '/items'
-        },
-        {
-          name: 'Customers',
-          icon: 'fa fa-address-book',
-          link: '/customers'
-        },
-        {
-          name: 'Orders',
-          icon: 'fa fa-file-text-o',
-          link: '/orders'
-        }
-      ]
+      menuItems: []
+    }
+  },
+  methods: {
+    init(items)
+    {
+      this.menuItems = items;
     }
   }
 }
 </script>
 <style lang="scss">
 
-nav {
-  //padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-  }
-}
 </style>
