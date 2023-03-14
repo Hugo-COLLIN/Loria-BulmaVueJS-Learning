@@ -53,19 +53,19 @@
       </tr>
       </tfoot>
       <tbody>
-      <template v-for="(item, key) in items">
+      <template v-for="(item) in items">
         <tr>
           <td>
             <input type="checkbox">
           </td>
           <td>
-            <strong>{{item.FirstName}} {{item.LastName}}</strong>
+            <strong>{{ item.FirstName }} {{ item.LastName }}</strong>
           </td>
-          <td><code>{{item.Email}}</code></td>
-          <td>{{item.Country}}</td>
+          <td><code>{{ item.Email }}</code></td>
+          <td>{{ item.Country }}</td>
           <td>
             <!-- TODO: Add redirect to orders -->
-            <a href="customer-orders.html">{{ item.OrderCount }}</a>
+            <a href="orders">{{ item.OrderCount }}</a>
           </td>
           <td>
             <div class="buttons">
@@ -80,23 +80,22 @@
     </table>
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
   </div>
-  <!-- TODO: Add modal -->
-  <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem"
-             @edit-data="editItem"></ModalItem>
+  <Modal ref="modalCustomers" :show-modal="showModal" @close="showModal = false" @sent-data="addItem"
+         @edit-data="editItem"></Modal>
 </template>
 
 <script>
-import CounterList from "@/components/tools/CounterList.vue";
-import Search from "@/components/tools/Search.vue";
-import Dropdown from "@/components/tools/Dropdown.vue";
-import Pagination from "@/components/tools/Pagination.vue";
-import ModalItem from "@/components/ModalItem.vue";
+import CounterList from "@/components/CounterList.vue";
+import Search from "@/components/Search.vue";
+import Dropdown from "@/components/Dropdown.vue";
+import Pagination from "@/components/Pagination.vue";
 import axios from "axios";
 import Collect from "collect.js";
+import Modal from "@/components/Modal.vue";
 
 export default {
   name: 'Dashboard',
-  components: {ModalItem, Pagination, Dropdown, Search, CounterList},
+  components: {Modal, Pagination, Dropdown, Search, CounterList},
   data() {
     return {
       items: [],
@@ -203,14 +202,19 @@ export default {
 
     callNewItem() {
       this.showModal = true;
-      this.$refs.modalItem.showModal = true;
+      console.log(this.$refs.modalCustomers.showModal);
+      this.$refs.modalCustomers.showModal = true;
     },
 
     addItem(item) {
       this.items.push(item);
       this.total = this.items.length;
       this.displayCutAllList();
-      axios.post('http://51.91.76.245:8000/api/customers/' + item.id, {
+      item.SupportRepId = 1;
+      axios({
+        method: 'post',
+        url: "http://51.91.76.245:8000/api/customers",
+        data: item,
         headers: {
           token: sessionStorage.getItem('tokenSession')
         }
@@ -225,7 +229,7 @@ export default {
 
     callEditItem(item) {
       this.showModal = true;
-      this.$refs.modalItem.editForm(item);
+      this.$refs.modalCustomers.editForm(item);
       this.currentItem = item;
     },
 
@@ -291,9 +295,10 @@ export default {
   },
   mounted() {
     this.getCustomers();
-    this.$refs.search.init(["FirstName","LastName", "Email", "Country"], "Name,Email,Country");
+    this.$refs.search.init(["FirstName", "LastName", "Email", "Country"], "Name,Email,Country");
     this.$refs.sortList.init(this.sorts, "Order by");
     this.$refs.orderList.init(this.orders, "Order");
+    this.$refs.modalCustomers.init(this.item)
   },
 }
 </script>
