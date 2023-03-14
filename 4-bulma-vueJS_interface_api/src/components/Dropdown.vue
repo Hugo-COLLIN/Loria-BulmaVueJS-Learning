@@ -34,7 +34,7 @@ export default {
       // console.log("Event : " + event.target.value);
     },
 
-    create(list, label) {
+    init(list, label) {
       this.label = label;
       this.listOptions = list;
       this.selected = list[0].shortName;
