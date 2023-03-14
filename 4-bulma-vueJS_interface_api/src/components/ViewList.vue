@@ -43,10 +43,10 @@
 import axios from "axios";
 import Collect from 'collect.js';
 import ModalItem from "@/components/ModalItem.vue";
-import Pagination from "@/components/Pagination.vue";
-import Dropdown from "@/components/Dropdown.vue";
-import CounterList from "@/components/CounterList.vue";
-import Search from "@/components/Search.vue";
+import Pagination from "@/components/tools/Pagination.vue";
+import Dropdown from "@/components/tools/Dropdown.vue";
+import CounterList from "@/components/tools/CounterList.vue";
+import Search from "@/components/tools/Search.vue";
 import TileViewList from "@/components/TileViewList.vue";
 
 export default {
