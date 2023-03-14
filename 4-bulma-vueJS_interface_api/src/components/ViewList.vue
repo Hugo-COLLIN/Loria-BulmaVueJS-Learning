@@ -48,10 +48,11 @@ import Dropdown from "@/components/tools/Dropdown.vue";
 import CounterList from "@/components/tools/CounterList.vue";
 import Search from "@/components/tools/Search.vue";
 import TileViewList from "@/components/TileViewList.vue";
+import Modal from "@/components/Modal.vue";
 
 export default {
   name: 'Items',
-  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search},
+  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search, Modal},
   data() {
     return {
       items: [],
@@ -306,6 +307,10 @@ export default {
       this.searchComponent.att = attributes;
       this.searchComponent.placeholder = placeholder;
       this.searchComponent.button = button;
+    },
+
+    setFormView(formStruct) {
+      this.$refs.modalItem.setFormView(formStruct);
     },
 
     init() {

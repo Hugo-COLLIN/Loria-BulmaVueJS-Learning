@@ -65,7 +65,7 @@
           <td>{{ item.Country }}</td>
           <td>
             <!-- TODO: Add redirect to orders -->
-            <a href="orders">{{ item.OrderCount }}</a>
+            <router-link to="orders">{{ item.OrderCount }}</router-link>
           </td>
           <td>
             <div class="buttons">

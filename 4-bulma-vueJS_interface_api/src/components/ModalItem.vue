@@ -14,44 +14,65 @@
           </div>
 
           <div :class="{'is-hidden': !hideNotification}">
-            <div class="field">
-              <div class="field">
-                <label class="label">Title</label>
-                <div class="control">
-                  <input v-model="this.form.Name" :class="{'is-danger': error.Name}" class="input is-large" type="text" placeholder="Title" name="title" required>
+              <template v-for="(item,key) in formStruct">
+                <div class="field">
+                  <div class="columns is-desktop">
+                    <template v-for="(item2,key2) in item">
+                      <div class="column">
+                        <label class="label">{{ item2.label }}</label>
+                        <div class="control" :class="{'has-icons-left': item2.icon !== '' }">
+                          <input :name="key2" v-model="this.form[item2.name]" class="input" :class="item2.classes" :placeholder="item2.placeholder" required :type="item2.type">
+                          <span v-if="item2.icon !== ''" class="icon is-small is-left">
+                            <i :class="item2.icon"></i>
+                          </span>
+                        </div>
+                        <p v-if="error[key2]" class="help is-danger">Please enter a {{ key2 }}</p>
+                      </div>
+                    </template>
+                  </div>
                 </div>
-                <p class="help is-danger" v-if="error.Name">Please enter an item name</p>
-              </div>
-            </div>
+              </template>
 
-            <div class="columns is-desktop">
-              <div class="column">
-                <label class="label">Price</label>
-                <div class="control has-icons-left">
-                  <input v-model="this.form.UnitPrice" class="input" type="number" placeholder="e.g. 22.99" name="price" required>
-                  <span class="icon is-small is-left">
-                      <i class="fa fa-dollar"></i>
-                  </span>
-                </div>
-                <p class="help is-danger" v-if="error.UnitPrice">Please enter a price</p>
-              </div>
 
-              <div class="column">
-                <label class="label">Duration (minutes)</label>
-                <div class="control">
-                  <input v-model="this.form.Milliseconds" class="input" type="number" placeholder="e.g. 270" name="duration" required>
-                </div>
-                <p class="help is-danger" v-if="error.Milliseconds">Please enter a duration</p>
-              </div>
 
-              <div class="column">
-                <label class="label">Composers (comma separated)</label>
-                <div class="control">
-                  <input v-model="this.form.Composer" class="input" type="text" placeholder="e.g. 9781939902351" name="composer" required>
-                </div>
-                <p class="help is-danger" v-if="error.Composer">Please enter composers</p>
-              </div>
-            </div>
+<!--            <div class="field">-->
+<!--              <div class="field">-->
+<!--                <label class="label">Title</label>-->
+<!--                <div class="control">-->
+<!--                  <input v-model="this.form.Name" :class="{'is-danger': error.Name}" class="input is-large" type="text" placeholder="Title" name="title" required>-->
+<!--                </div>-->
+<!--                <p class="help is-danger" v-if="error.Name">Please enter an item name</p>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="columns is-desktop">-->
+<!--              <div class="column">-->
+<!--                <label class="label">Price</label>-->
+<!--                <div class="control has-icons-left">-->
+<!--                  <input v-model="this.form.UnitPrice" class="input" type="number" placeholder="e.g. 22.99" name="price" required>-->
+<!--                  <span class="icon is-small is-left">-->
+<!--                      <i class="fa fa-dollar"></i>-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--                <p class="help is-danger" v-if="error.UnitPrice">Please enter a price</p>-->
+<!--              </div>-->
+
+<!--              <div class="column">-->
+<!--                <label class="label">Duration (minutes)</label>-->
+<!--                <div class="control">-->
+<!--                  <input v-model="this.form.Milliseconds" class="input" type="number" placeholder="e.g. 270" name="duration" required>-->
+<!--                </div>-->
+<!--                <p class="help is-danger" v-if="error.Milliseconds">Please enter a duration</p>-->
+<!--              </div>-->
+
+<!--              <div class="column">-->
+<!--                <label class="label">Composers (comma separated)</label>-->
+<!--                <div class="control">-->
+<!--                  <input v-model="this.form.Composer" class="input" type="text" placeholder="e.g. 9781939902351" name="composer" required>-->
+<!--                </div>-->
+<!--                <p class="help is-danger" v-if="error.Composer">Please enter composers</p>-->
+<!--              </div>-->
+<!--            </div>-->
 
 <!--            <div class="field">-->
 <!--              <label class="label">Cover image</label>-->
@@ -116,7 +137,14 @@ export default {
         UnitPrice: false,
         Milliseconds: false,
         Composer: false,
-      }
+      },
+      // labels: {
+      //   Name: "Title",
+      //   UnitPrice: "Price",
+      //   Milliseconds: "Duration (minutes)",
+      //   Composer: "Composers (comma separated)",
+      // },
+      formStruct: {},
     };
   },
   props: {
@@ -205,7 +233,39 @@ export default {
       for (let key in item)
         this.form[key] = item[key];
       this.form.Milliseconds /= 60000;
-    }
+    },
+
+    setFormView(formStruct) {
+      this.formStruct = formStruct;
+    },
+
+    // init(form) {
+    //   this.form = form;
+    //   this.error = {};
+    //   for (let key in this.form) {
+    //     this.error[key] = false;
+    //   }
+    //   this.column = Math.round(Object.keys(this.form).length / 3);
+    //   console.log(this.column)
+    //   this.splitedForm = this.splitForm(this.form, this.column);
+    // },
+    //
+    // splitForm(form, column) {
+    //   let splicedForm = {};
+    //   let i = 0;
+    //   let index = 0;
+    //   for (let key in form) {
+    //     if (i % column === 0) {
+    //       index++;
+    //     }
+    //     if (!splicedForm[index]) {
+    //       splicedForm[index] = {};
+    //     }
+    //     splicedForm[index][key] = form[key];
+    //     i++;
+    //   }
+    //   return splicedForm;
+    // }
   },
 }
 </script>

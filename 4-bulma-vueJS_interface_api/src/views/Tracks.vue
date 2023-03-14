@@ -44,6 +44,12 @@ export default {
             post: ""
           }],
       },
+
+      formView: [
+          [{name: "Name", label: "Title", icon:"", placeholder:"Title", type:"text", classes: "is-large"}],
+          [{name: "UnitPrice", label: "Price", icon:"fa fa-dollar", placeholder: "e.g. 22.99", type:"number"}, {name: "Milliseconds", label: "Duration (minutes)", icon:"", placeholder: "e.g. 1.8", type:"number"}],
+          [{name: "Composer", label: "Composers (comma separated)", icon:"", placeholder:"e.g. Mozart", type:"area"}],
+      ]
     }
   },
   mounted() {
@@ -52,6 +58,7 @@ export default {
     this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/tracks");
     this.$refs.viewList.setPageTitle("Tracks");
     this.$refs.viewList.setSearchComponent(["Name", "Composer"], "Titre, compositeur...", "Search");
+    this.$refs.viewList.setFormView(this.formView);
     // this.$refs.viewList.setCardsTitle("Name");
     this.$refs.viewList.init();
   },
