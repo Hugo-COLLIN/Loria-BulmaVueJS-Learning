@@ -14,11 +14,9 @@
  * This component is used to create a search bar.
  */
 import Collect from "collect.js";
-import Items from "@/views/Items.vue";
 
 export default {
   name: "Search",
-  components: {Items},
   data() {
     return {
       // The word to search
