@@ -126,24 +126,8 @@ export default {
       edit: false,
       btnTitle: "",
 
-      form: {
-        // Name: "",
-        // UnitPrice: "",
-        // Milliseconds: "",
-        // Composer: "",
-      },
-      error: {
-        // Name: false,
-        // UnitPrice: false,
-        // Milliseconds: false,
-        // Composer: false,
-      },
-      // labels: {
-      //   Name: "Title",
-      //   UnitPrice: "Price",
-      //   Milliseconds: "Duration (minutes)",
-      //   Composer: "Composers (comma separated)",
-      // },
+      form: {},
+      error: {},
       formStruct: {},
     };
   },
@@ -204,10 +188,6 @@ export default {
     resetErrors() {
       for (let key in this.error)
         this.error[key] = false;
-
-      // for (let key in this.formStruct)
-      //   for (let key2 in this.formStruct[key])
-      //     this.formStruct[key][key2].error = false;
     },
     /*
       Reset all fields
@@ -248,34 +228,6 @@ export default {
         for (let key2 in this.formStruct[key])
           this.error[key2] = false;
     },
-
-    // init(form) {
-    //   this.form = form;
-    //   this.error = {};
-    //   for (let key in this.form) {
-    //     this.error[key] = false;
-    //   }
-    //   this.column = Math.round(Object.keys(this.form).length / 3);
-    //   console.log(this.column)
-    //   this.splitedForm = this.splitForm(this.form, this.column);
-    // },
-    //
-    // splitForm(form, column) {
-    //   let splicedForm = {};
-    //   let i = 0;
-    //   let index = 0;
-    //   for (let key in form) {
-    //     if (i % column === 0) {
-    //       index++;
-    //     }
-    //     if (!splicedForm[index]) {
-    //       splicedForm[index] = {};
-    //     }
-    //     splicedForm[index][key] = form[key];
-    //     i++;
-    //   }
-    //   return splicedForm;
-    // }
   },
 }
 </script>
