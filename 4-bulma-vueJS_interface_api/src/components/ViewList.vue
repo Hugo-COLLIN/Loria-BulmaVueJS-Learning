@@ -1,6 +1,6 @@
 <template>
   <div class="items">
-    <h1 class="title is-center">Tracks</h1>
+    <h1 class="title is-center">{{this.pageTitle}}</h1>
 
     <nav>
       <div class="level is-flex-wrap-wrap is-ancestor">
@@ -80,11 +80,25 @@ export default {
       ],
 
       urlAPI: "",
+      pageTitle: "",
+
+      searchComponent: {
+        att: [],
+        placeholder: "",
+        button: "",
+      }
     };
   },
 
   methods:
   {
+    setPageTitle(title) {
+      this.pageTitle = title;
+    },
+
+    setSearchPlaceholder(placeholder) {
+      this.$refs.search.setPlaceholder(placeholder);
+    },
         /*
     --- ITEMS FILTERING METHODS ---
      */
@@ -276,7 +290,7 @@ export default {
       this.$refs.sortList.init(this.sorts, "Order by");
 
       this.$refs.counterList.init("tracks");
-      this.$refs.search.init(["Name", "Composer"], "Search");
+      this.$refs.search.init(this.searchComponent.att, this.searchComponent.placeholder, this.searchComponent.button);
     },
 
     setDataSet(url) {
@@ -288,12 +302,18 @@ export default {
       this.sorts = sorts;
     },
 
+    setSearchComponent(attributes, placeholder, button) {
+      this.searchComponent.att = attributes;
+      this.searchComponent.placeholder = placeholder;
+      this.searchComponent.button = button;
+    },
+
     init() {
       this.initComponents();
       this.loadList();
     },
 
-    setCards(cards) {
+    setModel(cards) {
       this.$refs.tileViewList.setCards(cards);
     },
     setCardsTitle(title, pre = "", post = "") {

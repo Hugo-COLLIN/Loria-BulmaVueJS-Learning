@@ -48,8 +48,10 @@ export default {
   },
   mounted() {
     this.$refs.viewList.setSortOptions(this.sorts);
-    this.$refs.viewList.setCards(this.cards);
+    this.$refs.viewList.setModel(this.cards);
     this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/tracks");
+    this.$refs.viewList.setPageTitle("Tracks");
+    this.$refs.viewList.setSearchComponent(["Name", "Composer"], "Titre, compositeur...", "Search");
     // this.$refs.viewList.setCardsTitle("Name");
     this.$refs.viewList.init();
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="field has-addons">
     <p class="control">
-      <input class="input" type="text" :placeholder="this.label" v-model="searchWord" v-on:keyup="emitSearch">
+      <input class="input" type="text" :placeholder="this.placeholder" v-model="searchWord" v-on:keyup="emitSearch">
     </p>
     <p class="control">
       <button class="button" @click="executeSearch">Search</button>
@@ -29,6 +29,7 @@ export default {
       searchAttributes: [],
       // The label of the button
       label: '',
+      placeholder: '',
     }
   },
   methods: {
@@ -66,8 +67,9 @@ export default {
           .all();
       return list;
     },
-    init(attributes, label) {
+    init(attributes, placeholder, label) {
       this.searchAttributes = attributes;
+      this.placeholder = placeholder;
       this.label = label;
     },
   }
