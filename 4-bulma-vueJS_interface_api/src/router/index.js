@@ -21,7 +21,7 @@ const routes = [
     meta: {
       requiresAuth: true, // this route requires auth
     },
-    component: () => import(/* webpackChunkName: "items" */ '../views/Items.vue')
+    component: () => import(/* webpackChunkName: "items" */ '../views/Tracks.vue')
   },
   {
     path: '/customers',
