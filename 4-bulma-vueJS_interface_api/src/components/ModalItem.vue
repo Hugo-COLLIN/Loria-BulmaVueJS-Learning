@@ -26,7 +26,7 @@
                             <i :class="item2.icon"></i>
                           </span>
                         </div>
-                        <p v-if="error[key2]" class="help is-danger">Please enter a {{ key2 }}</p>
+                        <p v-if="this.error[item2.name]" class="help is-danger">Please enter a {{ item2.label.toLowerCase() }}</p>
                       </div>
                     </template>
                   </div>
@@ -127,16 +127,16 @@ export default {
       btnTitle: "",
 
       form: {
-        Name: "",
-        UnitPrice: "",
-        Milliseconds: "",
-        Composer: "",
+        // Name: "",
+        // UnitPrice: "",
+        // Milliseconds: "",
+        // Composer: "",
       },
       error: {
-        Name: false,
-        UnitPrice: false,
-        Milliseconds: false,
-        Composer: false,
+        // Name: false,
+        // UnitPrice: false,
+        // Milliseconds: false,
+        // Composer: false,
       },
       // labels: {
       //   Name: "Title",
@@ -175,6 +175,8 @@ export default {
         // console.log(key)
         if (this.form[key] === "") {
           console.log(key)
+          console.log(this.formStruct)
+          this.form.Milliseconds /= 60000;
           return this.error[key] = true;
         }
       }
@@ -202,6 +204,10 @@ export default {
     resetErrors() {
       for (let key in this.error)
         this.error[key] = false;
+
+      // for (let key in this.formStruct)
+      //   for (let key2 in this.formStruct[key])
+      //     this.formStruct[key][key2].error = false;
     },
     /*
       Reset all fields
@@ -237,6 +243,10 @@ export default {
 
     setFormView(formStruct) {
       this.formStruct = formStruct;
+
+      for (let key in this.formStruct)
+        for (let key2 in this.formStruct[key])
+          this.error[key2] = false;
     },
 
     // init(form) {
