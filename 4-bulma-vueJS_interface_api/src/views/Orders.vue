@@ -59,12 +59,12 @@
             <input type="checkbox">
           </td>
           <td>
-            <strong>{{item.InvoiceId}}</strong>
+            <strong>{{ item.InvoiceId }}</strong>
           </td>
-          <td>{{item.CustomerName}}</td>
-          <td>{{item.InvoiceDate}}</td>
-          <td>{{item.Amount}}</td>
-          <td>{{item.Total}}</td>
+          <td>{{ item.CustomerName }}</td>
+          <td>{{ item.InvoiceDate }}</td>
+          <td>{{ item.Amount }}</td>
+          <td>{{ item.Total }}</td>
           <td>
             <div class="buttons">
               <a class="button is-small" @click="deleteItem(item)">Delete</a>
@@ -83,14 +83,13 @@
 </template>
 
 <script>
-import CounterList from "@/components/CounterList.vue";
-import Search from "@/components/Search.vue";
-import Dropdown from "@/components/Dropdown.vue";
-import Pagination from "@/components/Pagination.vue";
+import CounterList from "@/components/tools/CounterList.vue";
+import Search from "@/components/tools/Search.vue";
+import Dropdown from "@/components/tools/Dropdown.vue";
+import Pagination from "@/components/tools/Pagination.vue";
 import ModalItem from "@/components/ModalItem.vue";
 import axios from "axios";
 import Collect from "collect.js";
-import customers from "@/views/Customers.vue";
 
 export default {
   name: 'Dashboard',
@@ -109,7 +108,7 @@ export default {
         "InvoiceDate": '',
         "InvoiceId": '',
         "Amount": '',
-        "CustomerName":'',
+        "CustomerName": '',
         "Total": ''
       },
       showModal: false,
@@ -125,7 +124,7 @@ export default {
         {fullName: "Ascending", shortName: "asc"},
         {fullName: "Descending", shortName: "desc"},
       ],
-      customers:[],
+      customers: [],
     }
   },
   methods: {
@@ -292,7 +291,7 @@ export default {
   },
   mounted() {
     this.getInvoice();
-    this.$refs.search.init(["Order #","Customer","Date","Total"],"Order #,Customer, Date, Total");
+    this.$refs.search.init(["Order #", "Customer", "Date", "Total"], "Order #,Customer, Date, Total");
     this.$refs.sortList.init(this.sorts, "Order by");
     this.$refs.orderList.init(this.orders, "Order");
   },
