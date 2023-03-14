@@ -32,36 +32,7 @@
     <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
     <div class="columns is-multiline  is-align-items-stretch">
-      <template v-for="(item, key) in items">
-        <div class="column is-12-tablet is-6-desktop is-4-widescreen">
-          <article class="box" style="height: 100%;">
-            <div class="media">
-              <aside class="media-left">
-                <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
-              </aside>
-              <div class="media-content">
-                <p class="title is-5 is-spaced is-marginless">
-                  <a @click="callEditItem(item)">{{item[this.cards.title.label]}}</a>
-                </p>
-                <p class="subtitle is-marginless">
-                  ${{item[this.cards.subtitle.label]}}
-                </p>
-                <div class="content is-small">
-                  <div v-for="info in this.cards.infos">
-                    <!-- convert milliseconds to minutes and second -->
-                    <span v-if="info.label === 'Milliseconds'">{{Math.floor(item[info.label] / 60000)}} min {{Math.floor((item[info.label] % 60000) / 1000)}} sec</span>
-                    <span v-else>{{info.pre}} {{item[info.label]}} {{info.post}}</span>
-                    <br>
-                  </div>
-                  <a @click="callEditItem(item)">Edit</a>
-                  <span> | </span>
-                  <a @click="deleteItem(item)">Delete</a>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </template>
+      <TileViewList ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
     </div>
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
   </div>
@@ -76,10 +47,11 @@ import Pagination from "@/components/Pagination.vue";
 import Dropdown from "@/components/Dropdown.vue";
 import CounterList from "@/components/CounterList.vue";
 import Search from "@/components/Search.vue";
+import TileViewList from "@/components/TileViewList.vue";
 
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination, Dropdown, CounterList, Search},
+  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search},
   data() {
     return {
       items: [],
@@ -108,8 +80,6 @@ export default {
       ],
 
       urlAPI: "",
-
-      cards: {},
     };
   },
 
@@ -323,25 +293,17 @@ export default {
       this.loadList();
     },
 
-    /*
-    --- CARDS LIST METHODS ---
-     */
     setCards(cards) {
-      // this.cards.title = this.allItems[0][title];
-      this.cards = cards;
+      this.$refs.tileViewList.setCards(cards);
     },
     setCardsTitle(title, pre = "", post = "") {
-      this.cards.title = title;
-      this.cards.pre = pre;
-      this.cards.post = post;
+      this.$refs.tileViewList.setCardsTitle(title, pre, post);
     },
     setCardsSubtitle(subtitle, pre = "", post = "") {
-      this.cards.title = title;
-      this.cards.pre = pre;
-      this.cards.post = post;
+      this.$refs.tileViewList.setCardsSubtitle(subtitle, pre, post);
     },
     addCardsInfo(label, pre = "", post = "") {
-      this.cards.infos.push({label: label, pre: pre, post: post});
+      this.$refs.tileViewList.addCardsInfo(label, pre, post);
     },
   },
   mounted() {
@@ -354,6 +316,3 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-
-</style>
