@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import BugReport from "@/components/BugReport.vue";
-import SideMenu from "@/components/SideMenu.vue";
-import HeaderBar from "@/components/HeaderBar.vue";
+import BugReport from "@/components/modals/BugReport.vue";
+import SideMenu from "@/components/persistent/SideMenu.vue";
+import HeaderBar from "@/components/persistent/HeaderBar.vue";
 
 export default {
   name: "App",

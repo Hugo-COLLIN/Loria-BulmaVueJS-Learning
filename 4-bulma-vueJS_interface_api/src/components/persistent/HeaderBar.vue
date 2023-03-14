@@ -3,7 +3,7 @@
   <nav class="navbar has-shadow">
     <div class="navbar-brand">
       <a class="navbar-item">
-        <img src="../assets/logo.png" alt="logo">
+        <img src="../../assets/logo.png" alt="logo">
       </a>
       <div class="navbar-burger">
         <span></span>
@@ -58,7 +58,7 @@
 </template>
 <script>
 import LoginMechanics from "@/components/LoginMechanics.vue";
-import bugReport from "@/components/BugReport.vue";
+import bugReport from "@/components/modals/BugReport.vue";
 
 export default {
   name: 'HeaderBar',
