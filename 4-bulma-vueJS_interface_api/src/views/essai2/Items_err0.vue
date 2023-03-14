@@ -32,40 +32,11 @@
 <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
     <div class="columns is-multiline  is-align-items-stretch">
-      <ListMechanics ref="list"></ListMechanics>
-      <template v-for="(item, key) in items">
-        <div class="column is-12-tablet is-6-desktop is-4-widescreen">
-          <article class="box" style="height: 100%;">
-            <div class="media">
-              <aside class="media-left">
-                <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
-              </aside>
-              <div class="media-content">
-                <p class="title is-5 is-spaced is-marginless">
-                  <a @click="callEditItem(item)">{{item.Name}}</a>
-                </p>
-                <p class="subtitle is-marginless">
-                  ${{item.UnitPrice}}
-                </p>
-                <div class="content is-small">
-                  <!-- convert milliseconds to minutes and second -->
-                  {{Math.floor(item.Milliseconds / 60000)}} min {{Math.floor((item.Milliseconds % 60000) / 1000)}} sec
-                  <br>
-                  Compositeur(s): {{item.Composer}}
-                  <br>
-                  <a @click="callEditItem(item)">Edit</a>
-                  <span> | </span>
-                  <a @click="deleteItem(item)">Delete</a>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </template>
+      <TileViewList @call-edit-item="callEditItem(item)" @delete-item="deleteItem(item)" :items="items"/>
     </div>
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
+    <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
   </div>
-  <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
 
 <script>
@@ -76,10 +47,12 @@ import Pagination from "@/components/Pagination.vue";
 import Dropdown from "@/components/Dropdown.vue";
 import CounterList from "@/components/CounterList.vue";
 import Search from "@/components/Search.vue";
-import ListMechanics from "@/components/tests/ListMechanics2.vue";
+import TileViewList from "@/components/TileViewList_old.vue";
+// import ListMechanics from "@/components/tests/ListMechanics2.vue";
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination, Dropdown, CounterList, Search, ListMechanics},
+  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search},
+  emits: ['call-edit-item', 'delete-item'],
   data() {
     return {
       items: [],
@@ -337,6 +310,3 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-
-</style>

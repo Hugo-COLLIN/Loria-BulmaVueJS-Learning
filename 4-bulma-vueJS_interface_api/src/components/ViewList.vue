@@ -6,10 +6,10 @@
       <div class="level is-flex-wrap-wrap is-ancestor">
         <div class="level-left mb-4">
           <div class="level-item">
-          <CounterList ref="counterList"></CounterList>
-          <p class="level-item ml-2">
-            <button class="button is-success" @click="callNewItem">New</button>
-          </p>
+            <CounterList ref="counterList"></CounterList>
+            <p class="level-item ml-2">
+              <button class="button is-success" @click="callNewItem">New</button>
+            </p>
           </div>
 
           <div class="level-left">
@@ -29,14 +29,43 @@
       </div>
     </nav>
 
-<!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
+    <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
     <div class="columns is-multiline  is-align-items-stretch">
-      <TileViewList @call-edit-item="callEditItem(item)" @delete-item="deleteItem(item)" :items="items"/>
+      <template v-for="(item, key) in items">
+        <div class="column is-12-tablet is-6-desktop is-4-widescreen">
+          <article class="box" style="height: 100%;">
+            <div class="media">
+              <aside class="media-left">
+                <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
+              </aside>
+              <div class="media-content">
+                <p class="title is-5 is-spaced is-marginless">
+                  <a @click="callEditItem(item)">{{item[this.cards.title.label]}}</a>
+                </p>
+                <p class="subtitle is-marginless">
+                  ${{item[this.cards.subtitle.label]}}
+                </p>
+                <div class="content is-small">
+                  <div v-for="info in this.cards.infos">
+                    <!-- convert milliseconds to minutes and second -->
+                    <span v-if="info.label === 'Milliseconds'">{{Math.floor(item[info.label] / 60000)}} min {{Math.floor((item[info.label] % 60000) / 1000)}} sec</span>
+                    <span v-else>{{info.pre}} {{item[info.label]}} {{info.post}}</span>
+                    <br>
+                  </div>
+                  <a @click="callEditItem(item)">Edit</a>
+                  <span> | </span>
+                  <a @click="deleteItem(item)">Delete</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </template>
     </div>
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
-    <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
   </div>
+  <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
 
 <script>
@@ -47,12 +76,10 @@ import Pagination from "@/components/Pagination.vue";
 import Dropdown from "@/components/Dropdown.vue";
 import CounterList from "@/components/CounterList.vue";
 import Search from "@/components/Search.vue";
-import TileViewList from "@/components/TileViewList.vue";
-// import ListMechanics from "@/components/tests/ListMechanics2.vue";
+
 export default {
   name: 'Items',
-  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search},
-  emits: ['call-edit-item', 'delete-item'],
+  components: {ModalItem, Pagination, Dropdown, CounterList, Search},
   data() {
     return {
       items: [],
@@ -74,36 +101,28 @@ export default {
       currentItem: null,
 
       isDescOrder: false,
-      sorts: [
-        { fullName: "Name", shortName: "Name" },
-        { fullName: "Unit Price", shortName: "UnitPrice" },
-        { fullName: "Duration", shortName: "Milliseconds" },
-        { fullName: "Composer", shortName: "Composer" },
-        { fullName: "Track Id", shortName: "TrackId" },
-        { fullName: "Album Id", shortName: "AlbumId" },
-        { fullName: "Genre Id", shortName: "GenreId" },
-        { fullName: "Media Type", shortName: "MediaTypeId" },
-      ],
+      sorts: [],
       orders: [
-        { fullName: "Ascending", shortName: "asc" },
-        { fullName: "Descending", shortName: "desc" },
+        {fullName: "Ascending", shortName: "asc"},
+        {fullName: "Descending", shortName: "desc"},
       ],
+
+      urlAPI: "",
+
+      cards: {},
     };
   },
 
   methods:
   {
-    /*
+        /*
     --- ITEMS FILTERING METHODS ---
      */
     sortItems(sort) {
-      if (this.isDescOrder)
-      {
+      if (this.isDescOrder) {
         this.allItems = new Collect(this.allItems).sortByDesc(sort).all();
         this.searchItems = new Collect(this.searchItems).sortByDesc(sort).all();
-      }
-      else
-      {
+      } else {
         this.allItems = new Collect(this.allItems).sortBy(sort).all();
         this.searchItems = new Collect(this.searchItems).sortBy(sort).all();
       }
@@ -123,22 +142,20 @@ export default {
       this.updateList();
     },
 
-    /*
+        /*
     --- ITEM EDITION METHODS ---
      */
-    addItem(i)
-    {
-      this.$refs.list.add(i);
-      // this.items.push(i);
-      // this.allItems.push(i);
+    addItem(i) {
+      this.items.push(i);
+      this.allItems.push(i);
       this.showModal = false;
 
       const config = {
-          token: sessionStorage.getItem('tokenSession')
-        };
+        token: sessionStorage.getItem('tokenSession')
+      };
       axios({
         method: 'post',
-        url: 'http://51.91.76.245:8000/api/tracks',
+        url: this.urlAPI,
         data: i,
         headers: config
       })
@@ -155,45 +172,43 @@ export default {
           });
     },
 
-    editItem(i)
-    {
+    editItem(i) {
       let data = {};
       for (let key in this.currentItem) {
         this.currentItem[key] = i[key];
-        if (key !== "TrackId")
+        if (key !== "TrackId" && i[key] !== null)
           data[key] = i[key];
       }
       this.showModal = false;
 
       const config = {
-          token: sessionStorage.getItem('tokenSession')
-        };
+        token: sessionStorage.getItem('tokenSession')
+      };
 
       axios({
         method: 'put',
-        url: 'http://51.91.76.245:8000/api/tracks/' + i.TrackId,
+        url: this.urlAPI + '/' + i.TrackId,
         data: data,
         headers: config
       })
-        .then(response => {
-          this.updateList();
-        })
-        .catch(error => {
-          alert("Please reload the page")
-          console.log(error);
-          this.loadList();
-          //this.errorMsg("Erreur lors de la modification de l'item");
-        });
+          .then(response => {
+            this.updateList();
+          })
+          .catch(error => {
+            alert("Please reload the page")
+            console.log(error);
+            this.loadList();
+            //this.errorMsg("Erreur lors de la modification de l'item");
+          });
 
     },
 
-    deleteItem(item)
-    {
+    deleteItem(item) {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
       this.displayCutAllList();
-      axios.delete('http://51.91.76.245:8000/api/tracks/' + item.TrackId, {
-        headers:{
+      axios.delete(this.urlAPI + '/' + item.TrackId, {
+        headers: {
           token: sessionStorage.getItem('tokenSession')
         }
       })
@@ -209,54 +224,50 @@ export default {
     },
 
 
-    /*
+        /*
     --- MODAL CONFIGURATION ---
      */
-    callNewItem()
-    {
+    callNewItem() {
       this.showModal = true;
       this.$refs.modalItem.newForm();
     },
 
-    callEditItem(item)
-    {
+    callEditItem(item) {
       this.showModal = true;
       this.$refs.modalItem.editForm(item);
       this.currentItem = item;
     },
 
-    /*
+        /*
     --- LIST METHODS ---
      */
-    displayCutList(list)
-    {
+    displayCutList(list) {
       this.items = [];
       let startItem = this.$refs.pagination.startingItem();
       // console.log(startItem)
       let i = 0;
-      while (list[startItem + i] !== undefined && i < this.$refs.pagination.perPage)
-      {
+      while (list[startItem + i] !== undefined && i < this.$refs.pagination.perPage) {
         this.items[i] = list[startItem + i];
         i++;
       }
       this.updateCountItems();
     },
 
-    displayCutAllList()
-    {
+    displayCutAllList() {
       if (!this.$refs.search.isSearching())
         this.displayCutList(this.allItems);
       else
         this.displayCutList(this.searchItems);
     },
 
-    loadList()
-    {
-      axios.get('http://51.91.76.245:8000/api/tracks')
+    loadList() {
+      axios.get(this.urlAPI)
           .then(response => {
             this.allItems = response.data;
             this.sortItems("Name");
             this.updateList();
+            // this.setCardsTitle("Name");
+            console.log()
           })
           .catch(error => {
             console.log(error);
@@ -264,8 +275,7 @@ export default {
       this.sortItems("Name");
     },
 
-    updateList()
-    {
+    updateList() {
       this.displayCutAllList();
 
       if (!this.$refs.search.isSearching())
@@ -279,11 +289,10 @@ export default {
       // console.log(this.$refs.pagination.totalItems)
     },
 
-    /*
-    --- OTHER COMPONENTS METHODS ---
+      /*
+      --- OTHER COMPONENTS METHODS ---
      */
-    updateCountItems()
-    {
+    updateCountItems() {
       const init = this.$refs.pagination.startingItem() + 1;
       const last = this.items.length + init - 1;
       if (!this.$refs.search.isSearching())
@@ -294,15 +303,50 @@ export default {
 
     initComponents() {
       this.$refs.orderList.create(this.orders);
-      this.$refs.sortList.create(this.sorts,"Order by");
+      this.$refs.sortList.create(this.sorts, "Order by");
 
       this.$refs.counterList.create("tracks");
       this.$refs.search.init(["Name", "Composer"], "Search");
     },
+
+    setDataSet(url) {
+      this.urlAPI = url;
+      console.log(this.urlAPI)
+    },
+
+    setSortOptions(sorts) {
+      this.sorts = sorts;
+    },
+
+    init() {
+      this.initComponents();
+      this.loadList();
+    },
+
+    /*
+    --- CARDS LIST METHODS ---
+     */
+    setCards(cards) {
+      // this.cards.title = this.allItems[0][title];
+      this.cards = cards;
+    },
+    setCardsTitle(title, pre = "", post = "") {
+      this.cards.title = title;
+      this.cards.pre = pre;
+      this.cards.post = post;
+    },
+    setCardsSubtitle(subtitle, pre = "", post = "") {
+      this.cards.title = title;
+      this.cards.pre = pre;
+      this.cards.post = post;
+    },
+    addCardsInfo(label, pre = "", post = "") {
+      this.cards.infos.push({label: label, pre: pre, post: post});
+    },
   },
   mounted() {
-    this.initComponents();
-    this.loadList();
+    // this.initComponents();
+    // this.loadList();
     // console.log(this.items)
     // console.log(this.searchItems)
     // console.log(this.allItems)
@@ -310,3 +354,6 @@ export default {
 }
 </script>
 
+<style lang="sass" scoped>
+
+</style>

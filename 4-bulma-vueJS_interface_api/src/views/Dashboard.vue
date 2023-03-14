@@ -313,3 +313,36 @@ export default {
 <style lang="sass" scoped>
 
 </style>
+
+
+
+<!--cards: [-->
+<!--{-->
+<!--title: "Tracks",-->
+<!--subtitle: "Total",-->
+<!--icon: "mdi-music",-->
+<!--color: "is-primary",-->
+<!--value: 0,-->
+<!--},-->
+<!--{-->
+<!--title: "Albums",-->
+<!--subtitle: "Total",-->
+<!--icon: "mdi-album",-->
+<!--color: "is-info",-->
+<!--value: 0,-->
+<!--},-->
+<!--{-->
+<!--title: "Artists",-->
+<!--subtitle: "Total",-->
+<!--icon: "mdi-account-music",-->
+<!--color: "is-success",-->
+<!--value: 0,-->
+<!--},-->
+<!--{-->
+<!--title: "Genres",-->
+<!--subtitle: "Total",-->
+<!--icon: "mdi-music-circle",-->
+<!--color: "is-warning",-->
+<!--value: 0,-->
+<!--},-->
+<!--],-->

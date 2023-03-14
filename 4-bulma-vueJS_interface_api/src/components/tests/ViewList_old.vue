@@ -1,5 +1,72 @@
 <template>
+  <div class="items">
+    <h1 class="title is-center">Tracks</h1>
 
+    <nav>
+      <div class="level is-flex-wrap-wrap is-ancestor">
+        <div class="level-left mb-4">
+          <div class="level-item">
+          <CounterList ref="counterList"></CounterList>
+          <p class="level-item ml-2">
+            <button class="button is-success" @click="callNewItem">New</button>
+          </p>
+          </div>
+
+          <div class="level-left">
+            <div class="level-item">
+              <Search ref="search" @search="search"></Search>
+            </div>
+          </div>
+        </div>
+
+        <div class="level-right mb-4">
+          <div class="level-item is-flex-wrap-wrap">
+            <Dropdown ref="sortList" @update="sortItems"></Dropdown>
+            <Dropdown ref="orderList" @update="orderItems"></Dropdown>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+<!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
+
+    <div class="columns is-multiline  is-align-items-stretch">
+<!--      <TileViewList @call-edit-item="callEditItem(item)" @delete-item="deleteItem(item)" :items="items"/>-->
+      <!-- TO MOVE IN A COMPONENT -->
+      <template v-for="(item, key) in items">
+        <div class="column is-12-tablet is-6-desktop is-4-widescreen">
+          <article class="box" style="height: 100%;">
+            <div class="media">
+              <aside class="media-left">
+                <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
+              </aside>
+              <div class="media-content">
+                <p class="title is-5 is-spaced is-marginless">
+                  <a @click="callEditItem">{{item.Name}}</a>
+                </p>
+                <p class="subtitle is-marginless">
+                  ${{item.UnitPrice}}
+                </p>
+                <div class="content is-small">
+                  <!-- convert milliseconds to minutes and second -->
+                  {{Math.floor(item.Milliseconds / 60000)}} min {{Math.floor((item.Milliseconds % 60000) / 1000)}} sec
+                  <br>
+                  Compositeur(s): {{item.Composer}}
+                  <br>
+                  <a @click="callEditItem">Edit</a>
+                  <span> | </span>
+                  <a @click="deleteItem">Delete</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </template>
+    </div>
+    <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
+    <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
+  </div>
 </template>
 
 <script>
@@ -10,10 +77,12 @@ import Pagination from "@/components/Pagination.vue";
 import Dropdown from "@/components/Dropdown.vue";
 import CounterList from "@/components/CounterList.vue";
 import Search from "@/components/Search.vue";
-import ListMechanics from "@/components/tests/ListMechanics2.vue";
+import TileViewList from "@/components/TileViewList_old.vue";
+// import ListMechanics from "@/components/tests/ListMechanics2.vue";
 export default {
   name: 'Items',
-  components: {ModalItem, Pagination, Dropdown, CounterList, Search, ListMechanics},
+  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search},
+  emits: ['call-edit-item', 'delete-item'],
   data() {
     return {
       items: [],
@@ -30,9 +99,27 @@ export default {
         MediaTypeId: "",
         Bytes: "",
       },
-      currentItem: null,
-      isDescOrder: false,
       showModal: false,
+      // searchWord: "",
+      currentItem: null,
+
+      isDescOrder: false,
+      sorts: [
+        { fullName: "Name", shortName: "Name" },
+        { fullName: "Unit Price", shortName: "UnitPrice" },
+        { fullName: "Duration", shortName: "Milliseconds" },
+        { fullName: "Composer", shortName: "Composer" },
+        { fullName: "Track Id", shortName: "TrackId" },
+        { fullName: "Album Id", shortName: "AlbumId" },
+        { fullName: "Genre Id", shortName: "GenreId" },
+        { fullName: "Media Type", shortName: "MediaTypeId" },
+      ],
+      orders: [
+        { fullName: "Ascending", shortName: "asc" },
+        { fullName: "Descending", shortName: "desc" },
+      ],
+
+      urlAPI: ""
     };
   },
 
@@ -73,9 +160,9 @@ export default {
      */
     addItem(i)
     {
-      // this.$refs.list.add(i);
-      this.items.push(i);
-      this.allItems.push(i);
+      this.$refs.list.add(i);
+      // this.items.push(i);
+      // this.allItems.push(i);
       this.showModal = false;
 
       const config = {
@@ -83,7 +170,7 @@ export default {
         };
       axios({
         method: 'post',
-        url: 'http://51.91.76.245:8000/api/tracks',
+        url: this.urlAPI,
         data: i,
         headers: config
       })
@@ -187,9 +274,9 @@ export default {
       this.updateCountItems();
     },
 
-    displayCutAllList(searchState)
+    displayCutAllList()
     {
-      if (!searchState)
+      if (!this.$refs.search.isSearching())
         this.displayCutList(this.allItems);
       else
         this.displayCutList(this.searchItems);
@@ -197,7 +284,8 @@ export default {
 
     loadList()
     {
-      axios.get('http://51.91.76.245:8000/api/tracks')
+      console.log(this.urlAPI)
+      axios.get(this.urlAPI)
           .then(response => {
             this.allItems = response.data;
             this.sortItems("Name");
@@ -211,7 +299,7 @@ export default {
 
     updateList()
     {
-      this.displayCutAllList(searchState);
+      this.displayCutAllList();
 
       if (!this.$refs.search.isSearching())
         this.$refs.pagination.setTotalItems(this.allItems.length);
@@ -223,13 +311,40 @@ export default {
       // console.log(this.$refs.pagination.totalPages)
       // console.log(this.$refs.pagination.totalItems)
     },
+
+    /*
+    --- OTHER COMPONENTS METHODS ---
+     */
+    updateCountItems()
+    {
+      const init = this.$refs.pagination.startingItem() + 1;
+      const last = this.items.length + init - 1;
+      if (!this.$refs.search.isSearching())
+        this.$refs.counterList.updateCounter(init, last, this.allItems.length);
+      else
+        this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
+    },
+
+    initComponents() {
+      this.$refs.orderList.create(this.orders);
+      this.$refs.sortList.create(this.sorts,"Order by");
+
+      this.$refs.counterList.create("tracks");
+      this.$refs.search.init(["Name", "Composer"], "Search");
+    },
+
+    init(url) {
+      this.urlAPI = url;
+      console.log(this.urlAPI)
+      this.initComponents();
+      this.loadList();
+    }
   },
   mounted() {
-    this.loadList();
+    // console.log(this.items)
+    // console.log(this.searchItems)
+    // console.log(this.allItems)
   },
 }
 </script>
 
-<style lang="sass" scoped>
-
-</style>
