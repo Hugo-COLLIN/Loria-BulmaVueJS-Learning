@@ -53,7 +53,7 @@
       </tr>
       </tfoot>
       <tbody>
-      <template v-for="(item, key) in items">
+      <template v-for="(item) in items">
         <tr>
           <td>
             <input type="checkbox">
@@ -65,7 +65,7 @@
           <td>{{item.Country}}</td>
           <td>
             <!-- TODO: Add redirect to orders -->
-            <a href="customer-orders.html">{{ item.OrderCount }}</a>
+            <a href="orders">{{ item.OrderCount }}</a>
           </td>
           <td>
             <div class="buttons">
