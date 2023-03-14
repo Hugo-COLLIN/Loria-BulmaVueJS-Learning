@@ -272,10 +272,10 @@ export default {
     },
 
     initComponents() {
-      this.$refs.orderList.create(this.orders);
-      this.$refs.sortList.create(this.sorts, "Order by");
+      this.$refs.orderList.init(this.orders);
+      this.$refs.sortList.init(this.sorts, "Order by");
 
-      this.$refs.counterList.create("tracks");
+      this.$refs.counterList.init("tracks");
       this.$refs.search.init(["Name", "Composer"], "Search");
     },
 
