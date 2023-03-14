@@ -22,16 +22,16 @@ export default {
       ],
 
       cards: {
-        title: {
+        title: [{
           label: "Name",
           pre: "",
           post: ""
-        },
-        subtitle: {
+        }],
+        subtitle: [{
           label: "UnitPrice",
-          pre: "",
+          pre: "$",
           post: ""
-        },
+        }],
         infos: [
           {
             label: "Milliseconds",

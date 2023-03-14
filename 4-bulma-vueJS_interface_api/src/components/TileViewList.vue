@@ -8,10 +8,12 @@
           </aside>
           <div class="media-content">
             <p class="title is-5 is-spaced is-marginless">
-              <a @click="callEditItem(item)">{{item[this.cards.title.label]}}</a>
+              <a @click="callEditItem(item)">
+                <span v-for="elt in this.cards.title">{{elt.pre}}{{item[elt.label]}}{{elt.post}}&nbsp;</span>
+              </a>
             </p>
             <p class="subtitle is-marginless">
-              ${{item[this.cards.subtitle.label]}}
+              <span v-for="elt in this.cards.subtitle">{{elt.pre}}{{item[elt.label]}}{{elt.post}}&nbsp;</span>
             </p>
             <div class="content is-small">
               <div v-for="info in this.cards.infos">
