@@ -20,9 +20,9 @@
                     <template v-for="(item2,key2) in item">
                       <div class="column">
                         <label class="label">{{ item2.label }}</label>
-                        <div class="control" :class="{'has-icons-left': item2.icon !== '' }">
+                        <div class="control" :class="{'has-icons-left': item2.icon !== '' && item2.icon !== undefined }">
                           <input :name="key2" v-model="this.form[item2.name]" class="input" :class="item2.classes" :placeholder="item2.placeholder" required :type="item2.type">
-                          <span v-if="item2.icon !== ''" class="icon is-small is-left">
+                          <span v-if="item2.icon !== '' && item2.icon !== undefined" class="icon is-small is-left">
                             <i :class="item2.icon"></i>
                           </span>
                         </div>
@@ -127,6 +127,7 @@ export default {
       this.resetErrors();
 
       //this.hideNotification = false;
+      console.log(this.form)
 
       // Send data to parent component
       if (this.edit)
@@ -148,6 +149,20 @@ export default {
       for (let key in this.error)
         this.error[key] = false;
     },
+
+    setFieldsDefault() {
+      for (let key in this.form)
+        delete this.form[key];
+        // if (typeof(this.form[key]) === "string")
+        //   this.form[key] = "";
+        // else if (typeof(this.form[key]) === "number")
+        //   this.form[key] = 0;
+        // else if (typeof(this.form[key]) === "boolean")
+        //   this.form[key] = false;
+        // else if (typeof(this.form[key]) === "object")
+        //   this.form[key] = null;
+
+    },
     /*
       Reset all fields
      */
@@ -156,18 +171,19 @@ export default {
       this.btnTitle = "Create item";
 
       // Reset all fields
-      // for (let key in this.form)
-      //   if (typeof(this.form[key]) === "string")
-      //     this.form[key] = "";
-      this.form.Name = "";
-      this.form.UnitPrice = "";
-      this.form.Milliseconds = "";
-      this.form.Composer = "";
+      this.setFieldsDefault();
+
+      console.log(this.error)
+
+      // this.form.Name = "";
+      // this.form.UnitPrice = "";
+      // this.form.Milliseconds = "";
+      // this.form.Composer = "";
       //TODO : implement these fields and set them by default to error value (-1)
-      this.form.AlbumId = 5;
-      this.form.MediaTypeId = 1;
-      this.form.GenreId = 1;
-      this.form.Bytes = 1111;
+      // this.form.AlbumId = 5;
+      // this.form.MediaTypeId = 1;
+      // this.form.GenreId = 1;
+      // this.form.Bytes = 1111;
     },
 
     editForm(item)
@@ -175,6 +191,7 @@ export default {
       this.edit = true;
       this.btnTitle = "Update item";
 
+      this.setFieldsDefault();
       for (let key in item)
         this.form[key] = item[key];
       this.form.Milliseconds /= 60000;
@@ -188,6 +205,10 @@ export default {
           this.error[key2] = false;
     },
   },
+
+  mounted() {
+    this.setFieldsDefault();
+  }
 }
 </script>
 
