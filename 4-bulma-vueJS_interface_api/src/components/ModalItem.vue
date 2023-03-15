@@ -88,6 +88,7 @@ export default {
       form: {},
       error: {},
       formStruct: {},
+      itemAttributes: {}
     };
   },
   props: {
@@ -95,7 +96,12 @@ export default {
       type: Boolean,
       default: false
     },
-    reset: ['item', 'form']
+    reset: ['item', 'form'],
+
+    item: {
+      type: Object,
+      default: null
+    }
   },
   methods: {
     closeModal() {
@@ -105,6 +111,11 @@ export default {
     resetModal() {
       this.reportMessage = "";
       this.closeModal();
+    },
+
+    initForm() {
+      this.formStruct = this.$store.state.formStruct;
+      this.setFieldsDefault();
     },
 
     sendModal() {
@@ -151,17 +162,25 @@ export default {
     },
 
     setFieldsDefault() {
+      for (let key in this.itemAttributes)
+        if (typeof(this.itemAttributes[key]) === "string")
+          this.form[key] = "";
+        else if (typeof(this.itemAttributes[key]) === "number")
+          this.form[key] = 1;
+        else if (typeof(this.itemAttributes[key]) === "boolean")
+          this.form[key] = false;
+        else if (typeof(this.itemAttributes[key]) === "object")
+          this.form[key] = null;
+
+    },
+
+    setItemAttributes(itemAttributes) {
+      this.itemAttributes = itemAttributes;
+    },
+
+    cleanFields() {
       for (let key in this.form)
         delete this.form[key];
-        // if (typeof(this.form[key]) === "string")
-        //   this.form[key] = "";
-        // else if (typeof(this.form[key]) === "number")
-        //   this.form[key] = 0;
-        // else if (typeof(this.form[key]) === "boolean")
-        //   this.form[key] = false;
-        // else if (typeof(this.form[key]) === "object")
-        //   this.form[key] = null;
-
     },
     /*
       Reset all fields
@@ -171,7 +190,10 @@ export default {
       this.btnTitle = "Create item";
 
       // Reset all fields
+      this.cleanFields();
       this.setFieldsDefault();
+      console.log(this.item)
+      console.log(this.form)
 
       console.log(this.error)
 
@@ -204,6 +226,7 @@ export default {
         for (let key2 in this.formStruct[key])
           this.error[key2] = false;
     },
+
   },
 
   mounted() {

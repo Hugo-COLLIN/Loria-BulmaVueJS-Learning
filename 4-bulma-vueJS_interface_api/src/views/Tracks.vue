@@ -65,6 +65,8 @@ export default {
     this.$refs.viewList.setSearchComponent(["Name", "Composer"], "Titre, compositeur...", "Search");
     this.$refs.viewList.setCounterComponent("tracks");
     this.$refs.viewList.setFormView(this.formView);
+    this.$refs.viewList.setExcludedProps(["Sold"]);
+
     // this.$refs.viewList.setCardsTitle("Name");
     this.$refs.viewList.init();
   },

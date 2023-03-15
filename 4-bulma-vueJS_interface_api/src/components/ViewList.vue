@@ -98,8 +98,8 @@ export default {
       },
 
       listView: "",
-
       identifier: "",
+      excludedProps: [],
     };
   },
 
@@ -147,13 +147,22 @@ export default {
       this.allItems.push(i);
       this.showModal = false;
 
+      let data = {};
+      console.log(this.excludedProps)
+      for (let key in i) {
+        if (key !== this.identifier && this.excludedProps.indexOf(key) === -1 && i[key] !== null)
+          data[key] = i[key];
+      }
+
+      console.log(data)
+
       const config = {
         token: sessionStorage.getItem('tokenSession')
       };
       axios({
         method: 'post',
         url: this.urlAPI,
-        data: i,
+        data: data,
         headers: config
       })
           .then(response => {
@@ -261,6 +270,7 @@ export default {
       axios.get(this.urlAPI)
           .then(response => {
             this.allItems = response.data;
+            this.$refs.modalItem.setItemAttributes(this.allItems[0])
             this.sortItems("Name");
             this.updateList();
             // this.setCardsTitle("Name");
@@ -349,15 +359,11 @@ export default {
       // else if (this.listView === "tiles")
         this.$refs.tileViewList.setCards(cards);
     },
-    // setCardsTitle(title, pre = "", post = "") {
-    //   this.$refs.tileViewList.setCardsTitle(title, pre, post);
-    // },
-    // setCardsSubtitle(subtitle, pre = "", post = "") {
-    //   this.$refs.tileViewList.setCardsSubtitle(subtitle, pre, post);
-    // },
-    // addCardsInfo(label, pre = "", post = "") {
-    //   this.$refs.tileViewList.addCardsInfo(label, pre, post);
-    // },
+
+    setExcludedProps(props) {
+      console.log(props)
+      this.excludedProps = props;
+    },
   },
   mounted() {
     // this.initComponents();
