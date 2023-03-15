@@ -22,24 +22,25 @@ export default {
       ],
 
       cards: {
-        title: [{
-          label: "Name",
+        title: {
+          name: "Name",
+          // label: "Name",
           pre: "",
-          post: ""
-        }],
-        subtitle: [{
-          label: "UnitPrice",
+          post: "",
+        },
+        subtitle: {
+          name: "UnitPrice",
           pre: "$",
           post: ""
-        }],
+        },
         infos: [
           {
-            label: "Milliseconds",
+            name: "Milliseconds",
             pre: "",
             post: ""
           },
           {
-            label: "Composer",
+            name: "Composer",
             pre: "Compositeur(s): ",
             post: ""
           }],

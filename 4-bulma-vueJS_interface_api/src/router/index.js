@@ -46,7 +46,16 @@ const routes = [
   },
   { path: '/:catchAll(.*)',
     name: '404',
-    component: () => import(/* webpackChunkName: "404" */ '../views/404.vue') },
+    component: () => import(/* webpackChunkName: "404" */ '../views/404.vue')
+  },
+  {
+    path: '/customers_ok',
+    name: 'customers_ok',
+    meta: {
+      requiresAuth: true, // this route requires auth
+    },
+    component: () => import(/* webpackChunkName: "customers" */ '../views/Customers_ok.vue')
+  },
 ]
 
 const router = createRouter({

@@ -104,4 +104,19 @@ nav {
     }
   }
 }
+
+.codeStyle {
+  background-color: #f5f5f5;
+  //padding: 0;
+  //border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  color: #DA1039;
+  //display: inline-block;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  //font-size: 12px;
+  //line-height: 1.5;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  white-space: nowrap;
+}
 </style>

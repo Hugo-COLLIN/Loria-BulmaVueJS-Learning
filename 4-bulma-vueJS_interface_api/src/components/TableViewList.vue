@@ -1,56 +1,26 @@
 <template>
-<!--  <h1>C'est TableViewList</h1>-->
-  <template v-for="(item, key) in items">
-    <div class="column is-12-tablet is-6-desktop is-4-widescreen">
-      <article class="box" style="height: 100%;">
-        <div class="media">
-          <aside class="media-left">
-            <img src="@/assets/images/Speaker_Icon.svg.png" width="80" alt="Piste de musique">
-          </aside>
-          <div class="media-content">
-            <p class="title is-5 is-spaced is-marginless">
-              <a @click="callEditItem(item)">
-                <span v-for="elt in this.cols.title">{{elt.pre}}{{item[elt.label]}}{{elt.post}}&nbsp;</span>
-              </a>
-            </p>
-            <p class="subtitle is-marginless">
-              <span v-for="elt in this.cols.subtitle">{{elt.pre}}{{item[elt.label]}}{{elt.post}}&nbsp;</span>
-            </p>
-            <div class="content is-small">
-              <div v-for="info in this.cols.infos">
-                <!-- convert milliseconds to minutes and second -->
-                <span v-if="info.label === 'Milliseconds'">{{Math.floor(item[info.label] / 60000)}} min {{Math.floor((item[info.label] % 60000) / 1000)}} sec</span>
-                <span v-else>{{info.pre}} {{item[info.label]}} {{info.post}}</span>
-                <br>
-              </div>
-              <a @click="callEditItem(item)">Edit</a>
-              <span> | </span>
-              <a @click="deleteItem(item)">Delete</a>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-  </template>
-
   <table class="table is-hoverable is-fullwidth">
     <thead>
     <tr>
-      <th class="is-narrow">
-        <input type="checkbox">
-      </th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Country</th>
-      <th>Orders</th>
+<!--      <th class="is-narrow">-->
+<!--        <input type="checkbox">-->
+<!--      </th>-->
+      <th>{{ this.cols.title.label }}</th>
+<!--      <th>{{ this.cols.title }}</th> &lt;!&ndash;{{ this.cols.title.name }}&ndash;&gt; &lt;!&ndash; {{ this.cols.title[0].label }} &ndash;&gt;-->
+      <template v-for="(col) in this.cols.infos">
+        <th>{{ col.name }}</th>
+      </template>
+<!--      <th>Email</th>-->
+<!--      <th>Country</th>-->
+<!--      <th>Orders</th>-->
       <th>Actions</th>
     </tr>
     </thead>
     <tfoot>
     <tr>
-      <th class="is-narrow">
-        <input type="checkbox">
-      </th>
+<!--      <th class="is-narrow">-->
+<!--        <input type="checkbox">-->
+<!--      </th>-->
       <th>Name</th>
       <th>Email</th>
       <th>Country</th>
@@ -61,17 +31,24 @@
     <tbody>
     <template v-for="(item) in items">
       <tr>
+<!--        <td>-->
+<!--          <input type="checkbox">-->
+<!--        </td>-->
         <td>
-          <input type="checkbox">
+          <a @click="callEditItem(item)">
+            <strong v-if="this.cols.title.elements !== undefined" v-for="t in this.cols.title.elements">{{ item[t.name] }}&nbsp;</strong>
+            <strong v-else>{{ item[this.cols.title.name] }}</strong>
+          </a>
         </td>
-        <td>
-          <strong>{{ item.FirstName }} {{ item.LastName }}</strong>
+        <td v-for="info in this.cols.infos">
+          <span v-if="info.route === undefined" :class="{'codeStyle': info.style === 'code'}">{{ item[info.name] }}</span>
+          <router-link v-else-if="info.route !== ''" to="orders" :class="{'codeStyle': info.style === 'code'}">{{ item[info.name] }}</router-link>
+<!--          <a>{{ item[info.label] }}</a>-->
         </td>
-        <td><code>{{ item.Email }}</code></td>
-        <td>{{ item.Country }}</td>
-        <td>
-          <router-link to="orders">{{ item.OrderCount }}</router-link>
-        </td>
+<!--        <td>{{ item.Country }}</td>-->
+<!--        <td>-->
+<!--          <router-link to="orders">{{ item.OrderCount }}</router-link>-->
+<!--        </td>-->
         <td>
           <div class="buttons">
             <a class="button is-small" @click="callEditItem(item)">Edit</a>
@@ -91,9 +68,20 @@ export default {
   props: {
     items: {},
   },
+  computed: {
+    titleLabel() {
+      return this.cols.title.slice(0,1);
+    }
+  },
   data() {
     return {
-      cols: {},
+      cols: { //nécessaire sinon erreur label inconnu ?!
+        title: {
+          pre: "",
+          post: "",
+        },
+        infos: [],
+      },
     }
   },
   methods: {

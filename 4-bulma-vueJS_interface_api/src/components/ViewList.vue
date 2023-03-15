@@ -338,9 +338,9 @@ export default {
     },
 
     setModel(cards) {
-      if (this.listView === "table")
+      // if (this.listView === "table")
         this.$refs.tableViewList.setTable(cards);
-      else if (this.listView === "tiles")
+      // else if (this.listView === "tiles")
         this.$refs.tileViewList.setCards(cards);
     },
     // setCardsTitle(title, pre = "", post = "") {

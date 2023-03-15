@@ -22,33 +22,42 @@ export default {
       ],
 
       cols: {
-        title: [
-          {
-            label: "FirstName",
+        title: {
+          name: "Name",
+          label: "Name",
+          pre: "",
+          post: "",
+          elements: [{
+            name: "FirstName",
             pre: "",
             post: ""
           },
           {
-            label: "LastName",
+            name: "LastName",
             pre: "",
             post: ""
-          }
-        ],
+          }],
+        },
         infos: [
           {
+            name: "Email",
             label: "Email",
             pre: "",
-            post: ""
+            post: "",
+            style: "code"
           },
           {
+            name: "Country",
             label: "Country",
             pre: "",
             post: ""
           },
           {
+            name: "OrderCount",
             label: "Orders",
             pre: "",
-            post: ""
+            post: "",
+            route: "orders"
           }
         ],
       },
