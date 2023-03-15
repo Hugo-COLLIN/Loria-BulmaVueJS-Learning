@@ -64,11 +64,6 @@ export default {
   props: {
     items: {},
   },
-  computed: {
-    titleLabel() {
-      return this.cols.title.slice(0,1);
-    }
-  },
   data() {
     return {
       cols: { //nécessaire sinon erreur label inconnu ?!

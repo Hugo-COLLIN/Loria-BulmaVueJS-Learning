@@ -67,7 +67,8 @@ export default {
       formView: [
         [{name: "FirstName", label: "First Name", icon:"fa fa-user", placeholder:"e.g. Luis", type:"text"}, {name: "LastName", label: "Last Name", placeholder:"e.g. Franco", type:"text"}],
         [{name: "Email", label: "Email", icon:"fa fa-envelope", placeholder: "e.g. 22.99", type:"text"}],
-        [{name: "Country", label: "Country", icon:"", placeholder:"e.g. France", type:"text"}],
+        [{name: "Country", label: "Country", icon:"", placeholder:"e.g. France", type:"text"},],
+        [{name: "Address", label: "Address", icon:"fa fa-home", placeholder:"e.g. 1 Long Street", type:"text"}],
       ]
     }
   },

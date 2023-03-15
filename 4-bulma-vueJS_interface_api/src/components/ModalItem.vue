@@ -127,7 +127,7 @@ export default {
       this.resetErrors();
 
       //this.hideNotification = false;
-      console.log(this.form)
+      // console.log(this.form)
 
       // Send data to parent component
       if (this.edit)
@@ -179,7 +179,7 @@ export default {
       // this.form.UnitPrice = "";
       // this.form.Milliseconds = "";
       // this.form.Composer = "";
-      //TODO : implement these fields and set them by default to error value (-1)
+      // TODO : implement these fields and set them by default to error value (-1)
       // this.form.AlbumId = 5;
       // this.form.MediaTypeId = 1;
       // this.form.GenreId = 1;

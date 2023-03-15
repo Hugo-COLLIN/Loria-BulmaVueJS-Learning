@@ -173,7 +173,7 @@ export default {
       let data = {};
       for (let key in this.currentItem) {
         this.currentItem[key] = i[key];
-        if (key !== "TrackId" && i[key] !== null)
+        if (key !== this.identifier && i[key] !== null)
           data[key] = i[key];
       }
       this.showModal = false;
