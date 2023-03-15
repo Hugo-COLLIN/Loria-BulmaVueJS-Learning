@@ -21,6 +21,8 @@ export default {
         {fullName: "Media Type", shortName: "MediaTypeId"},
       ],
 
+      identifier: "CustomerId",
+
       cols: {
         title: {
           name: "Name",
@@ -63,9 +65,9 @@ export default {
       },
 
       formView: [
-        [{name: "Name", label: "Title", icon:"", placeholder:"Title", type:"text", classes: "is-large"}],
-        [{name: "UnitPrice", label: "Price", icon:"fa fa-dollar", placeholder: "e.g. 22.99", type:"number"}, {name: "Milliseconds", label: "Duration (minutes)", icon:"", placeholder: "e.g. 1.8", type:"number"}],
-        [{name: "Composer", label: "Composers (comma separated)", icon:"", placeholder:"e.g. Mozart", type:"area"}],
+        [{name: "FirstName", label: "First Name", icon:"fa fa-user", placeholder:"e.g. Luis", type:"text"}, {name: "LastName", label: "Last Name", placeholder:"e.g. Franco", type:"text"}],
+        [{name: "Email", label: "Email", icon:"fa fa-envelope", placeholder: "e.g. 22.99", type:"text"}],
+        [{name: "Country", label: "Country", icon:"", placeholder:"e.g. France", type:"text"}],
       ]
     }
   },
@@ -74,6 +76,7 @@ export default {
     this.$refs.viewList.setSortOptions(this.sorts);
     this.$refs.viewList.setModel(this.cols);
     this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/customers");
+    this.$refs.viewList.setIdentifier(this.identifier);
     this.$refs.viewList.setPageTitle("Customers");
     this.$refs.viewList.setSearchComponent(["FirstName", "LastName", "Email"], "Name, email...", "Search");
     this.$refs.viewList.setCounterComponent("customers");

@@ -63,15 +63,15 @@ export default {
       searchItems: [],
       allItems: [],
       item: {
-        Name: "",
-        UnitPrice: "",
-        Milliseconds: "",
-        Composer: "",
-        TrackId: "",
-        AlbumId: "",
-        GenreId: "",
-        MediaTypeId: "",
-        Bytes: "",
+        // Name: "",
+        // UnitPrice: "",
+        // Milliseconds: "",
+        // Composer: "",
+        // TrackId: "",
+        // AlbumId: "",
+        // GenreId: "",
+        // MediaTypeId: "",
+        // Bytes: "",
       },
       showModal: false,
       // searchWord: "",
@@ -98,6 +98,8 @@ export default {
       },
 
       listView: "",
+
+      identifier: "",
     };
   },
 
@@ -155,7 +157,7 @@ export default {
         headers: config
       })
           .then(response => {
-            i.TrackId = response.data.TrackId;
+            i[this.identifier] = response.data[this.identifier];
             // console.log(response);
           })
           .catch(error => {
@@ -182,7 +184,7 @@ export default {
 
       axios({
         method: 'put',
-        url: this.urlAPI + '/' + i.TrackId,
+        url: this.urlAPI + '/' + i[this.identifier],
         data: data,
         headers: config
       })
@@ -202,7 +204,7 @@ export default {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
       this.displayCutAllList();
-      axios.delete(this.urlAPI + '/' + item.TrackId, {
+      axios.delete(this.urlAPI + '/' + item[this.identifier], {
         headers: {
           token: sessionStorage.getItem('tokenSession')
         }
@@ -330,6 +332,10 @@ export default {
     setView(view) {
       console.log(view)
       this.listView = view;
+    },
+
+    setIdentifier(id) {
+      this.identifier = id;
     },
 
     init() {

@@ -53,43 +53,10 @@ export default {
     return {
       cards: {
         title: {
-          name: "Name",
-          label: "Name",
           pre: "",
           post: "",
-          elements: [{
-            name: "FirstName",
-            pre: "",
-            post: ""
-          },
-            {
-              name: "LastName",
-              pre: "",
-              post: ""
-            }],
         },
-        infos: [
-          {
-            name: "Email",
-            label: "Email",
-            pre: "",
-            post: "",
-            style: "code"
-          },
-          {
-            name: "Country",
-            label: "Country",
-            pre: "",
-            post: ""
-          },
-          {
-            name: "OrderCount",
-            label: "Orders",
-            pre: "",
-            post: "",
-            route: "orders"
-          }
-        ],
+        infos: [],
       },
     }
   },

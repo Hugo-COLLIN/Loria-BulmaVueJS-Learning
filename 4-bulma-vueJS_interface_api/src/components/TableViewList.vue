@@ -6,13 +6,9 @@
 <!--        <input type="checkbox">-->
 <!--      </th>-->
       <th>{{ this.cols.title.label }}</th>
-<!--      <th>{{ this.cols.title }}</th> &lt;!&ndash;{{ this.cols.title.name }}&ndash;&gt; &lt;!&ndash; {{ this.cols.title[0].label }} &ndash;&gt;-->
       <template v-for="(col) in this.cols.infos">
-        <th>{{ col.name }}</th>
+        <th>{{ col.label }}</th>
       </template>
-<!--      <th>Email</th>-->
-<!--      <th>Country</th>-->
-<!--      <th>Orders</th>-->
       <th>Actions</th>
     </tr>
     </thead>
@@ -21,10 +17,10 @@
 <!--      <th class="is-narrow">-->
 <!--        <input type="checkbox">-->
 <!--      </th>-->
-      <th>Name</th>
-      <th>Email</th>
-      <th>Country</th>
-      <th>Orders</th>
+      <th>{{ this.cols.title.label }}</th>
+      <template v-for="(col) in this.cols.infos">
+        <th>{{ col.label }}</th>
+      </template>
       <th>Actions</th>
     </tr>
     </tfoot>
