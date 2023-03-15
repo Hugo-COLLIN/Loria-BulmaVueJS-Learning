@@ -53,6 +53,7 @@ export default {
     }
   },
   mounted() {
+    this.$refs.viewList.setView("tiles");
     this.$refs.viewList.setSortOptions(this.sorts);
     this.$refs.viewList.setModel(this.cards);
     this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/tracks");
@@ -60,7 +61,6 @@ export default {
     this.$refs.viewList.setSearchComponent(["Name", "Composer"], "Titre, compositeur...", "Search");
     this.$refs.viewList.setCounterComponent("tracks");
     this.$refs.viewList.setFormView(this.formView);
-    this.$refs.viewList.setView("tiles"); //doit etre appelé avant setModel ? non
     // this.$refs.viewList.setCardsTitle("Name");
     this.$refs.viewList.init();
   },

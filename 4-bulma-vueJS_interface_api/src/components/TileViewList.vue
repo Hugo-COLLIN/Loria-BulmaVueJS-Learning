@@ -1,4 +1,5 @@
 <template>
+<!--  <h1>C'est Tile</h1>-->
   <template v-for="(item, key) in items">
     <div class="column is-12-tablet is-6-desktop is-4-widescreen">
       <article class="box" style="height: 100%;">

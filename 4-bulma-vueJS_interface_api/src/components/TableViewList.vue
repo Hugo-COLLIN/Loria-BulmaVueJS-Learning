@@ -1,4 +1,5 @@
 <template>
+<!--  <h1>C'est TableViewList</h1>-->
   <template v-for="(item, key) in items">
     <div class="column is-12-tablet is-6-desktop is-4-widescreen">
       <article class="box" style="height: 100%;">
@@ -31,6 +32,57 @@
       </article>
     </div>
   </template>
+
+  <table class="table is-hoverable is-fullwidth">
+    <thead>
+    <tr>
+      <th class="is-narrow">
+        <input type="checkbox">
+      </th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Country</th>
+      <th>Orders</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <th class="is-narrow">
+        <input type="checkbox">
+      </th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Country</th>
+      <th>Orders</th>
+      <th>Actions</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    <template v-for="(item) in items">
+      <tr>
+        <td>
+          <input type="checkbox">
+        </td>
+        <td>
+          <strong>{{ item.FirstName }} {{ item.LastName }}</strong>
+        </td>
+        <td><code>{{ item.Email }}</code></td>
+        <td>{{ item.Country }}</td>
+        <td>
+          <router-link to="orders">{{ item.OrderCount }}</router-link>
+        </td>
+        <td>
+          <div class="buttons">
+            <a class="button is-small" @click="callEditItem(item)">Edit</a>
+            <a class="button is-small" @click="deleteItem(item)">Delete</a>
+          </div>
+        </td>
+      </tr>
+    </template>
+    </tbody>
+
+  </table>
 </template>
 <script>
 export default {

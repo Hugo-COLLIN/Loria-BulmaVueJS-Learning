@@ -31,10 +31,13 @@
 
     <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
-    <div class="columns is-multiline  is-align-items-stretch">
-<!--      <TileViewList v-if="this.listView === 'tiles'" ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>-->
-      <TableViewList v-if="this.listView === 'table'" ref="tableViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
+    <div class="columns is-multiline is-align-items-stretch" :class="{'is-hidden': this.listView !== 'tiles'}">
+      <TileViewList ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/> <!--v-if="this.listView === 'tile'"-->
     </div>
+    <div class="columns is-multiline is-align-items-stretch" :class="{'is-hidden': this.listView !== 'table'}">
+      <TableViewList ref="tableViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
+    </div>
+
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
   </div>
   <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
@@ -94,7 +97,7 @@ export default {
         label: "",
       },
 
-      listView: "tiles",
+      listView: "",
     };
   },
 
