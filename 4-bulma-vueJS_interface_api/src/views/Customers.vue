@@ -34,22 +34,23 @@ export default {
             post: ""
           }
         ],
-        subtitle: {
-          label: "UnitPrice",
-          pre: "",
-          post: ""
-        },
         infos: [
           {
-            label: "Milliseconds",
+            label: "Email",
             pre: "",
             post: ""
           },
           {
-            label: "Composer",
-            pre: "Compositeur(s): ",
+            label: "Country",
+            pre: "",
             post: ""
-          }],
+          },
+          {
+            label: "Orders",
+            pre: "",
+            post: ""
+          }
+        ],
       },
 
       formView: [
@@ -60,11 +61,13 @@ export default {
     }
   },
   mounted() {
+    this.$refs.viewList.setView("table");
     this.$refs.viewList.setSortOptions(this.sorts);
     this.$refs.viewList.setModel(this.cols);
     this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/customers");
-    this.$refs.viewList.setPageTitle("Tracks");
+    this.$refs.viewList.setPageTitle("Customers");
     this.$refs.viewList.setSearchComponent(["FirstName", "LastName", "Email"], "Name, email...", "Search");
+    this.$refs.viewList.setCounterComponent("customers");
     this.$refs.viewList.setFormView(this.formView);
     // this.$refs.viewList.setCardsTitle("Name");
     this.$refs.viewList.init();

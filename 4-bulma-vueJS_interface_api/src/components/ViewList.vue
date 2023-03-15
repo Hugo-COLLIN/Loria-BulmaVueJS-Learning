@@ -32,7 +32,8 @@
     <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
 
     <div class="columns is-multiline  is-align-items-stretch">
-      <TileViewList ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
+<!--      <TileViewList v-if="this.listView === 'tiles'" ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>-->
+      <TableViewList v-if="this.listView === 'table'" ref="tableViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
     </div>
     <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
   </div>
@@ -48,11 +49,11 @@ import Dropdown from "@/components/tools/Dropdown.vue";
 import CounterList from "@/components/tools/CounterList.vue";
 import Search from "@/components/tools/Search.vue";
 import TileViewList from "@/components/TileViewList.vue";
-import Modal from "@/components/Modal.vue";
+import TableViewList from "@/components/TableViewList.vue";
 
 export default {
   name: 'Items',
-  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search, Modal},
+  components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search, TableViewList},
   data() {
     return {
       items: [],
@@ -87,7 +88,13 @@ export default {
         att: [],
         placeholder: "",
         button: "",
-      }
+      },
+
+      counterComponent: {
+        label: "",
+      },
+
+      listView: "tiles",
     };
   },
 
@@ -290,7 +297,7 @@ export default {
       this.$refs.orderList.init(this.orders);
       this.$refs.sortList.init(this.sorts, "Order by");
 
-      this.$refs.counterList.init("tracks");
+      this.$refs.counterList.init(this.counterComponent.label);
       this.$refs.search.init(this.searchComponent.att, this.searchComponent.placeholder, this.searchComponent.button);
     },
 
@@ -313,23 +320,35 @@ export default {
       this.$refs.modalItem.setFormView(formStruct);
     },
 
+    setCounterComponent(label) {
+      this.counterComponent.label = label;
+    },
+
+    setView(view) {
+      console.log(view)
+      this.listView = view;
+    },
+
     init() {
       this.initComponents();
       this.loadList();
     },
 
     setModel(cards) {
-      this.$refs.tileViewList.setCards(cards);
+      if (this.listView === "table")
+        this.$refs.tableViewList.setTable(cards);
+      else if (this.listView === "tiles")
+        this.$refs.tileViewList.setCards(cards);
     },
-    setCardsTitle(title, pre = "", post = "") {
-      this.$refs.tileViewList.setCardsTitle(title, pre, post);
-    },
-    setCardsSubtitle(subtitle, pre = "", post = "") {
-      this.$refs.tileViewList.setCardsSubtitle(subtitle, pre, post);
-    },
-    addCardsInfo(label, pre = "", post = "") {
-      this.$refs.tileViewList.addCardsInfo(label, pre, post);
-    },
+    // setCardsTitle(title, pre = "", post = "") {
+    //   this.$refs.tileViewList.setCardsTitle(title, pre, post);
+    // },
+    // setCardsSubtitle(subtitle, pre = "", post = "") {
+    //   this.$refs.tileViewList.setCardsSubtitle(subtitle, pre, post);
+    // },
+    // addCardsInfo(label, pre = "", post = "") {
+    //   this.$refs.tileViewList.addCardsInfo(label, pre, post);
+    // },
   },
   mounted() {
     // this.initComponents();
