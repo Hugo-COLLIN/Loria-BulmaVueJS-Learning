@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <section class="hero is-primary is-fullheight">
+    <section class="hero is-primary is-fullheight-with-navbar">
       <div class="hero-body">
         <div class="container">
           <div class="columns is-centered">

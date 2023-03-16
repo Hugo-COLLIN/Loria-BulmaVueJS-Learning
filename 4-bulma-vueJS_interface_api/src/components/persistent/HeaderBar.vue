@@ -19,14 +19,14 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link has-icons-left" >
+          <div class="navbar-link has-icons-left" @click="userAction">
             <span class="icon is-left">
               <i class="fa fa-user"></i>
             </span>
             <span>&nbsp;{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}</span>
           </div>
 
-          <div class="navbar-dropdown">
+          <div class="navbar-dropdown" v-if="isConnected">
             <a class="navbar-item">
               <div>
                 <span class="icon is-small">
@@ -82,6 +82,9 @@ export default {
         FirstName: 'Log',
         LastName: 'in'
       };
+    },
+    isConnected() {
+      return this.userInfos.FirstName !== 'Log';
     }
   },
   components: {LoginMechanics, store},
@@ -98,17 +101,20 @@ export default {
     },
 
     login() {
-      this.$emit('login');
+       this.$emit('login');
     },
 
     logout() {
       this.$emit('logout');
     },
-    isConnected() {
-      // console.log(sessionStorage.getItem('tokenSession') !== null);
-      return sessionStorage.getItem('tokenSession') !== null;
-    },
 
+    userAction() {
+      if (this.isConnected) {
+        this.$router.push('/profile');
+      } else {
+        this.login();
+      }
+    }
 
   }
 }
