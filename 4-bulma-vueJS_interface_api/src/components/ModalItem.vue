@@ -128,12 +128,13 @@ export default {
       // Check if all fields are filled else return error
       for (let key in this.form) {
         // console.log(key)
-        if (this.form[key] === "" || this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) {
+        if (/*this.form[key] === "" ||*/ this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) {
           // console.log(key)
           // console.log(this.formStruct)
           if (this.form.Milliseconds !== undefined) this.form.Milliseconds /= 60000;
           this.error[key] = true;
           isErrors = true;
+          // console.log("error: " + key)
         }
       }
       if (isErrors) return;
@@ -165,6 +166,7 @@ export default {
     },
 
     setFieldsDefault() {
+      // console.log(this.itemAttributes)
       for (let key in this.itemAttributes)
         if (typeof(this.itemAttributes[key]) === "string")
           this.form[key] = "";

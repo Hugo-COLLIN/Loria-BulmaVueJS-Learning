@@ -68,9 +68,10 @@ export default {
       formView: [
         [{name: "FirstName", label: "First Name", icon:"fa fa-user", placeholder:"e.g. Luis", type:"text"}, {name: "LastName", label: "Last Name", placeholder:"e.g. Franco", type:"text"}],
         [{name: "Email", label: "Email", icon:"fa fa-envelope", placeholder: "e.g. 22.99", type:"text"},],
-        [{name: "Phone", label: "Phone number", icon:"", placeholder:"e.g. +00 (00) 1234-5678", type:"text"},],
-        [{name: "Address", label: "Address", icon:"fa fa-home", placeholder:"e.g. 1 Long Street", type:"text"}, {name: "PostalCode", label: "Code Postal", icon:"", placeholder:"e.g. 00000", type:"text"},],
-        [{name: "City", label: "City", icon:"", placeholder:"e.g. London", type:"text"}, {name: "State", label: "State", icon:"", placeholder:"e.g. SP", type:"text"}, {name: "Country", label: "Country", icon:"", placeholder:"e.g. France", type:"text"},],
+        [{name: "Company", label: "Company", icon:"fa fa-building", placeholder: "e.g. Brackets", type:"text"},],
+        [{name: "Phone", label: "Phone number", icon:"fa fa-phone", placeholder:"e.g. +00 (00) 1234-5678", type:"text"}, {name: "Fax", label: "Fax number", icon:"fa fa-fax", placeholder:"e.g. +00 (00) 1234-5679", type:"text"},],
+        [{name: "Address", label: "Address", icon:"fa fa-home", placeholder:"e.g. 1 Long Street", type:"text"}, {name: "PostalCode", label: "Postal Code", icon:"", placeholder:"e.g. 00000", type:"text"},],
+        [{name: "City", label: "City", icon:"fa fa-tree-city", placeholder:"e.g. London", type:"text"}, {name: "State", label: "State", icon:"fa fa-route-interstate", placeholder:"e.g. SP", type:"text"}, {name: "Country", label: "Country", icon:"fa fa-globe", placeholder:"e.g. France", type:"text"},],
       ]
     }
   },
@@ -84,6 +85,7 @@ export default {
     this.$refs.viewList.setSearchComponent(["FirstName", "LastName", "Email"], "Name, email...", "Search");
     this.$refs.viewList.setCounterComponent("customers");
     this.$refs.viewList.setFormView(this.formView);
+    this.$refs.viewList.setExcludedProps(["OrderCount"]);
     // this.$refs.viewList.setCardsTitle("Name");
     this.$refs.viewList.init();
   },
