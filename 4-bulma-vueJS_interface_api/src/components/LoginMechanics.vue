@@ -4,7 +4,7 @@
 
 <script>
 import axios from "axios";
-import router from "@/router";
+import router from "@/router"; //used in loginStateRouter() because it's called in the router/index.js file
 
 export default {
   name: "LoginMechanics",
@@ -28,10 +28,8 @@ export default {
             // save the token in the session storage
             sessionStorage.setItem('tokenSession', response.data[0]);
             sessionStorage.setItem('userId', response.data[1]);
-
-            this.$router.go(0) // refresh page : loading side menu temporary solution
-            // redirect to the dashboard
-            // this.$router.push({name: 'dashboard'});
+            this.getUserInfo();
+            // this.reloadPage();
           })
           .catch(error => {
             // TODO : Remplacer les alert par des messages d'erreur
@@ -66,6 +64,7 @@ export default {
               console.log(error);
               // If the token is not valid then the user is not logged in and the token is deleted
               sessionStorage.removeItem('tokenSession');
+              sessionStorage.removeItem('userId');
               // redirect to the login page
               router.push({name: 'login'});
               // alert("Disconnected");
@@ -104,8 +103,34 @@ export default {
     loginRequired()
     {
       sessionStorage.removeItem('tokenSession');
-      this.$router.push({name: 'login'});
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('userInfos');
+      // this.$router.push({name: 'login'});
+      this.reloadPage();
     },
+
+    getUserInfo() {
+      console.log(this.$store.state.urlAPI)
+      axios.get(this.$store.state.urlAPI + "employees/" + sessionStorage.getItem('userId'), {
+        headers: {
+          token: sessionStorage.getItem('tokenSession')
+        }
+      })
+          .then(response => {
+            console.log(response.data);
+            sessionStorage.setItem('userInfos', JSON.stringify(response.data));
+
+            this.reloadPage();
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+    reloadPage() {
+      this.$router.go(0) // refresh page : loading side menu temporary solution
+      // redirect to the dashboard
+      // this.$router.push({name: 'dashboard'});
+    }
   }
 }
 </script>

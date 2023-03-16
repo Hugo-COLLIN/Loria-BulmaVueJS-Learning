@@ -1,5 +1,5 @@
 <template>
-<!--  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>-->
+  <!--  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>-->
   <nav class="navbar has-shadow">
     <div class="navbar-brand">
       <a class="navbar-item">
@@ -19,11 +19,11 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link has-icons-left" >
+          <div class="navbar-link has-icons-left" v-if="this.isConnected">
             <span class="icon is-left">
               <i class="fa fa-user"></i>
             </span>
-            <span>&nbsp;{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}</span>
+            &nbsp;{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}
           </div>
 
           <div class="navbar-dropdown">
@@ -73,15 +73,7 @@ export default {
     },
     userInfos() {
       // console.log(JSON.parse(sessionStorage.getItem('userInfos')).FirstName);
-      console.log(JSON.parse(sessionStorage.getItem('userInfos')));
-      if (JSON.parse(sessionStorage.getItem('userInfos')) !== null)
-        return JSON.parse(sessionStorage.getItem('userInfos'));
-      console.log('userInfos is null')
-      console.log(sessionStorage.getItem('userInfos'))
-      return {
-        FirstName: 'Log',
-        LastName: 'in'
-      };
+      return JSON.parse(sessionStorage.getItem('userInfos'));
     }
   },
   components: {LoginMechanics, store},
@@ -105,11 +97,9 @@ export default {
       this.$emit('logout');
     },
     isConnected() {
-      // console.log(sessionStorage.getItem('tokenSession') !== null);
+      console.log(sessionStorage.getItem('tokenSession') !== null);
       return sessionStorage.getItem('tokenSession') !== null;
-    },
-
-
+    }
   }
 }
 </script>

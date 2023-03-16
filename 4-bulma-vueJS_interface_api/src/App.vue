@@ -1,7 +1,7 @@
 <template>
   <LoginMechanics ref="loginMechanics" @login="init"></LoginMechanics>
+  <HeaderBar @open-bug-report="bugReport" @logout="logout"/>
   <template v-if="$route.name !== 'login'">
-    <HeaderBar @open-bug-report="bugReport" @logout="logout"/>
 
     <section class="section">
       <div class="columns">
@@ -97,6 +97,8 @@ export default {
 
   },
   mounted() {
+    console.log(sessionStorage.getItem('tokenSession') !== null);
+
     this.$store.state.urlAPI = this.urlAPI;
     // console.log(this.$store.state.urlAPI)
     this.$refs.sideMenu.init(this.menuItems);
