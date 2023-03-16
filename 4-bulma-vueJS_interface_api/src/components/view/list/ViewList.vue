@@ -46,7 +46,7 @@
 <script>
 import axios from "axios";
 import Collect from 'collect.js';
-import ModalItem from "@/components/ModalItem.vue";
+import ModalItem from "@/components/modals/ModalItem.vue";
 import Pagination from "@/components/tools/Pagination.vue";
 import Dropdown from "@/components/tools/Dropdown.vue";
 import CounterList from "@/components/tools/CounterList.vue";

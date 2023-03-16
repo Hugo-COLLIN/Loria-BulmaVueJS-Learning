@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import ModalItem from "@/components/ModalItem.vue";
+import ModalItem from "@/components/modals/ModalItem.vue";
 import axios from "axios";
 import customers from "@/views/Customers.vue";
 

@@ -87,7 +87,7 @@ import CounterList from "@/components/tools/CounterList.vue";
 import Search from "@/components/tools/Search.vue";
 import Dropdown from "@/components/tools/Dropdown.vue";
 import Pagination from "@/components/tools/Pagination.vue";
-import ModalItem from "@/components/ModalItem.vue";
+import ModalItem from "@/components/modals/ModalItem.vue";
 import axios from "axios";
 import Collect from "collect.js";
 
