@@ -54,7 +54,23 @@ const routes = [
     meta: {
       requiresAuth: true, // this route requires auth
     },
-    component: () => import(/* webpackChunkName: "customers" */ '../views/Customers_ok.vue')
+    component: () => import(/* webpackChunkName: "customers" */ '../views/old/Customers_ok.vue')
+  },
+  {
+    path: '/dashboard_ok',
+    name: 'dashboard_ok',
+    meta: {
+      requiresAuth: true, // this route requires auth
+    },
+    component: () => import(/* webpackChunkName: "customers" */ '../views/Dashboard_ok.vue')
+  },
+  {
+    path: '/orders_ok',
+    name: 'orders_ok',
+    meta: {
+      requiresAuth: true, // this route requires auth
+    },
+    component: () => import(/* webpackChunkName: "customers" */ '../views/Orders_ok.vue')
   },
 ]
 
