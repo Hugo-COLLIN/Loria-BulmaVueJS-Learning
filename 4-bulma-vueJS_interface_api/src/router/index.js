@@ -49,14 +49,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "404" */ '../views/404.vue')
   },
   {
-    path: '/customers_ok',
-    name: 'customers_ok',
-    meta: {
-      requiresAuth: true, // this route requires auth
-    },
-    component: () => import(/* webpackChunkName: "customers" */ '../views/old/Customers_ok.vue')
-  },
-  {
     path: '/dashboard_ok',
     name: 'dashboard_ok',
     meta: {
@@ -70,7 +62,7 @@ const routes = [
     meta: {
       requiresAuth: true, // this route requires auth
     },
-    component: () => import(/* webpackChunkName: "customers" */ '../views/Orders_ok.vue')
+    component: () => import(/* webpackChunkName: "customers" */ '../views/old/Orders_ok.vue')
   },
 ]
 

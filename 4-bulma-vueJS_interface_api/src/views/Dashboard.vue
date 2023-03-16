@@ -153,72 +153,72 @@ export default {
   data() {
     return {
       customers: [
-        {
-          "Address": "Av. Brigadeiro Faria Lima, 2170",
-          "City": "S\u00e3o Jos\u00e9 dos Campos",
-          "Company": "Embraer - Empresa Brasileira de Aeron\u00e1utica S.A.",
-          "Country": "Brazil",
-          "CustomerId": 1,
-          "Email": "luisg@embraer.com.br",
-          "Fax": "+55 (12) 3923-5566",
-          "FirstName": "Lu\u00eds",
-          "LastName": "Gon\u00e7alves",
-          "Phone": "+55 (12) 3923-5555",
-          "PostalCode": "12227-000",
-          "State": "SP",
-          "SupportRepId": 3
-        },
+        // {
+        //   "Address": "Av. Brigadeiro Faria Lima, 2170",
+        //   "City": "S\u00e3o Jos\u00e9 dos Campos",
+        //   "Company": "Embraer - Empresa Brasileira de Aeron\u00e1utica S.A.",
+        //   "Country": "Brazil",
+        //   "CustomerId": 1,
+        //   "Email": "luisg@embraer.com.br",
+        //   "Fax": "+55 (12) 3923-5566",
+        //   "FirstName": "Lu\u00eds",
+        //   "LastName": "Gon\u00e7alves",
+        //   "Phone": "+55 (12) 3923-5555",
+        //   "PostalCode": "12227-000",
+        //   "State": "SP",
+        //   "SupportRepId": 3
+        // },
       ],
       items: [
-        {
-          "Count": -1,
-          "Name": "Loading",
-          "TrackId": 1,
-        },
+        // {
+        //   "Count": -1,
+        //   "Name": "Loading",
+        //   "TrackId": 1,
+        // },
       ],
       orders: [
-        {
-          "BillingAddress": "Theodor-Heuss-Stra\u00dfe 34",
-          "BillingCity": "Stuttgart",
-          "BillingCountry": "Germany",
-          "BillingPostalCode": "70174",
-          "BillingState": null,
-          "CustomerId": 2,
-          "InvoiceDate": "2009-01-01T00:00:00",
-          "InvoiceId": 1,
-          "Total": 1.98
-        },
+        // {
+        //   "BillingAddress": "Theodor-Heuss-Stra\u00dfe 34",
+        //   "BillingCity": "Stuttgart",
+        //   "BillingCountry": "Germany",
+        //   "BillingPostalCode": "70174",
+        //   "BillingState": null,
+        //   "CustomerId": 2,
+        //   "InvoiceDate": "2009-01-01T00:00:00",
+        //   "InvoiceId": 1,
+        //   "Total": 1.98
+        // },
       ],
       stats: {
         today: {
-          orders: "0",
-          revenue: "7,648",
-          visitors: "1,678",
-          pageViews: "20,756"
+          // orders: "0",
+          // revenue: "7,648",
+          // visitors: "1,678",
+          // pageViews: "20,756"
         },
         yesterday: {
-          orders: "200",
-          revenue: "5,465",
-          visitors: "1,400",
-          pageViews: "18,556"
+          // orders: "200",
+          // revenue: "5,465",
+          // visitors: "1,400",
+          // pageViews: "18,556"
         },
         week: {
-          orders: "200",
-          revenue: "5,465",
-          visitors: "1,400",
-          pageViews: "18,556"
+          // orders: "200",
+          // revenue: "5,465",
+          // visitors: "1,400",
+          // pageViews: "18,556"
         },
         month: {
-          orders: "200",
-          revenue: "5,465",
-          visitors: "1,400",
-          pageViews: "18,556"
+          // orders: "200",
+          // revenue: "5,465",
+          // visitors: "1,400",
+          // pageViews: "18,556"
         },
         alltime: {
-          orders: "1000",
-          revenue: "55,465",
-          visitors: "10,400",
-          pageViews: "87,999"
+          // orders: "1000",
+          // revenue: "55,465",
+          // visitors: "10,400",
+          // pageViews: "87,999"
         }
       }
     }
