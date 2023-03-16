@@ -8,6 +8,19 @@ import router from "@/router"; //used in loginStateRouter() because it's called 
 
 export default {
   name: "LoginMechanics",
+  computed: {
+    // userInfos() {
+    //   console.log(JSON.parse(sessionStorage.getItem('userInfos')));
+    //   if (JSON.parse(sessionStorage.getItem('userInfos')) !== null)
+    //     return JSON.parse(sessionStorage.getItem('userInfos'));
+    //   console.log('userInfos is null')
+    //   console.log(sessionStorage.getItem('userInfos'))
+    //   return {
+    //     FirstName: 'Log',
+    //     LastName: 'in'
+    //   };
+    // }
+  },
   methods: {
     /**
      * Log in the user

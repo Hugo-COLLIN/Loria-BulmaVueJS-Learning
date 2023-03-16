@@ -61,7 +61,7 @@
   </nav>
 </template>
 <script>
-import LoginMechanics from "@/components/LoginMechanics.vue";
+import LoginMechanics from "@/components/LoginMechanics.vue"; //necessary
 import bugReport from "@/components/modals/BugReport.vue";
 import store from "@/store";
 
@@ -73,11 +73,11 @@ export default {
     },
     userInfos() {
       // console.log(JSON.parse(sessionStorage.getItem('userInfos')).FirstName);
-      console.log(JSON.parse(sessionStorage.getItem('userInfos')));
+      // console.log(JSON.parse(sessionStorage.getItem('userInfos')));
       if (JSON.parse(sessionStorage.getItem('userInfos')) !== null)
         return JSON.parse(sessionStorage.getItem('userInfos'));
-      console.log('userInfos is null')
-      console.log(sessionStorage.getItem('userInfos'))
+      // console.log('userInfos is null')
+      // console.log(sessionStorage.getItem('userInfos'))
       return {
         FirstName: 'Log',
         LastName: 'in'

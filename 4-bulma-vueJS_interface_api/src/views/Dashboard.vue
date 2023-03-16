@@ -3,7 +3,7 @@
     <div class="level">
       <div class="level-left">
         <h1 class="subtitle is-3">
-          <span class="has-text-grey-light">Hello</span> <strong>Alex Johnson</strong>
+          <span class="has-text-grey-light">Hello</span> <strong>{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}</strong>
         </h1>
       </div>
       <div class="level-right">
@@ -226,6 +226,9 @@ export default {
   computed: {
     selectedStats() {
       return this.stats.today;
+    },
+    userInfos() {
+      return JSON.parse(sessionStorage.getItem('userInfos'));
     }
   },
   methods: {
