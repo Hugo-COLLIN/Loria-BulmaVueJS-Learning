@@ -38,7 +38,7 @@
         </td>
         <td v-for="info in this.cols.infos">
           <span v-if="info.route === undefined" :class="{'codeStyle': info.style === 'code'}">{{info.pre}}{{ item[info.name] }}{{info.post}}</span>
-          <router-link v-else-if="info.route !== ''" to="orders" :class="{'codeStyle': info.style === 'code'}">{{info.pre}}{{ item[info.name] }}{{info.post}}</router-link>
+          <router-link v-else-if="info.route !== ''" :to="info.route" :class="{'codeStyle': info.style === 'code'}">{{info.pre}}{{ item[info.name] }}{{info.post}}</router-link>
         </td>
         <td>
           <div class="buttons">
