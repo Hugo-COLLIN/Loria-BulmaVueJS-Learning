@@ -1,4 +1,12 @@
-FROM node:latest
-COPY . /app
+FROM node:latest as build-stage
 WORKDIR /app
-CMD ["yarn", "serve","--port", "8080"]
+COPY package*.json ./
+RUN npm install
+COPY ./ .
+RUN npm run build
+
+#nginx is a lightweight web server
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
