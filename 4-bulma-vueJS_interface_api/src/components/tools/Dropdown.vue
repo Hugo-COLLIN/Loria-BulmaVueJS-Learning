@@ -31,13 +31,14 @@ export default {
     sortItems(event) {
       this.selected = event.target.value;
       this.$emit("update", this.selected);
-      // console.log("Event : " + event.target.value);
+      console.log("Event : " + event.target.value);
     },
 
     init(list, label) {
       this.label = label;
       this.listOptions = list;
       this.selected = list[0].shortName;
+      console.log("Dropdown : " + this.selected)
     },
 
     // createFilter(name, short)

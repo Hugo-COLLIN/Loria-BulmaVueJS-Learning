@@ -128,9 +128,9 @@ export default {
       // Check if all fields are filled else return error
       for (let key in this.form) {
         // console.log(key)
-        if (this.form[key] === "") {
-          console.log(key)
-          console.log(this.formStruct)
+        if (this.form[key] === "" || this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) {
+          // console.log(key)
+          // console.log(this.formStruct)
           if (this.form.Milliseconds !== undefined) this.form.Milliseconds /= 60000;
           this.error[key] = true;
           isErrors = true;
@@ -169,7 +169,7 @@ export default {
         if (typeof(this.itemAttributes[key]) === "string")
           this.form[key] = "";
         else if (typeof(this.itemAttributes[key]) === "number")
-          this.form[key] = 1;
+          this.form[key] = 1; //TODO: 0
         else if (typeof(this.itemAttributes[key]) === "boolean")
           this.form[key] = false;
         else if (typeof(this.itemAttributes[key]) === "object")
@@ -195,20 +195,10 @@ export default {
       // Reset all fields
       this.cleanFields();
       this.setFieldsDefault();
-      console.log(this.item)
-      console.log(this.form)
-
-      console.log(this.error)
-
-      // this.form.Name = "";
-      // this.form.UnitPrice = "";
-      // this.form.Milliseconds = "";
-      // this.form.Composer = "";
-      // TODO : implement these fields and set them by default to error value (-1)
-      // this.form.AlbumId = 5;
-      // this.form.MediaTypeId = 1;
-      // this.form.GenreId = 1;
-      // this.form.Bytes = 1111;
+      // console.log(this.item)
+      // console.log(this.form)
+      //
+      // console.log(this.error)
     },
 
     editForm(item)
@@ -224,11 +214,11 @@ export default {
 
     setFormStruct(formStruct) {
       this.formStruct = formStruct;
-      console.log(this.formStruct)
+      // console.log(this.formStruct)
       for (let key in this.formStruct) {
-        console.log(key + ":")
+        // console.log(key + ":")
         for (let key2 in this.formStruct[key]) {
-          console.log(this.formStruct[key][key2])
+          // console.log(this.formStruct[key][key2])
           this.error[this.formStruct[key][key2].name] = false;
         }
       }
@@ -244,6 +234,9 @@ export default {
 </script>
 
 <style scoped>
+/**
+ * This is a fix for the modal card to be scrollable
+ **/
 .modal-card > * {
   overflow: auto;
 }

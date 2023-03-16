@@ -109,9 +109,9 @@ export default {
       this.pageTitle = title;
     },
 
-    setSearchPlaceholder(placeholder) {
-      this.$refs.search.setPlaceholder(placeholder);
-    },
+    // setSearchPlaceholder(placeholder) {
+    //   this.$refs.search.setPlaceholder(placeholder);
+    // },
         /*
     --- ITEMS FILTERING METHODS ---
      */
@@ -271,7 +271,7 @@ export default {
           .then(response => {
             this.allItems = response.data;
             this.$refs.modalItem.setItemAttributes(this.allItems[0])
-            this.sortItems("Name");
+            this.sortItems(this.$refs.sortList.selected);
             this.updateList();
             // this.setCardsTitle("Name");
             console.log()
@@ -279,7 +279,7 @@ export default {
           .catch(error => {
             console.log(error);
           })
-      this.sortItems("Name");
+      // this.sortItems("Name");
     },
 
     updateList() {
@@ -347,6 +347,8 @@ export default {
     setIdentifier(id) {
       this.identifier = id;
     },
+
+
 
     init() {
       this.initComponents();

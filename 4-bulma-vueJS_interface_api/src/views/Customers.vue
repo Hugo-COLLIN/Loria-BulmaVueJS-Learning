@@ -11,14 +11,15 @@ export default {
   {
     return {
       sorts: [
-        {fullName: "Name", shortName: "Name"},
-        {fullName: "Unit Price", shortName: "UnitPrice"},
-        {fullName: "Duration", shortName: "Milliseconds"},
-        {fullName: "Composer", shortName: "Composer"},
-        {fullName: "Track Id", shortName: "TrackId"},
-        {fullName: "Album Id", shortName: "AlbumId"},
-        {fullName: "Genre Id", shortName: "GenreId"},
-        {fullName: "Media Type", shortName: "MediaTypeId"},
+        {fullName: "First Name", shortName: "FirstName"},
+        {fullName: "Last Name", shortName: "LastName"},
+        {fullName: "Email", shortName: "Email"},
+        {fullName: "Phone number", shortName: "Phone"},
+        {fullName: "Address", shortName: "Address"},
+        {fullName: "City", shortName: "City"},
+        {fullName: "State", shortName: "State"},
+        {fullName: "Country", shortName: "Country"},
+        {fullName: "Orders", shortName: "OrderCount"},
       ],
 
       identifier: "CustomerId",
