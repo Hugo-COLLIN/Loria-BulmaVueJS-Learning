@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     // tokenLogin: null,
+    urlAPI: '',
   },
   getters: {
     // getTokenLogin(state) {
@@ -10,9 +11,9 @@ export default createStore({
     // }
   },
   mutations: {
-    setTokenLogin(state, token) {
-      state.tokenLogin = token;
-    }
+    // setUrlAPI(state, urlAPI) {
+    //   state.urlAPI = urlAPI;
+    // }
   },
   actions: {
   },

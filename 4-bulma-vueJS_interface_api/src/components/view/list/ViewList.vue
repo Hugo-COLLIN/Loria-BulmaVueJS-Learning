@@ -84,7 +84,7 @@ export default {
         {fullName: "Descending", shortName: "desc"},
       ],
 
-      urlAPI: "",
+      urlAPISection: "",
       pageTitle: "",
 
       searchComponent: {
@@ -161,7 +161,7 @@ export default {
       };
       axios({
         method: 'post',
-        url: this.urlAPI,
+        url: this.urlAPISection,
         data: data,
         headers: config
       })
@@ -193,7 +193,7 @@ export default {
 
       axios({
         method: 'put',
-        url: this.urlAPI + '/' + i[this.identifier],
+        url: this.urlAPISection + '/' + i[this.identifier],
         data: data,
         headers: config
       })
@@ -213,7 +213,7 @@ export default {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
       this.displayCutAllList();
-      axios.delete(this.urlAPI + '/' + item[this.identifier], {
+      axios.delete(this.urlAPISection + '/' + item[this.identifier], {
         headers: {
           token: sessionStorage.getItem('tokenSession')
         }
@@ -267,7 +267,7 @@ export default {
     },
 
     loadList() {
-      axios.get(this.urlAPI)
+      axios.get(this.urlAPISection)
           .then(response => {
             this.allItems = response.data;
             this.$refs.modalItem.setItemAttributes(this.allItems[0])
@@ -317,8 +317,8 @@ export default {
     },
 
     setDataSet(url) {
-      this.urlAPI = url;
-      console.log(this.urlAPI)
+      this.urlAPISection = this.$store.state.urlAPI + url;
+      console.log(this.urlAPISection)
     },
 
     setSortOptions(sorts) {

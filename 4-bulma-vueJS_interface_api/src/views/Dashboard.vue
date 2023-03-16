@@ -236,7 +236,7 @@ export default {
       return image ? require(`@/assets/images/${image}`) : "";
     },
     setCustomer() {
-      axios.get("http://51.91.76.245:8000/api/customers")
+      axios.get(this.$store.state.urlAPI + "customers")
           .then(response => {
             this.customers = response.data;
             this.customers.sort((a, b) => {
@@ -251,7 +251,7 @@ export default {
           });
     },
     setOrder() {
-      axios.get("http://51.91.76.245:8000/api/invoices" )
+      axios.get(this.$store.state.urlAPI + "invoices" )
           .then(response => {
             response.data.sort((a, b) => {
               return new Date(b.InvoiceDate) - new Date(a.InvoiceDate);
@@ -275,7 +275,7 @@ export default {
           });
     },
     setItem() {
-      axios.get("http://51.91.76.245:8000/api/tracks")
+      axios.get(this.$store.state.urlAPI + "tracks")
           .then(response => {
             this.items = response.data;
             this.items.sort((a, b) => {

@@ -79,7 +79,7 @@ export default {
     this.$refs.viewList.setView("table");
     this.$refs.viewList.setSortOptions(this.sorts);
     this.$refs.viewList.setModel(this.cols);
-    this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/customers");
+    this.$refs.viewList.setDataSet("customers");
     this.$refs.viewList.setIdentifier(this.identifier);
     this.$refs.viewList.setPageTitle("Customers");
     this.$refs.viewList.setSearchComponent(["FirstName", "LastName", "Email"], "Name, email...", "Search");

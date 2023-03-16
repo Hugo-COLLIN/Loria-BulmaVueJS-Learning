@@ -39,6 +39,8 @@ export default {
        * "Bug report modal" display state
        */
       openBugReport: false,
+
+      urlAPI: 'http://51.91.76.245:8000/api/',
       /**
        * Menu items
        */
@@ -95,6 +97,8 @@ export default {
 
   },
   mounted() {
+    this.$store.state.urlAPI = this.urlAPI;
+    // console.log(this.$store.state.urlAPI)
     this.$refs.sideMenu.init(this.menuItems);
   }
 };

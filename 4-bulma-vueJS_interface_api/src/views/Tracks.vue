@@ -59,7 +59,7 @@ export default {
     this.$refs.viewList.setView("tiles");
     this.$refs.viewList.setSortOptions(this.sorts);
     this.$refs.viewList.setModel(this.cards);
-    this.$refs.viewList.setDataSet("http://51.91.76.245:8000/api/tracks");
+    this.$refs.viewList.setDataSet("tracks");
     this.$refs.viewList.setIdentifier(this.identifier);
     this.$refs.viewList.setPageTitle("Tracks");
     this.$refs.viewList.setSearchComponent(["Name", "Composer"], "Titre, compositeur...", "Search");

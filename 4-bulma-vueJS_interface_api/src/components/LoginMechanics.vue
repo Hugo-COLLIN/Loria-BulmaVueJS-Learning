@@ -19,7 +19,7 @@ export default {
         alert("Please enter email and password");
         return
       }
-      // Ask the API to log in the user
+      // Ask the API to log-in the user
       axios.post('http://51.91.76.245:8000/api/login', {
         username: email,
         password: password,
