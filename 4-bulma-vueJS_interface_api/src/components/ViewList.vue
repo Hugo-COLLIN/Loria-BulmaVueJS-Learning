@@ -332,7 +332,7 @@ export default {
     },
 
     setFormView(formStruct) {
-      this.$refs.modalItem.setFormView(formStruct);
+      this.$refs.modalItem.setFormStruct(formStruct);
     },
 
     setCounterComponent(label) {

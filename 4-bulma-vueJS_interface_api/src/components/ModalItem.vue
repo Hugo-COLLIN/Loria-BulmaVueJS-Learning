@@ -113,10 +113,10 @@ export default {
       this.closeModal();
     },
 
-    initForm() {
-      this.formStruct = this.$store.state.formStruct;
-      this.setFieldsDefault();
-    },
+    // initForm() {
+    //   this.formStruct = this.$store.state.formStruct;
+    //   this.setFieldsDefault();
+    // },
 
     sendModal() {
       this.resetErrors();
@@ -219,12 +219,16 @@ export default {
       this.form.Milliseconds /= 60000;
     },
 
-    setFormView(formStruct) {
+    setFormStruct(formStruct) {
       this.formStruct = formStruct;
-
-      for (let key in this.formStruct)
-        for (let key2 in this.formStruct[key])
+      console.log(this.formStruct)
+      for (let key in this.formStruct) {
+        console.log(key + ":")
+        for (let key2 in this.formStruct[key]) {
+          console.log(key2)
           this.error[key2] = false;
+        }
+      }
     },
 
   },
