@@ -26,7 +26,7 @@
                             <i :class="item2.icon"></i>
                           </span>
                         </div>
-                        <p v-if="this.error[item2.name]" class="help is-danger">Please enter a {{ item2.label.toLowerCase() }}</p>
+                        <p v-if="this.error[item2.name]" class="help is-danger">Please enter {{ item2.label.toLowerCase() }}</p>
                       </div>
                     </template>
                   </div>
@@ -225,10 +225,11 @@ export default {
       for (let key in this.formStruct) {
         console.log(key + ":")
         for (let key2 in this.formStruct[key]) {
-          console.log(key2)
-          this.error[key2] = false;
+          console.log(this.formStruct[key][key2])
+          this.error[this.formStruct[key][key2].name] = false;
         }
       }
+      console.log(this.error)
     },
 
   },
