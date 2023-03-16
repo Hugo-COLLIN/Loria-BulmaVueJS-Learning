@@ -21,7 +21,7 @@
                       <div class="column">
                         <label class="label">{{ item2.label }}</label>
                         <div class="control" :class="{'has-icons-left': item2.icon !== '' && item2.icon !== undefined }">
-                          <input :name="key2" v-model="this.form[item2.name]" class="input" :class="item2.classes" :placeholder="item2.placeholder" required :type="item2.type">
+                          <input :name="key2" v-model="this.form[item2.name]" class="input" :class="item2.classes, {'is-danger' : this.error[item2.name]}" :placeholder="item2.placeholder" required :type="item2.type">
                           <span v-if="item2.icon !== '' && item2.icon !== undefined" class="icon is-small is-left">
                             <i :class="item2.icon"></i>
                           </span>
@@ -119,10 +119,11 @@ export default {
     // },
 
     sendModal() {
+      let isErrors = false;
       this.resetErrors();
 
       // Convert minutes to milliseconds
-      this.form.Milliseconds *= 60000;
+      if (this.form.Milliseconds !== undefined) this.form.Milliseconds *= 60000;
 
       // Check if all fields are filled else return error
       for (let key in this.form) {
@@ -130,10 +131,12 @@ export default {
         if (this.form[key] === "") {
           console.log(key)
           console.log(this.formStruct)
-          this.form.Milliseconds /= 60000;
-          return this.error[key] = true;
+          if (this.form.Milliseconds !== undefined) this.form.Milliseconds /= 60000;
+          this.error[key] = true;
+          isErrors = true;
         }
       }
+      if (isErrors) return;
 
       this.resetErrors();
 
@@ -241,5 +244,7 @@ export default {
 </script>
 
 <style scoped>
-
+.modal-card > * {
+  overflow: auto;
+}
 </style>
