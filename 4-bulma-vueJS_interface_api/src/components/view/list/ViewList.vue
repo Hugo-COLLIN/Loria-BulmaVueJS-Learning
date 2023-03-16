@@ -51,8 +51,8 @@ import Pagination from "@/components/tools/Pagination.vue";
 import Dropdown from "@/components/tools/Dropdown.vue";
 import CounterList from "@/components/tools/CounterList.vue";
 import Search from "@/components/tools/Search.vue";
-import TileViewList from "@/components/TileViewList.vue";
-import TableViewList from "@/components/TableViewList.vue";
+import TileViewList from "@/components/view/list/TileViewList.vue";
+import TableViewList from "@/components/view/list/TableViewList.vue";
 
 export default {
   name: 'Items',

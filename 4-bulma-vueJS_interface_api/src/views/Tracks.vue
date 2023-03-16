@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ViewList from "@/components/ViewList.vue";
+import ViewList from "@/components/view/list/ViewList.vue";
 export default {
   name: 'Items',
   components: {ViewList},
