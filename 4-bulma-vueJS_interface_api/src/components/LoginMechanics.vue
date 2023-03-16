@@ -27,6 +27,7 @@ export default {
           .then(response => {
             // save the token in the session storage
             sessionStorage.setItem('tokenSession', response.data[0]);
+            sessionStorage.setItem('userId', response.data[1]);
 
             this.$router.go(0) // refresh page : loading side menu temporary solution
             // redirect to the dashboard

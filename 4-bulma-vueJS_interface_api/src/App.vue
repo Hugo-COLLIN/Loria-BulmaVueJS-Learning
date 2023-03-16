@@ -1,6 +1,7 @@
 <template>
+  <LoginMechanics ref="loginMechanics" @login="init"></LoginMechanics>
   <template v-if="$route.name !== 'login'">
-    <HeaderBar @open-bug-report="bugReport" @login="init"/>
+    <HeaderBar @open-bug-report="bugReport" @logout="logout"/>
 
     <section class="section">
       <div class="columns">
@@ -14,13 +15,14 @@
     </section>
     <BugReport :show-modal="openBugReport" @close="openBugReport = false"/>
   </template>
-  <template v-else><router-view/></template>
+  <template v-else><router-view @login="login"/></template>
 </template>
 
 <script>
 import BugReport from "@/components/modals/BugReport.vue";
 import SideMenu from "@/components/persistent/SideMenu.vue";
 import HeaderBar from "@/components/persistent/HeaderBar.vue";
+import LoginMechanics from "@/components/LoginMechanics.vue";
 
 export default {
   name: "App",
@@ -28,6 +30,7 @@ export default {
     HeaderBar,
     SideMenu,
     BugReport,
+    LoginMechanics
   },
   data()
   {
@@ -46,7 +49,7 @@ export default {
           link: '/dashboard'
         },
         {
-          name: 'Items',
+          name: 'Tracks',
           icon: 'fa fa-book',
           link: '/items'
         },
@@ -74,6 +77,20 @@ export default {
 
     init() {
       this.$refs.sideMenu.init(this.menuItems);
+    },
+
+    /**
+     * Login
+     */
+    login(email, password) {
+      this.$refs.loginMechanics.login(email, password);
+    },
+
+    /**
+     * Logout
+     */
+    logout() {
+      this.$refs.loginMechanics.logout();
     }
 
   },

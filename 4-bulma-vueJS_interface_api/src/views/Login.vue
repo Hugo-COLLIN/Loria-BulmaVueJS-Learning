@@ -81,9 +81,9 @@ export default {
   methods: {
     tryLogin() {
       this.resetErrors();
-      this.$refs.logup.login(this.form.email, this.form.password);
-      this.resetErrors();
-      this.$emit('login');
+      // this.$refs.logup.login(this.form.email, this.form.password);
+      // this.resetErrors();
+      this.$emit('login', this.form.email, this.form.password);
     },
     resetErrors() {
       this.error.email = false;

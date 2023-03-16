@@ -1,5 +1,5 @@
 <template>
-  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>
+<!--  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>-->
   <nav class="navbar has-shadow">
     <div class="navbar-brand">
       <a class="navbar-item">
@@ -41,7 +41,7 @@
               </div>
             </a>
 
-            <a class="navbar-item" @click="this.$refs.loginMechanics.logout">
+            <a class="navbar-item" @click="logout">
               <div>
                 <span class="icon is-small">
                    <i class="fa fa-sign-out"></i>
@@ -59,14 +59,21 @@
 <script>
 import LoginMechanics from "@/components/LoginMechanics.vue";
 import bugReport from "@/components/modals/BugReport.vue";
+import axios from "axios";
 
 export default {
   name: 'HeaderBar',
   components: {LoginMechanics},
-  emits: ['open-bug-report', 'login'],
+  emits: ['open-bug-report', 'login', 'logout'],
   data() {
     return {
       openBugReport: false
+    }
+  },
+  computed: {
+    user() {
+      // return
+      // sessionStorage.getItem('userId');
     }
   },
   methods: {
@@ -77,6 +84,18 @@ export default {
 
     login() {
       this.$emit('login');
+    },
+
+    logout() {
+      this.$emit('logout');
+      // axios.post('/api/logout')
+      //   .then(response => {
+      //     console.log(response);
+      //     this.$router.push('/login');
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
     }
   }
 }
