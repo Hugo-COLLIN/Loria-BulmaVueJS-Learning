@@ -1,7 +1,7 @@
 <template>
 <!--  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>-->
   <nav class="navbar has-shadow">
-    <div class="navbar-brand">
+    <router-link to="/" class="navbar-brand">
       <a class="navbar-item">
         <img src="../../assets/logo.png" alt="logo">
       </a>
@@ -10,7 +10,7 @@
         <span></span>
         <span></span>
       </div>
-    </div>
+    </router-link>
     <div class="navbar-menu">
       <div class="navbar-start">
         <div class="navbar-item">
@@ -19,12 +19,18 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link has-icons-left" @click="userAction">
+<!--          <div class="navbar-link has-icons-left" @click="userAction">-->
+<!--            <span class="icon is-left">-->
+<!--              <i class="fa fa-user"></i>-->
+<!--            </span>-->
+<!--            <span>&nbsp;{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}</span>-->
+<!--          </div>-->
+          <router-link :to="isConnected ? 'profile' : 'login'" :class="isConnected ? 'navbar-link' : 'navbar-item'" class="has-icons-left">
             <span class="icon is-left">
               <i class="fa fa-user"></i>
             </span>
             <span>&nbsp;{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}</span>
-          </div>
+          </router-link>
 
           <div class="navbar-dropdown" v-if="isConnected">
             <router-link to="profile" class="navbar-item">

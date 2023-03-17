@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from "@/store";
 import LoginMechanics from "@/components/LoginMechanics.vue";
+import App from "@/App.vue";
 
 const routes = [
+  // customizable dynamic route (with parameter)
+  // { path: '/:id', component: App, name: 'route' },
   {
     path: '/',
     redirect: '/dashboard'
