@@ -152,6 +152,9 @@ export default {
   },
   data() {
     return {
+      config: {
+        token: sessionStorage.getItem('tokenSession')
+      },
       customers: [
         // {
         //   "Address": "Av. Brigadeiro Faria Lima, 2170",
@@ -232,14 +235,14 @@ export default {
     }
   },
   methods: {
-    changeStats(event) {
-      this.selectedStats = this.stats[event.target.value];
-    },
+    // changeStats(event) {
+    //   this.selectedStats = this.stats[event.target.value];
+    // },
     getImgPath(image) {
       return image ? require(`@/assets/images/${image}`) : "";
     },
     setCustomer() {
-      axios.get(this.$store.state.urlAPI + "customers")
+      axios.get(this.$store.state.urlAPI + "customers", {headers: this.config} )
           .then(response => {
             this.customers = response.data;
             this.customers.sort((a, b) => {
@@ -254,7 +257,7 @@ export default {
           });
     },
     setOrder() {
-      axios.get(this.$store.state.urlAPI + "invoices" )
+      axios.get(this.$store.state.urlAPI + "invoices", {headers: this.config} )
           .then(response => {
             response.data.sort((a, b) => {
               return new Date(b.InvoiceDate) - new Date(a.InvoiceDate);
@@ -278,7 +281,7 @@ export default {
           });
     },
     setItem() {
-      axios.get(this.$store.state.urlAPI + "tracks")
+      axios.get(this.$store.state.urlAPI + "tracks", {headers: this.config} )
           .then(response => {
             this.items = response.data;
             this.items.sort((a, b) => {
@@ -297,7 +300,7 @@ export default {
             }
             // get only the 3 first items
             this.items = this.items.slice(0, 3);
-            this.changeStats({target: {value: "today"}})
+            // this.changeStats({target: {value: "today"}}) cf. 238
           })
           .catch(error => {
             console.error(error);
