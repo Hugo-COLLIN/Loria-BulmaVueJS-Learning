@@ -1,18 +1,22 @@
 <template>
   <div class="items">
-    <h1 class="title is-center">{{this.pageTitle}}</h1>
-
     <nav>
       <div class="level is-flex-wrap-wrap is-ancestor">
+        <div class="level-left">
+          <div class="level-item">
+            <h2 class="title is-center is-3 mr-2">{{this.pageTitle}}</h2>
+            <button class="button is-success" @click="callNewItem" :class="{'is-loading': !this.listCharged}">New</button>
+          </div>
+
+        </div>
+      </div>
+      <div class="level is-flex-wrap-wrap is-ancestor" :class="{'is-hidden': !this.listCharged}">
         <div class="level-left mb-4">
           <div class="level-item">
             <CounterList ref="counterList"></CounterList>
-            <p class="level-item ml-2">
-              <button class="button is-success" @click="callNewItem">New</button>
-            </p>
           </div>
 
-          <div class="level-left">
+          <div class="level-item">
             <div class="level-item">
               <Search ref="search" @search="search"></Search>
             </div>
@@ -29,16 +33,15 @@
       </div>
     </nav>
 
-    <!--    <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>--> <!--Initialization error, only for the last and bug when vue reload data-->
+<!--        <Pagination ref="pagination" @pagin-update="displayCutList"></Pagination>-->
+<!--    Initialization error, only for the last and bug when vue reload data-->
 
-    <div class="columns is-multiline is-align-items-stretch" :class="{'is-hidden': this.listView !== 'tiles'}">
-      <TileViewList ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/> <!--v-if="this.listView === 'tile'"-->
-    </div>
-    <div class="columns is-multiline is-align-items-stretch" :class="{'is-hidden': this.listView !== 'table'}">
-      <TableViewList ref="tableViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
+    <div class="viewList-views" :class="{'is-hidden': !this.listCharged}">
+        <TileViewList :class="{'is-hidden': this.listView !== 'tiles'}" ref="tileViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/> <!--v-if="this.listView === 'tile'"-->
+        <TableViewList :class="{'is-hidden': this.listView !== 'table'}" ref="tableViewList" @call-edit-item="callEditItem" @delete-item="deleteItem" :items="this.items"/>
     </div>
 
-    <Pagination ref="pagination" @pagin-update="displayCutAllList"></Pagination>
+    <Pagination ref="pagination" @pagin-update="displayCutAllList" :class="{'is-hidden': !this.listCharged}"></Pagination>
   </div>
   <ModalItem ref="modalItem" :show-modal="showModal" @close="showModal = false" @sent-data="addItem" @edit-data="editItem"></ModalItem>
 </template>
@@ -57,6 +60,11 @@ import TableViewList from "@/components/view/list/TableViewList.vue";
 export default {
   name: 'Items',
   components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search, TableViewList},
+  // computed: {
+  //   listCharged() {
+  //     return this.allItems !== [];
+  //   },
+  // },
   data() {
     return {
       items: [],
@@ -100,6 +108,12 @@ export default {
       listView: "",
       identifier: "",
       excludedProps: [],
+
+      config: {
+        token: sessionStorage.getItem('tokenSession')
+      },
+
+      listCharged: false,
     };
   },
 
@@ -156,14 +170,11 @@ export default {
 
       console.log(data)
 
-      const config = {
-        token: sessionStorage.getItem('tokenSession')
-      };
       axios({
         method: 'post',
         url: this.urlAPISection,
         data: data,
-        headers: config
+        headers: this.config
       })
           .then(response => {
             i[this.identifier] = response.data[this.identifier];
@@ -187,15 +198,12 @@ export default {
       }
       this.showModal = false;
 
-      const config = {
-        token: sessionStorage.getItem('tokenSession')
-      };
 
       axios({
         method: 'put',
         url: this.urlAPISection + '/' + i[this.identifier],
         data: data,
-        headers: config
+        headers: this.config
       })
           .then(response => {
             this.updateList();
@@ -214,9 +222,7 @@ export default {
       this.allItems.splice(this.allItems.indexOf(item), 1);
       this.displayCutAllList();
       axios.delete(this.urlAPISection + '/' + item[this.identifier], {
-        headers: {
-          token: sessionStorage.getItem('tokenSession')
-        }
+        headers: this.config
       })
           .then(response => {
             this.updateList();
@@ -267,12 +273,13 @@ export default {
     },
 
     loadList() {
-      axios.get(this.urlAPISection)
+      axios.get(this.urlAPISection, {headers: this.config})
           .then(response => {
             this.allItems = response.data;
             this.$refs.modalItem.setItemAttributes(this.allItems[0])
             this.sortItems(this.$refs.sortList.selected);
             this.updateList();
+            this.listCharged = true;
             // this.setCardsTitle("Name");
             console.log()
           })
