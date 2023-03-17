@@ -27,14 +27,14 @@
           </div>
 
           <div class="navbar-dropdown" v-if="isConnected">
-            <a class="navbar-item">
+            <router-link to="profile" class="navbar-item">
               <div>
                 <span class="icon is-small">
                    <i class="fa fa-user-circle-o"></i>
                 </span>
                 Profile
               </div>
-            </a>
+            </router-link>
 
             <a class="navbar-item" @click="bugReport">
               <div>
@@ -53,6 +53,26 @@
                 Sign Out
               </div>
             </a>
+          </div>
+
+          <div class="navbar-dropdown" v-else>
+            <router-link class="navbar-item" to="login">
+              <div>
+                <span class="icon is-small">
+                   <i class="fa fa-arrow-right"></i>
+                </span>
+                Log in
+              </div>
+            </router-link>
+
+            <router-link class="navbar-item" to="register">
+              <div>
+                <span class="icon is-small">
+                   <i class="fa fa-user-plus"></i>
+                </span>
+                Register
+              </div>
+            </router-link>
           </div>
 
         </div>
@@ -79,12 +99,12 @@ export default {
       // console.log('userInfos is null')
       // console.log(sessionStorage.getItem('userInfos'))
       return {
-        FirstName: 'Log',
-        LastName: 'in'
+        FirstName: 'Logged',
+        LastName: 'out'
       };
     },
     isConnected() {
-      return this.userInfos.FirstName !== 'Log';
+      return this.userInfos.FirstName !== 'Logged';
     }
   },
   components: {LoginMechanics, store},
