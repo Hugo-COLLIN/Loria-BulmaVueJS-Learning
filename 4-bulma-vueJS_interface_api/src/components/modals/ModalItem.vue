@@ -7,70 +7,20 @@
         <p class="modal-card-title">Item information</p>
         <button class="delete" aria-label="close" @click="closeModal"></button>
       </header>
-
-<!--      <Formular :form-struct="formStruct" :hide-notification="hideNotification"/>-->
-      <form ref="itemAddForm">
-        <section class="modal-card-body" :class="{'notification is-success': !hideNotification}">
-          <div :class="{'is-hidden': hideNotification}">
-            <p>Item added!</p>
-          </div>
-
-          <div :class="{'is-hidden': !hideNotification}">
-            <template v-for="(item,key) in formStruct">
-              <div class="field">
-                <div class="columns is-desktop">
-                  <template v-for="(item2,key2) in item">
-                    <div class="column">
-                      <label class="label">{{ item2.label }}</label>
-                      <div class="control" :class="{'has-icons-left': item2.icon !== '' && item2.icon !== undefined }">
-                        <input :name="key2" v-model="this.form[item2.name]" class="input"
-                               :class="item2.classes, {'is-danger' : this.error[item2.name]}"
-                               :placeholder="item2.placeholder" required :type="item2.type">
-                        <span v-if="item2.icon !== '' && item2.icon !== undefined" class="icon is-small is-left">
-                            <i :class="item2.icon"></i>
-                          </span>
-                      </div>
-                      <p v-if="this.error[item2.name]" class="help is-danger">Please enter {{ item2.label.toLowerCase()
-                        }}</p>
-                    </div>
-                  </template>
-                </div>
-              </div>
-            </template>
-
-            <!--            <div class="field">-->
-            <!--              <label class="label">Cover image</label>-->
-            <!--              <div class="control">-->
-            <!--                <div class="file has-name">-->
-            <!--                  <label class="file-label">-->
-            <!--                    <input class="file-input" type="file"> &lt;!&ndash; v-model="this.form.title"&ndash;&gt;-->
-            <!--                    <span class="file-cta">-->
-            <!--                       <span class="file-icon">-->
-            <!--                        <i class="fa fa-upload"></i>-->
-            <!--                       </span>-->
-            <!--                         <span class="file-label">-->
-            <!--                          Choose a file…-->
-            <!--                         </span>-->
-            <!--                       </span>-->
-
-            <!--                    <span class="file-name">-->
-            <!--                       No file chosen-->
-            <!--                    </span>-->
-            <!--                  </label>-->
-            <!--                  <p class="help is-danger" v-if="error.coverImage">Please choose a picture</p>-->
-            <!--                </div>-->
-            <!--              </div>-->
-
-            <!--            </div>-->
-          </div>
-        </section>
-      </form>
+      <section class="modal-card-body" :class="{'notification is-success': !hideNotification}">
+        <Formular
+            ref="formular"
+          :hideNotification="hideNotification"
+          :reportMessage="reportMessage"
+          @edit-data="editData"
+          @sent-data="sentData"></Formular>
+      </section>
 
       <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
-        <div class="buttons">
-          <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
-          <button class="button" @click="closeModal">Cancel</button>
-        </div>
+<!--        <div class="buttons">-->
+<!--          <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>-->
+<!--          <button class="button" @click="closeModal">Cancel</button>-->
+<!--        </div>-->
       </footer>
 
 
@@ -82,11 +32,12 @@
 /*
   This component is used to create a new item or edit an existing one.
  */
-import Formular from "@/components/modals/Formular.vue";
-
+import Formular from "./Formular";
 export default {
   name: "ModalItem",
-  components: {Formular},
+  components: {
+    Formular
+  },
   data() {
     return {
       hideNotification: true,
@@ -94,10 +45,10 @@ export default {
       edit: false,
       btnTitle: "",
 
-      form: {},
-      error: {},
-      formStruct: {},
-      itemAttributes: {}
+      // form: {},
+      // error: {},
+      // formStruct: {},
+      // itemAttributes: {}
     };
   },
   props: {
@@ -117,15 +68,10 @@ export default {
       this.$emit("close");
     },
 
-    resetModal() {
+    resetModal() {//refs resetmodal
       this.reportMessage = "";
       this.closeModal();
     },
-
-    // initForm() {
-    //   this.formStruct = this.$store.state.formStruct;
-    //   this.setFieldsDefault();
-    // },
 
     sendModal() {
       let isErrors = false;
@@ -188,53 +134,43 @@ export default {
 
     },
 
-    setItemAttributes(itemAttributes) {
-      this.itemAttributes = itemAttributes;
-    },
+
 
     cleanFields() {
       for (let key in this.form)
         delete this.form[key];
     },
-    /*
-      Reset all fields
-     */
-    newForm() {
-      this.edit = false;
-      this.btnTitle = "Create item";
 
-      // Reset all fields
-      this.cleanFields();
-      this.setFieldsDefault();
-      // console.log(this.item)
-      // console.log(this.form)
-      //
-      // console.log(this.error)
+    /*
+    --- FORM METHODS CALLS ---
+     */
+    setFormStruct(formStruct) {
+      this.$refs.formular.setFormStruct(formStruct);
+    },
+
+    setItemAttributes(itemAttributes) {
+      this.$refs.formular.setItemAttributes(itemAttributes);
+    },
+
+    newForm() {
+      this.$refs.formular.newForm();
     },
 
     editForm(item)
     {
-      this.edit = true;
-      this.btnTitle = "Update item";
-
-      this.setFieldsDefault();
-      for (let key in item)
-        this.form[key] = item[key];
-      this.form.Milliseconds /= 60000;
+      this.$refs.formular.editForm(item);
     },
 
-    setFormStruct(formStruct) {
-      this.formStruct = formStruct;
-      // console.log(this.formStruct)
-      for (let key in this.formStruct) {
-        // console.log(key + ":")
-        for (let key2 in this.formStruct[key]) {
-          // console.log(this.formStruct[key][key2])
-          this.error[this.formStruct[key][key2].name] = false;
-        }
-      }
-      console.log(this.error)
+    /*
+    --- FORM EMITS REEMITED ---
+     */
+    editData(item) {
+      this.$emit("edit-data", item);
     },
+
+    sentData(item) {
+      this.$emit("sent-data", item);
+    }
 
   },
 

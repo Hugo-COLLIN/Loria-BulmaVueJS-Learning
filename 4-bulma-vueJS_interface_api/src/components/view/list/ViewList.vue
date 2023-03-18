@@ -169,6 +169,7 @@ export default {
       }
 
       console.log(data)
+      console.log(i)
 
       axios({
         method: 'post',

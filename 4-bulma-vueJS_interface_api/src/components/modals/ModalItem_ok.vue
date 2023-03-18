@@ -128,7 +128,8 @@ export default {
       // Check if all fields are filled else return error
       for (let key in this.form) {
         // console.log(key)
-        if (/*this.form[key] === "" ||*/ this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) {
+        if (this.form[key] === "" || this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) //TODO: implement required/not required fields, string check can cause pb if field not implemented in the form, but can cause axios error if check not implemented
+        {
           // console.log(key)
           // console.log(this.formStruct)
           if (this.form.Milliseconds !== undefined) this.form.Milliseconds /= 60000;
