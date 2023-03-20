@@ -26,7 +26,7 @@ export default {
     // }
   },
   methods: {
-    /**
+    /** @vuese
      * Log in the user
      */
     login(email, password) {
@@ -57,7 +57,7 @@ export default {
               console.log(error);
           });
     },
-    /**
+    /** @vuese
      * Check if the user is logged in
      */
     loginStateRouter()
@@ -92,7 +92,7 @@ export default {
       return isLogin;
     },
 
-    /**
+    /** @vuese
      * Logout the user by deleting the token
      */
     logout()
@@ -114,7 +114,7 @@ export default {
       this.loginRequired();
     },
 
-    /**
+    /** @vuese
      * Redirect to the login page
      */
     loginRequired()
@@ -126,6 +126,9 @@ export default {
       this.reloadPage();
     },
 
+    /** @vuese
+     * Get the user information
+     */
     getUserInfo() {
       console.log(this.$store.state.urlAPI)
       axios.get(this.$store.state.urlAPI + "employees/" + sessionStorage.getItem('userId'), {
@@ -143,6 +146,10 @@ export default {
             console.log(error);
           });
     },
+
+    /** @vuese
+     * Refresh the page
+     */
     reloadPage() {
       this.$router.go(0) // refresh page : loading side menu temporary solution
       // redirect to the dashboard

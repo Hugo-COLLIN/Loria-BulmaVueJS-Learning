@@ -44,17 +44,17 @@ export default {
   data()
   {
     return {
-      /**
+      /** @vuese
        * "Bug report modal" display state
        */
       openBugReport: false,
 
-      /**
+      /** @vuese
        * URL of the API
        */
       urlAPI: 'http://51.91.76.245:8000/api/',
 
-      /**
+      /** @vuese
        * Elemnts displayed in the side menu
        */
       menuItems: [
@@ -81,11 +81,11 @@ export default {
       ]
     }
   },
-  /**
+  /** @vuese
    * App global methods
    */
   methods: {
-    /**
+    /** @vuese
      * Open "Bug report modal"
      */
     bugReport(status) {
@@ -93,21 +93,21 @@ export default {
       this.openBugReport = status;
     },
 
-    /**
+    /** @vuese
      * Initialize the side menu
      */
     init() {
       this.$refs.sideMenu.init(this.menuItems);
     },
 
-    /**
+    /** @vuese
      * Call the login method of the LoginMechanics component with the user-entered credentials
      */
     login(email, password) {
       this.$refs.loginMechanics.login(email, password);
     },
 
-    /**
+    /** @vuese
      * Call the logout method of the LoginMechanics component
      */
     logout() {
@@ -115,7 +115,7 @@ export default {
     }
 
   },
-  /**
+  /** @vuese
    * Initialize the side menu and the API URL
    */
   mounted()
@@ -146,7 +146,7 @@ nav {
   }
 }
 
-/**
+/** @vuese
  * Inline codeblock style
  */
 .codeStyle {
