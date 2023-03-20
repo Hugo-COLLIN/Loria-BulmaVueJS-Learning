@@ -11,6 +11,7 @@
     "bulma": "^0.9.4",
     "collect.js": "^4.34.3",
     "core-js": "^3.8.3",
+    "portal-vue": "^3.0.0-beta.0",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.13",
     "vue-cookies": "^1.8.3",

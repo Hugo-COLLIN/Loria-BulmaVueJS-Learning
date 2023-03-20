@@ -21,6 +21,7 @@
 <!--          <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>-->
 <!--          <button class="button" @click="closeModal">Cancel</button>-->
 <!--        </div>-->
+<!--        <portal-target name="modal-footer"></portal-target>-->
       </footer>
 
 
@@ -32,11 +33,15 @@
 /*
   This component is used to create a new item or edit an existing one.
  */
-import Formular from "./Formular";
+import Formular from "../view/form/Formular.vue";
+// import {PortalTarget} from "portal-vue";
+import PortalTarget from "portal-vue";
+
 export default {
   name: "ModalItem",
   components: {
-    Formular
+    Formular,
+    // PortalTarget
   },
   data() {
     return {

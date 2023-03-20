@@ -1,76 +1,83 @@
 <template>
-        <form ref="itemAddForm">
-          <div :class="{'is-hidden': hideNotification}">
-            <p>Item added!</p>
-          </div>
+  <form ref="itemAddForm">
+    <div :class="{'is-hidden': hideNotification}">
+      <p>Item added!</p>
+    </div>
 
-          <div :class="{'is-hidden': !hideNotification}">
-              <template v-for="(item,key) in formStruct">
-                <div class="field">
-                  <div class="columns is-desktop">
-                    <template v-for="(item2,key2) in item">
-                      <div class="column">
-                        <label class="label">{{ item2.label }}</label>
-                        <div class="control" :class="{'has-icons-left': item2.icon !== '' && item2.icon !== undefined }">
-                          <input :name="key2" v-model="this.form[item2.name]" class="input" :class="item2.classes, {'is-danger' : this.error[item2.name]}" :placeholder="item2.placeholder" required :type="item2.type">
-                          <span v-if="item2.icon !== '' && item2.icon !== undefined" class="icon is-small is-left">
-                            <i :class="item2.icon"></i>
-                          </span>
-                        </div>
-                        <p v-if="this.error[item2.name]" class="help is-danger">Please enter {{ item2.label.toLowerCase() }}</p>
-                      </div>
-                    </template>
+    <div :class="{'is-hidden': !hideNotification}">
+        <template v-for="(item,key) in formStruct">
+          <div class="field">
+            <div class="columns is-desktop">
+              <template v-for="(item2,key2) in item">
+                <div class="column">
+                  <label class="label">{{ item2.label }}</label>
+                  <div class="control" :class="{'has-icons-left': item2.icon !== '' && item2.icon !== undefined }">
+                    <input :name="key2" v-model="this.form[item2.name]" class="input" :class="item2.classes, {'is-danger' : this.error[item2.name]}" :placeholder="item2.placeholder" required :type="item2.type">
+                    <span v-if="item2.icon !== '' && item2.icon !== undefined" class="icon is-small is-left">
+                      <i :class="item2.icon"></i>
+                    </span>
                   </div>
+                  <p v-if="this.error[item2.name]" class="help is-danger">Please enter {{ item2.label.toLowerCase() }}</p>
                 </div>
               </template>
-
-<!--            <div class="field">-->
-<!--              <label class="label">Cover image</label>-->
-<!--              <div class="control">-->
-<!--                <div class="file has-name">-->
-<!--                  <label class="file-label">-->
-<!--                    <input class="file-input" type="file"> &lt;!&ndash; v-model="this.form.title"&ndash;&gt;-->
-<!--                    <span class="file-cta">-->
-<!--                       <span class="file-icon">-->
-<!--                        <i class="fa fa-upload"></i>-->
-<!--                       </span>-->
-<!--                         <span class="file-label">-->
-<!--                          Choose a file…-->
-<!--                         </span>-->
-<!--                       </span>-->
-
-<!--                    <span class="file-name">-->
-<!--                       No file chosen-->
-<!--                    </span>-->
-<!--                  </label>-->
-<!--                  <p class="help is-danger" v-if="error.coverImage">Please choose a picture</p>-->
-<!--                </div>-->
-<!--              </div>-->
-
-<!--            </div>-->
-          </div>
-
-<!--          <Teleport to="footer">-->
-            <div class="buttons">
-              <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
-              <button class="button" @click="closeModal">Cancel</button>
             </div>
-<!--          </Teleport>-->
-        </form>
+          </div>
+        </template>
+
+  <!--            <div class="field">-->
+  <!--              <label class="label">Cover image</label>-->
+  <!--              <div class="control">-->
+  <!--                <div class="file has-name">-->
+  <!--                  <label class="file-label">-->
+  <!--                    <input class="file-input" type="file"> &lt;!&ndash; v-model="this.form.title"&ndash;&gt;-->
+  <!--                    <span class="file-cta">-->
+  <!--                       <span class="file-icon">-->
+  <!--                        <i class="fa fa-upload"></i>-->
+  <!--                       </span>-->
+  <!--                         <span class="file-label">-->
+  <!--                          Choose a file…-->
+  <!--                         </span>-->
+  <!--                       </span>-->
+
+  <!--                    <span class="file-name">-->
+  <!--                       No file chosen-->
+  <!--                    </span>-->
+  <!--                  </label>-->
+  <!--                  <p class="help is-danger" v-if="error.coverImage">Please choose a picture</p>-->
+  <!--                </div>-->
+  <!--              </div>-->
+
+  <!--            </div>-->
+    </div>
+    <!--          <Teleport to=".modal-card-foot" :disabled="!this.teleportState">-->
+    <div class="buttons">
+      <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
+      <button class="button" @click="closeModal">Cancel</button>
+    </div>
+    <!--          </Teleport>-->
+    <!--          <portal to="modal-footer">-->
+    <!--            <div class="buttons">-->
+    <!--              <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>-->
+    <!--              <button class="button" @click="closeModal">Cancel</button>-->
+    <!--            </div>-->
+    <!--          </portal>-->
+  </form>
 </template>
 
 <script>
-/*
-  This component is used to create a new item or edit an existing one.
- */
+// import {Portal} from "portal-vue";
 export default {
   name: "ModalItem",
+  components: {
+    // Portal
+  },
   data() {
     return {
       hideNotification: true,
       reportMessage: "",
       edit: false,
       btnTitle: "",
+      teleportState: false,
 
       form: {},
       error: {},
@@ -190,6 +197,7 @@ export default {
       // console.log(this.form)
       //
       // console.log(this.error)
+      this.teleportState = true;
     },
 
     editForm(item)
