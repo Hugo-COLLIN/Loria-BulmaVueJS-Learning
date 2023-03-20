@@ -50,7 +50,7 @@ export default {
       urlAPI: 'http://51.91.76.245:8000/api/',
 
       /**
-       * Menu items
+       * Elemnts displayed in the side menu
        */
       menuItems: [
         {
@@ -76,6 +76,9 @@ export default {
       ]
     }
   },
+  /**
+   * App global methods
+   */
   methods: {
     /**
      * Open "Bug report modal"
@@ -85,30 +88,35 @@ export default {
       this.openBugReport = status;
     },
 
+    /**
+     * Initialize the side menu
+     */
     init() {
       this.$refs.sideMenu.init(this.menuItems);
     },
 
     /**
-     * Login
+     * Call the login method of the LoginMechanics component with the user-entered credentials
      */
     login(email, password) {
       this.$refs.loginMechanics.login(email, password);
     },
 
     /**
-     * Logout
+     * Call the logout method of the LoginMechanics component
      */
     logout() {
       this.$refs.loginMechanics.logout();
     }
 
   },
-  mounted() {
-    console.log(sessionStorage.getItem('tokenSession') !== null);
-
+  /**
+   * Initialize the side menu and the API URL
+   */
+  mounted()
+  {
+    // console.log(sessionStorage.getItem('tokenSession') !== null);
     this.$store.state.urlAPI = this.urlAPI;
-    // console.log(this.$store.state.urlAPI)
     this.$refs.sideMenu.init(this.menuItems);
   }
 };
@@ -119,13 +127,10 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  //text-align: center;
   color: #2c3e50;
 }
 
 nav {
-  //padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -136,6 +141,9 @@ nav {
   }
 }
 
+/**
+ * Inline codeblock style
+ */
 .codeStyle {
   background-color: #f5f5f5;
   //padding: 0;
