@@ -1,6 +1,7 @@
 <template>
   <LoginMechanics ref="loginMechanics" @login="init"></LoginMechanics>
   <HeaderBar @open-bug-report="bugReport" @logout="logout"/>
+
   <template v-if="$route.name !== 'login'">
 
     <section class="section">
@@ -13,9 +14,12 @@
         </main>
       </div>
     </section>
+
     <BugReport :show-modal="openBugReport" @close="openBugReport = false"/>
+
   </template>
   <template v-else><router-view @login="login"/></template>
+
 </template>
 
 <script>
@@ -40,7 +44,11 @@ export default {
        */
       openBugReport: false,
 
+      /**
+       * URL of the API
+       */
       urlAPI: 'http://51.91.76.245:8000/api/',
+
       /**
        * Menu items
        */
@@ -53,7 +61,7 @@ export default {
         {
           name: 'Tracks',
           icon: 'fa fa-book',
-          link: '/items'
+          link: '/tracks'
         },
         {
           name: 'Customers',
