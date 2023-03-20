@@ -17,7 +17,10 @@ I followed videos from the Youtube channel "La Tech avec Bertrand" to learn VueJ
 ### Part 3: VueJS + Bulma
 I followed the chapter 12: VueJS integration of the "Creating Interfaces with Bulma" Jeremy Thomas' book.
 
-### Part 4: VueJS + Bulma + API + reusable components
+### Part 4: VueJS + Bulma + API + reusable components + documentation + tests + docker (this line is too long)
 - I used the @Sacus1 API to apply changes from the interface to its database.
 - I externalised some VueJS code into components to make it reusable.
+- @Sacus1 made CodeceptJS tests
+- @Sacus1 Dockerized the project
+- I made the documentation using Vuese
 
