@@ -5,7 +5,7 @@
 <!-- @vuese:Login:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|login|this.$refs.logup.login(this.form.email, this.form.password);this.resetErrors();|-|
+|login|event send credentials to parent // TODO: use a component / use a store?|-|
 
 <!-- @vuese:Login:events:end -->
 

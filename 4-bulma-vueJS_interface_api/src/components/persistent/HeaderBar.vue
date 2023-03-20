@@ -97,18 +97,25 @@ export default {
     store() {
       return store
     },
+
+    /**
+     * Get the user infos from the session storage
+     * @returns {{FirstName: string, LastName: string}|any}
+     */
     userInfos() {
-      // console.log(JSON.parse(sessionStorage.getItem('userInfos')).FirstName);
-      // console.log(JSON.parse(sessionStorage.getItem('userInfos')));
       if (JSON.parse(sessionStorage.getItem('userInfos')) !== null)
         return JSON.parse(sessionStorage.getItem('userInfos'));
-      // console.log('userInfos is null')
-      // console.log(sessionStorage.getItem('userInfos'))
+
       return {
         FirstName: 'Logged',
         LastName: 'out'
       };
     },
+
+    /**
+     * Return true if the user is connected
+     * @returns {boolean}
+     */
     isConnected() {
       return this.userInfos.FirstName !== 'Logged';
     }
@@ -117,30 +124,45 @@ export default {
   emits: ['open-bug-report', 'login', 'logout'],
   data() {
     return {
+      /**
+       * Bug report modal visibility
+       */
       openBugReport: false
     }
   },
   methods: {
+    /**
+     * Displays the bug report modal
+     */
     bugReport() {
-      console.log('bugReport');
+      // emitted to parent to open the bug report modal
       this.$emit('open-bug-report', true);
+      console.log('bugReport modal opened');
     },
 
+    /**
+     * Request the login page
+     */
     login() {
-       this.$emit('login');
+      // emitted to parent to open the login page
+      this.$emit('login');
     },
 
+    /**
+     * Request to disconnect the user
+     */
     logout() {
+      // emitted to parent to disconnect the user
       this.$emit('logout');
     },
 
-    userAction() {
-      if (this.isConnected) {
-        this.$router.push('/profile');
-      } else {
-        this.login();
-      }
-    }
+    // userAction() {
+    //   if (this.isConnected) {
+    //     this.$router.push('/profile');
+    //   } else {
+    //     this.login();
+    //   }
+    // }
 
   }
 }

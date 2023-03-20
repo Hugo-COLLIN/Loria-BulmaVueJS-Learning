@@ -81,8 +81,7 @@ export default {
   methods: {
     tryLogin() {
       this.resetErrors();
-      // this.$refs.logup.login(this.form.email, this.form.password);
-      // this.resetErrors();
+      // event send credentials to parent // TODO: use a component / use a store?
       this.$emit('login', this.form.email, this.form.password);
     },
     resetErrors() {

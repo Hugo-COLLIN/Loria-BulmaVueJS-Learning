@@ -57,11 +57,13 @@ export default {
     };
   },
   props: {
+    // determine if the modal is visible or not
     showModal: {
       type: Boolean,
       default: false
     },
-    reset: ['item', 'form'],
+    // visibly not used
+    // reset: ['item', 'form'],
 
     item: {
       type: Object,
@@ -70,10 +72,12 @@ export default {
   },
   methods: {
     closeModal() {
+      // emitted to hide the modal
       this.$emit("close");
+      // this.showModal = false;
     },
 
-    resetModal() {//refs resetmodal
+    resetModal() {
       this.reportMessage = "";
       this.closeModal();
     },
@@ -106,6 +110,7 @@ export default {
 
       // Send data to parent component
       if (this.edit)
+        // use the form content to edit the item
         this.$emit("edit-data", this.form);
       else
         this.$emit("sent-data", this.form);

@@ -51,10 +51,11 @@
     </div>
     <!--          <Teleport to=".modal-card-foot" :disabled="!this.teleportState">-->
     <div class="buttons">
-      <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>
-      <button class="button" @click="closeModal">Cancel</button>
+      <button class="button is-medium is-success" @click.prevent="sendForm">{{this.btnTitle}}</button>
+<!--      <button class="button" @click.prevent="closeModal">Cancel</button>--> <!-- Bugs events-->
     </div>
     <!--          </Teleport>-->
+
     <!--          <portal to="modal-footer">-->
     <!--            <div class="buttons">-->
     <!--              <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>-->
@@ -85,18 +86,6 @@ export default {
       itemAttributes: {}
     };
   },
-  props: {
-    showModal: {
-      type: Boolean,
-      default: false
-    },
-    reset: ['item', 'form'],
-
-    item: {
-      type: Object,
-      default: null
-    }
-  },
   methods: {
     closeModal() {
       this.$emit("close");
@@ -107,37 +96,28 @@ export default {
       this.closeModal();
     },
 
-    // initForm() {
-    //   this.formStruct = this.$store.state.formStruct;
-    //   this.setFieldsDefault();
-    // },
-
-    sendModal() {
+    sendForm() {
       let isErrors = false;
       this.resetErrors();
 
-      // Convert minutes to milliseconds
 
-      // Check if all fields are filled else return error
+      // Check if all fields are filled
       for (let key in this.form) {
-        // console.log(key)
         if (this.form[key] === "" || this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) //TODO: implement required/not required fields, string check can cause pb if field not implemented in the form, but can cause axios error if check not implemented
         {
-          // console.log(key)
-          // console.log(this.formStruct)
           this.error[key] = true;
           isErrors = true;
-          // console.log("error: " + key)
         }
       }
+      // Return error if not all fields are filled
       if (isErrors) return;
 
       this.resetErrors();
 
+      // Convert minutes to milliseconds
       if (this.form.Milliseconds !== undefined) this.form.Milliseconds *= 60000;
 
       //this.hideNotification = false;
-      // console.log(this.form)
 
       // Send data to parent component
       console.log(this.form)
@@ -161,8 +141,10 @@ export default {
         this.error[key] = false;
     },
 
+    /**
+     * Set default values for all fields
+     */
     setFieldsDefault() {
-      // console.log(this.itemAttributes)
       for (let key in this.itemAttributes)
         if (typeof(this.itemAttributes[key]) === "string")
           this.form[key] = "";
@@ -175,16 +157,24 @@ export default {
 
     },
 
+    /**
+     * Set the structure of the form
+     * @param itemAttributes
+     */
     setItemAttributes(itemAttributes) {
       this.itemAttributes = itemAttributes;
     },
 
+    /**
+     * Delete all the this.form object properties'
+     */
     cleanFields() {
       for (let key in this.form)
         delete this.form[key];
     },
-    /*
-      Reset all fields
+
+    /**
+     * Prepare the form to create a new item
      */
     newForm() {
       this.edit = false;
@@ -193,13 +183,14 @@ export default {
       // Reset all fields
       this.cleanFields();
       this.setFieldsDefault();
-      // console.log(this.item)
-      // console.log(this.form)
-      //
-      // console.log(this.error)
-      this.teleportState = true;
+
+      // this.teleportState = true; // teleport try
     },
 
+    /**
+     * Prepare the form to edit an item
+     * @param item
+     */
     editForm(item)
     {
       this.edit = true;

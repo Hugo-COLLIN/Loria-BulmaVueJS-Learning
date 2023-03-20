@@ -38,7 +38,7 @@ export default {
   },
   // the properties that will be used in the component
   props: {
-    // the showModal property will be used to show or hide the popup
+    // determine if the modal is visible or not
     showModal: {
       type: Boolean,
       default: false
@@ -47,6 +47,7 @@ export default {
   methods: {
 
     closeModal() {
+      // event emitted to hide the modal
       this.$emit("close");
     },
 

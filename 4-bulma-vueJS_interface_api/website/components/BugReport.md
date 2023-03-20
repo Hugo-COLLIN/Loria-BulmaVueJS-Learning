@@ -5,7 +5,7 @@
 <!-- @vuese:BugReport:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|showModal|the showModal property will be used to show or hide the popup|`Boolean`|`false`|false|
+|showModal|determine if the modal is visible or not|`Boolean`|`false`|false|
 
 <!-- @vuese:BugReport:props:end -->
 
@@ -15,7 +15,7 @@
 <!-- @vuese:BugReport:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|close|-|-|
+|close|event emitted to hide the modal|-|
 
 <!-- @vuese:BugReport:events:end -->
 
