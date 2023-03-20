@@ -1,3 +1,4 @@
+<!-- 404 page -->
 <template>
     <div class="container has-text-centered">
       <h2 class="title">Seems you are in troubles...</h2>
@@ -7,6 +8,6 @@
 
 <script>
 export default {
-  name: '404',
+  name: 'Error404',
 }
 </script>

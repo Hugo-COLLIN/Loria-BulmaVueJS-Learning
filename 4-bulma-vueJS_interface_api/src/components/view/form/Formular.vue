@@ -67,7 +67,7 @@
 <script>
 // import {Portal} from "portal-vue";
 export default {
-  name: "ModalItem",
+  name: "Formular",
   components: {
     // Portal
   },

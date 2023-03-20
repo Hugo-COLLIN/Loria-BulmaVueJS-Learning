@@ -1,3 +1,4 @@
+<!-- Global app vue -->
 <template>
   <LoginMechanics ref="loginMechanics" @login="init"></LoginMechanics>
   <HeaderBar @open-bug-report="bugReport" @logout="logout"/>

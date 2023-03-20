@@ -58,7 +58,7 @@ import TileViewList from "@/components/view/list/TileViewList.vue";
 import TableViewList from "@/components/view/list/TableViewList.vue";
 
 export default {
-  name: 'Items',
+  name: 'ViewList',
   components: {TileViewList, ModalItem, Pagination, Dropdown, CounterList, Search, TableViewList},
   // computed: {
   //   listCharged() {

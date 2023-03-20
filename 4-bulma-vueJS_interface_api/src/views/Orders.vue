@@ -5,7 +5,7 @@
 <script>
 import ViewList from "@/components/view/list/ViewList.vue";
 export default {
-  name: 'Items',
+  name: 'Orders',
   components: {ViewList},
   data()
   {
