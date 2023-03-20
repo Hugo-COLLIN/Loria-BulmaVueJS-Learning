@@ -6,12 +6,9 @@
 -->
 
 <template>
-  <form ref="itemAddForm">
-    <div :class="{'is-hidden': hideNotification}">
-      <p>Item added!</p>
-    </div>
+  <form class="container is-inline">
 
-    <div :class="{'is-hidden': !hideNotification}">
+    <div>
         <template v-for="(item,key) in formStruct">
           <div class="field">
             <div class="columns is-desktop">
@@ -59,7 +56,7 @@
     <!--          <Teleport to=".modal-card-foot" :disabled="!this.teleportState">-->
     <div class="buttons">
       <button class="button is-medium is-success" @click.prevent="sendForm">{{this.btnTitle}}</button>
-<!--      <button class="button" @click.prevent="closeModal">Cancel</button>--> <!-- Bugs events-->
+      <button class="button" @click.prevent="cancel">Cancel</button>
     </div>
     <!--          </Teleport>-->
 
@@ -70,22 +67,24 @@
     <!--            </div>-->
     <!--          </portal>-->
   </form>
+<!--  <button class="button" @click.prevent="closeModal">Cancel</button>-->
+<!--  TODO: Bugs events-->
+
 </template>
 
 <script>
 // import {Portal} from "portal-vue";
 export default {
   name: "Formular",
+  emits: ["close", "sent-data", "edit-data"],
   components: {
     // Portal
   },
   data() {
     return {
-      hideNotification: true,
-      reportMessage: "",
       edit: false,
       btnTitle: "",
-      teleportState: false,
+      // teleportState: false,
 
       form: {},
       error: {},
@@ -94,19 +93,17 @@ export default {
     };
   },
   methods: {
-    closeModal() {
+    /**
+     * Abort the form
+     */
+    cancel() {
+      console.log("cancel - Formular.vue")
       this.$emit("close");
-    },
-
-    resetModal() {
-      this.reportMessage = "";
-      this.closeModal();
     },
 
     sendForm() {
       let isErrors = false;
       this.resetErrors();
-
 
       // Check if all fields are filled
       for (let key in this.form) {
@@ -124,20 +121,13 @@ export default {
       // Convert minutes to milliseconds
       if (this.form.Milliseconds !== undefined) this.form.Milliseconds *= 60000;
 
-      //this.hideNotification = false;
-
       // Send data to parent component
-      console.log(this.form)
       if (this.edit)
+        // use the form content to edit the item
         this.$emit("edit-data", this.form);
       else
+        // use the form content to create an item
         this.$emit("sent-data", this.form);
-
-/*
-      setTimeout(() => {
-        this.hideNotification = true;
-        this.resetModal();
-      }, 3000);*/
     },
 
     /*

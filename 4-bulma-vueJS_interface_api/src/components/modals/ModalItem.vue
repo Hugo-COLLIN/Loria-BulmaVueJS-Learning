@@ -15,10 +15,9 @@
       <section class="modal-card-body" :class="{'notification is-success': !hideNotification}">
         <Formular
             ref="formular"
-          :hideNotification="hideNotification"
-          :reportMessage="reportMessage"
           @edit-data="editData"
-          @sent-data="sentData"></Formular>
+          @sent-data="sentData"
+          @close="closeModal"></Formular>
       </section>
 
       <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
@@ -28,7 +27,6 @@
 <!--        </div>-->
 <!--        <portal-target name="modal-footer"></portal-target>-->
       </footer>
-
 
     </div>
   </div>
@@ -51,7 +49,6 @@ export default {
   data() {
     return {
       hideNotification: true,
-      reportMessage: "",
       edit: false,
       btnTitle: "",
 
@@ -67,13 +64,6 @@ export default {
       type: Boolean,
       default: false
     },
-    // visibly not used
-    // reset: ['item', 'form'],
-
-    item: {
-      type: Object,
-      default: null
-    }
   },
   methods: {
     closeModal() {
@@ -83,49 +73,8 @@ export default {
     },
 
     resetModal() {
-      this.reportMessage = "";
+      // this.reportMessage = "";
       this.closeModal();
-    },
-
-    sendModal() {
-      let isErrors = false;
-      this.resetErrors();
-
-      // Convert minutes to milliseconds
-      if (this.form.Milliseconds !== undefined) this.form.Milliseconds *= 60000;
-
-      // Check if all fields are filled else return error
-      for (let key in this.form) {
-        // console.log(key)
-        if (/*this.form[key] === "" ||*/ this.form[key] === null || this.form[key] === undefined /*|| this.form[key] === 0*/) {
-          // console.log(key)
-          // console.log(this.formStruct)
-          if (this.form.Milliseconds !== undefined) this.form.Milliseconds /= 60000;
-          this.error[key] = true;
-          isErrors = true;
-          // console.log("error: " + key)
-        }
-      }
-      if (isErrors) return;
-
-      this.resetErrors();
-
-      //this.hideNotification = false;
-      // console.log(this.form)
-
-      // Send data to parent component
-      if (this.edit)
-        // use the form content to edit the item
-        this.$emit("edit-data", this.form);
-      else
-        // use the form content to create an item
-        this.$emit("sent-data", this.form);
-
-/*
-      setTimeout(() => {
-        this.hideNotification = true;
-        this.resetModal();
-      }, 3000);*/
     },
 
     /*
@@ -136,6 +85,9 @@ export default {
         this.error[key] = false;
     },
 
+    /**
+     * Reset all fields to default values
+     */
     setFieldsDefault() {
       // console.log(this.itemAttributes)
       for (let key in this.itemAttributes)
@@ -150,8 +102,9 @@ export default {
 
     },
 
-
-
+    /**
+     * Delete all fields
+     */
     cleanFields() {
       for (let key in this.form)
         delete this.form[key];
