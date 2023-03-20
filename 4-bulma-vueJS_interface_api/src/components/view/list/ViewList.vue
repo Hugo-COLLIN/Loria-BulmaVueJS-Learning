@@ -77,17 +77,6 @@ export default {
       items: [],
       searchItems: [],
       allItems: [],
-      item: {
-        // Name: "",
-        // UnitPrice: "",
-        // Milliseconds: "",
-        // Composer: "",
-        // TrackId: "",
-        // AlbumId: "",
-        // GenreId: "",
-        // MediaTypeId: "",
-        // Bytes: "",
-      },
       showModal: false,
       // searchWord: "",
       currentItem: null,
@@ -130,9 +119,6 @@ export default {
       this.pageTitle = title;
     },
 
-    // setSearchPlaceholder(placeholder) {
-    //   this.$refs.search.setPlaceholder(placeholder);
-    // },
         /*
     --- ITEMS FILTERING METHODS ---
      */

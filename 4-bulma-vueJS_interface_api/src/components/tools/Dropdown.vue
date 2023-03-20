@@ -29,18 +29,39 @@ export default {
   emits: ["update"],
   data() {
     return {
+      /**
+       * Text before the dropdown
+       */
       label: "",
+
+      /**
+       * Dropdown elements
+       */
       listOptions: {},
+
+      /**
+       * Selected option
+       */
       selected: "",
     };
   },
   methods: {
+    /**
+     * Take a list of items and sort them by the selected option
+     * @param event event emitted by the dropdown
+     */
     sortItems(event) {
       this.selected = event.target.value;
+      // Emitted to update the list
       this.$emit("update", this.selected);
-      console.log("Event : " + event.target.value);
+      // console.log("Event : " + event.target.value);
     },
 
+    /**
+     * Initialize the component
+     * @param list elements of the dropdown
+     * @param label text before the dropdown
+     */
     init(list, label) {
       this.label = label;
       this.listOptions = list;
@@ -48,10 +69,6 @@ export default {
       console.log("Dropdown : " + this.selected)
     },
 
-    // createFilter(name, short)
-    // {
-    //   this.listOptions.push({fullName: name, shortName: short});
-    // }
   },
 }
 </script>

@@ -1,5 +1,5 @@
 <!-- Pagination -->
-<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- Hugo COLLIN, Lucas POIROT, 20/03/2023 -->
 <!-- This component is used to paginate a list of items. -->
 
 <template>
@@ -55,91 +55,100 @@ export default {
       startItem: 0,
     };
   },
-  methods: {
+
+  methods:
+  {
+    /**
+     * Set the number of items per page
+     * @param totalItems
+     */
     setTotalItems(totalItems)
     {
       this.totalItems = totalItems;
     },
 
+    /**
+     * Set the number of pages
+     */
     setTotalPages()
     {
-      // console.log("Per page: " + this.perPage)
       this.totalPages = Math.ceil(this.totalItems / this.perPage);
     },
 
+    /**
+     * Get the current page
+     * @returns {number}
+     */
     getCurrentPage()
     {
       return this.currentPage;
     },
 
+    /**
+     * Get the number of items per page
+     * @returns {number}
+     */
     getPerPage()
     {
       return this.perPage;
     },
 
-    /*
-      Get to the previous page
+    /**
+     * Set the page to previous and emit update
      */
     paginPrev()
     {
-      // console.log(this.currentPage)
       if (this.currentPage > 1)
       {
         this.currentPage--;
-        // this.$emit('pagin-prev');
+        // emitted to update the list
         this.$emit('pagin-update');
       }
     },
 
-    /*
-      Get to the next page
+    /**
+     * Set the page to next and emit update
      */
     paginNext()
     {
-      //console.log(this.currentPage)
-      // console.log(this.totalItems / this.perPage)
-      // console.log("Next page")
       if (this.currentPage < this.totalItems / this.perPage)
       {
         this.currentPage++;
-        // this.$emit('pagin-next');
         this.$emit('pagin-update');
-        // console.log(this.currentPage)
       }
     },
 
-    /*
-      Get to the first page
+    /**
+     * Set the page to the first page and emit update
      */
     paginStart()
     {
       this.currentPage = 1;
-      // this.$emit('pagin-start');
       this.$emit('pagin-update');
     },
 
-    /*
-      Get to the last page
+    /**
+     * Set the page to the last page and emit update
      */
     paginEnd()
     {
       this.currentPage = this.totalPages;
-      // this.$emit('pagin-end');
       this.$emit('pagin-update');
     },
 
-    //Items.length / this.perPage
 
-    /*
-      Get the first item on the current page
+    /**
+     * Get the first item on the current page
+     * @returns {number}
      */
     startingItem()
     {
       return (this.currentPage - 1) * this.perPage;
     },
 
-    /*
-      Get the last item on the current page
+    /**
+     * Get the last item on the current page
+     * @returns {number}
      */
     endingItem()
     {
@@ -148,19 +157,25 @@ export default {
       return this.currentPage * this.perPage;
     },
 
+    /**
+     * Set a custom page to go to
+     * @param page custom page
+     */
     setPage(page)
     {
       this.currentPage = page;
     },
 
-    movePage(page)
+    /**
+     * Move the page by a number
+     * @param pages number of pages to move
+     */
+    movePage(pages)
     {
-      this.currentPage += page;
+      this.currentPage += pages;
     },
+
   },
-  mounted() {
-    // console.log(this)
-  }
 }
 </script>
 
