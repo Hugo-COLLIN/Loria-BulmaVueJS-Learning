@@ -1,3 +1,7 @@
+<!-- Table View List -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to display a list of items in a table view. -->
+
 <template>
     <table class="table is-hoverable is-fullwidth">
       <thead>

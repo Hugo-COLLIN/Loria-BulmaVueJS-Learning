@@ -1,3 +1,7 @@
+<!-- LoginMechanics.vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to manage the user login and logout. -->
+
 <template>
 
 </template>

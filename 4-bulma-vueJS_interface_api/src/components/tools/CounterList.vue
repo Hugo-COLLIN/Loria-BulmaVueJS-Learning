@@ -1,3 +1,8 @@
+<!-- CounterList -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to show the number of items in the list
+  and the number of items that are currently being displayed. -->
+
 <template>
   <p class="subtitle is-5">
     <strong>{{ this.initItem }} - {{ this.lastItem }}</strong> / {{this.totalItems}} {{ this.label }}

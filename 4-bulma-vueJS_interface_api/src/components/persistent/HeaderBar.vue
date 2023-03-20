@@ -1,5 +1,9 @@
+<!-- Header bar -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to create a header bar. -->
+<!-- TODO : account menu in DropMenu component -->
+
 <template>
-<!--  <LoginMechanics ref="loginMechanics" @login="login"></LoginMechanics>-->
   <nav class="navbar has-shadow">
     <router-link to="/" class="navbar-brand">
       <a class="navbar-item">
@@ -19,12 +23,7 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
-<!--          <div class="navbar-link has-icons-left" @click="userAction">-->
-<!--            <span class="icon is-left">-->
-<!--              <i class="fa fa-user"></i>-->
-<!--            </span>-->
-<!--            <span>&nbsp;{{ this.userInfos.FirstName }} {{ this.userInfos.LastName }}</span>-->
-<!--          </div>-->
+
           <router-link :to="isConnected ? 'profile' : 'login'" :class="isConnected ? 'navbar-link' : 'navbar-item'" class="has-icons-left">
             <span class="icon is-left">
               <i class="fa fa-user"></i>

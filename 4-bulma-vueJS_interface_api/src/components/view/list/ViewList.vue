@@ -1,3 +1,10 @@
+<!-- ViewList.vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to display a list of items
+     according to different implemented views.
+     It also manage pagination, search, and sort.
+-->
+
 <template>
   <div class="items">
     <nav>

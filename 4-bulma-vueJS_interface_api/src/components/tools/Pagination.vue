@@ -1,3 +1,7 @@
+<!-- Pagination -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to paginate a list of items. -->
+
 <template>
   <nav class="pagination is-centered">
     <ul class="pagination-list">

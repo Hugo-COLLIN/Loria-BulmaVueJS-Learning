@@ -1,3 +1,8 @@
+<!-- ModalItem.vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to create a new item or edit an existing one. -->
+<!-- TODO : init formular component with initButton parameter to false -->
+
 <template>
   <div class="modal" :class="{'is-active': showModal}">
     <div class="modal-background" @click="closeModal"></div>
@@ -113,6 +118,7 @@ export default {
         // use the form content to edit the item
         this.$emit("edit-data", this.form);
       else
+        // use the form content to create an item
         this.$emit("sent-data", this.form);
 
 /*

@@ -1,3 +1,7 @@
+<!-- Search -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to create a search bar. -->
+
 <template>
   <div class="field has-addons">
     <p class="control">

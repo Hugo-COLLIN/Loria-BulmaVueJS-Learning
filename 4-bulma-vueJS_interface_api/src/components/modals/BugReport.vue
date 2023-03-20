@@ -1,3 +1,8 @@
+<!-- BugReport.vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This is the modal that will be used to report bugs -->
+<!-- TODO : to be combined with ModalItem and deleted  -->
+
 <template>
   <div :class="{'is-active': showModal}" class="modal">
     <div class="modal-background" @click="closeModal"></div>

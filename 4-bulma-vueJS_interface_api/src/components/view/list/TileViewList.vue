@@ -1,5 +1,8 @@
+<!-- TileViewList.vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to display a list of items in a tile view -->
+
 <template>
-<!--  <h1>C'est Tile</h1>-->
   <div class="columns is-multiline is-align-items-stretch">
     <template v-for="(item, key) in items">
       <div class="column is-12-tablet is-6-desktop is-4-widescreen">

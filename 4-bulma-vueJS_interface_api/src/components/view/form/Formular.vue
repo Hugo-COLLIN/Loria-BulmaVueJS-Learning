@@ -1,3 +1,10 @@
+<!-- Formular -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to create a form
+     It's set with a list of nested arrays of objects
+     to create multiple fields in a row and multiple rows.
+-->
+
 <template>
   <form ref="itemAddForm">
     <div :class="{'is-hidden': hideNotification}">

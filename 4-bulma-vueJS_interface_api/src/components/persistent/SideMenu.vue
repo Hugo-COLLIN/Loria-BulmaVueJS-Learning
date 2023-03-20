@@ -1,3 +1,8 @@
+<!-- SideMenu.vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to create a navigation menu. -->
+<!-- TODO: Make listItem child component usable with SideMenu, Dropdown and DropMenu -->
+
 <template>
   <aside class="menu">
     <p class="menu-label">Menu</p>
@@ -14,40 +19,8 @@
   </aside>
 </template>
 <script>
-// export default {
-//   name: 'SideMenu',
-//   // props: ['menuItems'],
-//   // surveiller la prop menuItems et appeler la méthode init() quand elle change
-//   watch: {
-//     menuItems() {
-//       this.init(this.menuItems)
-//     }
-//   },
-//   data() {
-//     return {
-//       // initialiser menuItems à une valeur par défaut au cas où la prop ne serait pas fournie
-//       // ce n'est pas obligatoire, mais cela peut éviter des erreurs si la prop est omise
-//       // dans l'usage de ce composant
-//       menuItems: []
-//     }
-//   },
-//   methods: {
-//     init(items) {
-//       this.menuItems = items;
-//     }
-//   }
-// }
-
 export default {
   name: 'SideMenu',
-  // props: ['menuItems'],
-  // watch: {
-  //   // surveiller la prop menuItems et appeler la méthode init() quand elle change
-  //   menuItems()
-  //   {
-  //     this.init(this.menuItems);
-  //   }
-  // },
   data() {
     return {
       // initialiser menuItems à une valeur par défaut au cas où la prop ne serait pas fournie
@@ -60,7 +33,6 @@ export default {
     init(items)
     {
       this.menuItems = items;
-      // console.log(this.menuItems)
     }
   }
 }

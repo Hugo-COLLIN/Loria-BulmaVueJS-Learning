@@ -1,3 +1,10 @@
+<!-- Dropdown -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is used to create a dropdown menu
+     It takes a list of options and a label as parameters
+     It emits an event when the user selects an option
+-->
+
 <template>
   <div class="level-item mr-2">
     {{ this.label }}

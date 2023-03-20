@@ -1,4 +1,8 @@
 <!-- Global app vue -->
+<!-- Hugo COLLIN, 20/03/2023 -->
+<!-- This component is the main component of the application
+     It contains the header bar, the side menu and the main content. -->
+
 <template>
   <LoginMechanics ref="loginMechanics" @login="init"></LoginMechanics>
   <HeaderBar @open-bug-report="bugReport" @logout="logout"/>
