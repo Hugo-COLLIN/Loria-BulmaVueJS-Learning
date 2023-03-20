@@ -29,24 +29,24 @@ export default {
   emits: ["update"],
   data() {
     return {
-      /**
+      /** @vuese
        * Text before the dropdown
        */
       label: "",
 
-      /**
+      /** @vuese
        * Dropdown elements
        */
       listOptions: {},
 
-      /**
+      /** @vuese
        * Selected option
        */
       selected: "",
     };
   },
   methods: {
-    /**
+    /** @vuese
      * Take a list of items and sort them by the selected option
      * @param event event emitted by the dropdown
      */
@@ -57,7 +57,7 @@ export default {
       // console.log("Event : " + event.target.value);
     },
 
-    /**
+    /** @vuese
      * Initialize the component
      * @param list elements of the dropdown
      * @param label text before the dropdown

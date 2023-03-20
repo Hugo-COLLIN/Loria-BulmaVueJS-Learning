@@ -93,7 +93,7 @@ export default {
     };
   },
   methods: {
-    /**
+    /** @vuese
      * Abort the form
      */
     cancel() {
@@ -101,6 +101,9 @@ export default {
       this.$emit("close");
     },
 
+    /** @vuese
+     * Send the form
+     */
     sendForm() {
       let isErrors = false;
       this.resetErrors();
@@ -130,7 +133,7 @@ export default {
         this.$emit("sent-data", this.form);
     },
 
-    /*
+    /* @vuese
       Reset all errors
      */
     resetErrors() {
@@ -138,7 +141,7 @@ export default {
         this.error[key] = false;
     },
 
-    /**
+    /** @vuese
      * Set default values for all fields
      */
     setFieldsDefault() {
@@ -154,7 +157,7 @@ export default {
 
     },
 
-    /**
+    /** @vuese
      * Set the structure of the form
      * @param itemAttributes
      */
@@ -162,7 +165,7 @@ export default {
       this.itemAttributes = itemAttributes;
     },
 
-    /**
+    /** @vuese
      * Delete all the this.form object properties'
      */
     cleanFields() {
@@ -170,7 +173,7 @@ export default {
         delete this.form[key];
     },
 
-    /**
+    /** @vuese
      * Prepare the form to create a new item
      */
     newForm() {
@@ -184,7 +187,7 @@ export default {
       // this.teleportState = true; // teleport try
     },
 
-    /**
+    /** @vuese
      * Prepare the form to edit an item
      * @param item
      */
@@ -199,7 +202,7 @@ export default {
       this.form.Milliseconds /= 60000;
     },
 
-    /**
+    /** @vuese
      * Set the form structure
      * @param formStruct
      */
@@ -215,17 +218,11 @@ export default {
 
   },
 
+  /** @vuese
+   * Set default values for all fields
+   */
   mounted() {
     this.setFieldsDefault();
   }
 }
 </script>
-
-<style scoped>
-/**
- * This is a fix for the modal card to be scrollable
- **/
-.modal-card > * {
-  overflow: auto;
-}
-</style>

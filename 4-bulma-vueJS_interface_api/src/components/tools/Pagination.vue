@@ -58,7 +58,7 @@ export default {
 
   methods:
   {
-    /**
+    /** @vuese
      * Set the number of items per page
      * @param totalItems
      */
@@ -67,7 +67,7 @@ export default {
       this.totalItems = totalItems;
     },
 
-    /**
+    /** @vuese
      * Set the number of pages
      */
     setTotalPages()
@@ -75,7 +75,7 @@ export default {
       this.totalPages = Math.ceil(this.totalItems / this.perPage);
     },
 
-    /**
+    /** @vuese
      * Get the current page
      * @returns {number}
      */
@@ -84,7 +84,7 @@ export default {
       return this.currentPage;
     },
 
-    /**
+    /** @vuese
      * Get the number of items per page
      * @returns {number}
      */
@@ -93,7 +93,7 @@ export default {
       return this.perPage;
     },
 
-    /**
+    /** @vuese
      * Set the page to previous and emit update
      */
     paginPrev()
@@ -106,7 +106,7 @@ export default {
       }
     },
 
-    /**
+    /** @vuese
      * Set the page to next and emit update
      */
     paginNext()
@@ -118,7 +118,7 @@ export default {
       }
     },
 
-    /**
+    /** @vuese
      * Set the page to the first page and emit update
      */
     paginStart()
@@ -127,7 +127,7 @@ export default {
       this.$emit('pagin-update');
     },
 
-    /**
+    /** @vuese
      * Set the page to the last page and emit update
      */
     paginEnd()
@@ -137,7 +137,7 @@ export default {
     },
 
 
-    /**
+    /** @vuese
      * Get the first item on the current page
      * @returns {number}
      */
@@ -146,7 +146,7 @@ export default {
       return (this.currentPage - 1) * this.perPage;
     },
 
-    /**
+    /** @vuese
      * Get the last item on the current page
      * @returns {number}
      */
@@ -157,7 +157,7 @@ export default {
       return this.currentPage * this.perPage;
     },
 
-    /**
+    /** @vuese
      * Set a custom page to go to
      * @param page custom page
      */
@@ -166,7 +166,7 @@ export default {
       this.currentPage = page;
     },
 
-    /**
+    /** @vuese
      * Move the page by a number
      * @param pages number of pages to move
      */

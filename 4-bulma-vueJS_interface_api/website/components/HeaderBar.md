@@ -12,3 +12,14 @@
 <!-- @vuese:HeaderBar:events:end -->
 
 
+## Methods
+
+<!-- @vuese:HeaderBar:methods:start -->
+|Method|Description|Parameters|
+|---|---|---|
+|login|Request the login page|-|
+|logout|Request to disconnect the user|-|
+
+<!-- @vuese:HeaderBar:methods:end -->
+
+

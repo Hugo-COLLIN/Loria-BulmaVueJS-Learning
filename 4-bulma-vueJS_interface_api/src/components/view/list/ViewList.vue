@@ -115,12 +115,21 @@ export default {
 
   methods:
   {
+    /** @vuese
+     * This method is used to set the component h2 title.
+     * @param title
+     */
     setPageTitle(title) {
       this.pageTitle = title;
     },
 
         /*
     --- ITEMS FILTERING METHODS ---
+     */
+    /**
+     * @vuese
+     * Sort the items according to the selected sort and order.
+     * @param sort
      */
     sortItems(sort) {
       if (this.isDescOrder) {
@@ -134,20 +143,33 @@ export default {
       this.updateList();
     },
 
+    /**
+     * @vuese
+     * Order the items according to the selected order.
+     * @param order
+     */
     orderItems(order) {
       this.isDescOrder = (order === "desc");
       this.sortItems(this.$refs.sortList.selected);
     },
 
+    /**
+     * @vuese
+     * Update the list of items to display according to the search.
+     */
     search() {
       this.searchItems = this.$refs.search.executeSearch(this.allItems);
-      // console.log(this.searchItems)
       this.$refs.pagination.setPage(1);
       this.updateList();
     },
 
         /*
     --- ITEM EDITION METHODS ---
+     */
+    /**
+     * @vuese
+     * Add an item to the list and to the database.
+     * @param i item to add
      */
     addItem(i) {
       this.items.push(i);
@@ -183,6 +205,11 @@ export default {
           });
     },
 
+    /**
+     * @vuese
+     * Edit an item in the list and in the database.
+     * @param i item to edit
+     */
     editItem(i) {
       let data = {};
       for (let key in this.currentItem) {
@@ -191,7 +218,6 @@ export default {
           data[key] = i[key];
       }
       this.showModal = false;
-
 
       axios({
         method: 'put',
@@ -211,6 +237,11 @@ export default {
 
     },
 
+    /**
+     * @vuese
+     * Delete an item from the list and from the database.
+     * @param item item to delete
+     */
     deleteItem(item) {
       this.items.splice(this.items.indexOf(item), 1);
       this.allItems.splice(this.allItems.indexOf(item), 1);
@@ -233,11 +264,20 @@ export default {
         /*
     --- MODAL CONFIGURATION ---
      */
+    /**
+     * @vuese
+     * Open the modal to add an item.
+     */
     callNewItem() {
       this.showModal = true;
       this.$refs.modalItem.newForm();
     },
 
+    /**
+     * @vuese
+     * Open the modal to edit an item.
+     * @param item
+     */
     callEditItem(item) {
       this.showModal = true;
       this.$refs.modalItem.editForm(item);
@@ -246,6 +286,11 @@ export default {
 
         /*
     --- LIST METHODS ---
+     */
+    /**
+     * @vuese
+     * Display the list of items according to the pagination.
+     * @param list initial list of items
      */
     displayCutList(list) {
       this.items = [];
@@ -259,6 +304,10 @@ export default {
       this.updateCountItems();
     },
 
+    /**
+     * @vuese
+     * Display the list of items according to the search state.
+     */
     displayCutAllList() {
       if (!this.$refs.search.isSearching())
         this.displayCutList(this.allItems);
@@ -266,6 +315,10 @@ export default {
         this.displayCutList(this.searchItems);
     },
 
+    /**
+     * @vuese
+     * Request the list of items from the database.
+     */
     loadList() {
       axios.get(this.urlAPISection, {headers: this.config})
           .then(response => {
@@ -283,6 +336,10 @@ export default {
       // this.sortItems("Name");
     },
 
+    /**
+     * @vuese
+     * Update the list displayed according to the item list content.
+     */
     updateList() {
       this.displayCutAllList();
 
@@ -300,6 +357,11 @@ export default {
       /*
       --- OTHER COMPONENTS METHODS ---
      */
+
+    /**
+     * @vuese
+     * Update the counter items component according to the pagination.
+     */
     updateCountItems() {
       const init = this.$refs.pagination.startingItem() + 1;
       const last = this.items.length + init - 1;
@@ -309,6 +371,10 @@ export default {
         this.$refs.counterList.updateCounter(init, last, this.searchItems.length);
     },
 
+    /**
+     * @vuese
+     * Initialize the other child components.
+     */
     initComponents() {
       this.$refs.orderList.init(this.orders);
       this.$refs.sortList.init(this.sorts, "Order by");
@@ -317,63 +383,102 @@ export default {
       this.$refs.search.init(this.searchComponent.att, this.searchComponent.placeholder, this.searchComponent.button);
     },
 
-    setDataSet(url) {
-      this.urlAPISection = this.$store.state.urlAPI + url;
+    /**
+     * @vuese
+     * Set the url of the API section.
+     * @param suburl API section path
+     */
+    setDataSet(suburl) {
+      this.urlAPISection = this.$store.state.urlAPI + suburl;
       console.log(this.urlAPISection)
     },
 
+    /**
+     * @vuese
+     * Set the sort options.
+     * @param sorts
+     */
     setSortOptions(sorts) {
       this.sorts = sorts;
     },
 
+    /**
+     * @vuese
+     * Initialize the search component.
+     * @param attributes
+     * @param placeholder
+     * @param button
+     */
     setSearchComponent(attributes, placeholder, button) {
       this.searchComponent.att = attributes;
       this.searchComponent.placeholder = placeholder;
       this.searchComponent.button = button;
     },
 
+    /**
+     * @vuese
+     * Set the form structure.
+     * @param formStruct
+     */
     setFormView(formStruct) {
       this.$refs.modalItem.setFormStruct(formStruct);
     },
 
+    /**
+     * @vuese
+     * Set the counter component label.
+     * @param label
+     */
     setCounterComponent(label) {
       this.counterComponent.label = label;
     },
 
+    /**
+     * @vuese
+     * Set the display style of the list.
+     * @param view
+     */
     setView(view) {
-      console.log(view)
       this.listView = view;
     },
 
+    /**
+     * @vuese
+     * Set the identifier attribute of the item list.
+     * @param id
+     */
     setIdentifier(id) {
       this.identifier = id;
     },
 
-
-
+    /**
+     * @vuese
+     * Initialize this component.
+     */
     init() {
       this.initComponents();
       this.loadList();
     },
 
-    setModel(cards) {
-      // if (this.listView === "table")
-        this.$refs.tableViewList.setTable(cards);
-      // else if (this.listView === "tiles")
-        this.$refs.tileViewList.setCards(cards);
+    /**
+     * @vuese
+     * Initialize the views.
+     * @param struct json structure for each elements
+     */
+    setModel(struct) {
+      this.$refs.tableViewList.setTable(struct);
+      this.$refs.tileViewList.setCards(struct);
     },
 
+    /**
+     * @vuese
+     * Set the excluded properties to avoid them in database requests.
+     * @param props
+     */
     setExcludedProps(props) {
       console.log(props)
       this.excludedProps = props;
     },
-  },
-  mounted() {
-    // this.initComponents();
-    // this.loadList();
-    // console.log(this.items)
-    // console.log(this.searchItems)
-    // console.log(this.allItems)
   },
 }
 </script>

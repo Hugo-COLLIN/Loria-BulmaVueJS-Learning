@@ -56,11 +56,16 @@
 
     </table>
 </template>
+
 <script>
+// @group View
 export default {
   name: 'TableViewList',
   emits: ['call-edit-item', 'delete-item'],
   props: {
+    /** @vuese
+     * The list of items to display.
+     */
     items: {},
   },
   data() {
@@ -75,18 +80,34 @@ export default {
     }
   },
   methods: {
+    /** @vuese
+     * Emit an event to edit an item.
+     * @param item
+     */
     callEditItem(item) {
-      console.log(item)
+      // emitted to edit an item
       this.$emit('call-edit-item', item);
     },
+
+    /** @vuese
+     * Emit an event to delete an item.
+     * @param item
+     */
     deleteItem(item) {
+      // emitted to delete an item
       this.$emit('delete-item', item);
     },
+
+
     /*
-    --- CARDS LIST METHODS ---
+     `--- CARDS LIST METHODS ---`<br>
+     */
+
+    /** @vuese
+     * Set the table structure.
+     * @param cols
      */
     setTable(cols) {
-      // this.cards.title = this.allItems[0][title];
       console.log(cols)
       this.cols = cols;
     },

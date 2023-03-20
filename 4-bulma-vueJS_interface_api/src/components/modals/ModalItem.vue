@@ -8,11 +8,11 @@
     <div class="modal-background" @click="closeModal"></div>
     <div class="modal-card">
 
-      <header class="modal-card-head" :class="{'is-hidden': !hideNotification}">
-        <p class="modal-card-title">Item information</p>
+      <header class="modal-card-head">
+        <p class="modal-card-title">{{ this.modalTitle }}</p>
         <button class="delete" aria-label="close" @click="closeModal"></button>
       </header>
-      <section class="modal-card-body" :class="{'notification is-success': !hideNotification}">
+      <section class="modal-card-body">
         <Formular
             ref="formular"
           @edit-data="editData"
@@ -20,7 +20,7 @@
           @close="closeModal"></Formular>
       </section>
 
-      <footer class="modal-card-foot field" :class="{'is-hidden': !hideNotification}">
+      <footer class="modal-card-foot field">
 <!--        <div class="buttons">-->
 <!--          <button class="button is-medium is-success" @click.prevent="sendModal">{{this.btnTitle}}</button>-->
 <!--          <button class="button" @click="closeModal">Cancel</button>-->
@@ -51,11 +51,7 @@ export default {
       hideNotification: true,
       edit: false,
       btnTitle: "",
-
-      // form: {},
-      // error: {},
-      // formStruct: {},
-      // itemAttributes: {}
+      modalTitle: "",
     };
   },
   props: {
@@ -66,26 +62,32 @@ export default {
     },
   },
   methods: {
+    /** @vuese
+     * Close the modal
+     */
     closeModal() {
       // emitted to hide the modal
       this.$emit("close");
       // this.showModal = false;
     },
 
+    /** @vuese
+     * Reset the modal TODO delete this method
+     */
     resetModal() {
       // this.reportMessage = "";
       this.closeModal();
     },
 
-    /*
-      Reset all errors
-     */
+    /** @vuese
+      * Reset all errors
+      */
     resetErrors() {
       for (let key in this.error)
         this.error[key] = false;
     },
 
-    /**
+    /** @vuese
      * Reset all fields to default values
      */
     setFieldsDefault() {
@@ -102,7 +104,7 @@ export default {
 
     },
 
-    /**
+    /** @vuese
      * Delete all fields
      */
     cleanFields() {
@@ -113,18 +115,33 @@ export default {
     /*
     --- FORM METHODS CALLS ---
      */
+    /** @vuese
+     * Set its structure to the formular component
+     * @param formStruct
+     */
     setFormStruct(formStruct) {
       this.$refs.formular.setFormStruct(formStruct);
     },
 
+    /** @vuese
+     * Set item attributes to the formular component
+     * @param itemAttributes
+     */
     setItemAttributes(itemAttributes) {
       this.$refs.formular.setItemAttributes(itemAttributes);
     },
 
+    /** @vuese
+     * Set the formular component to create a new item
+     */
     newForm() {
       this.$refs.formular.newForm();
     },
 
+    /** @vuese
+     * Set the formular component to edit an existing item
+     * @param item
+     */
     editForm(item)
     {
       this.$refs.formular.editForm(item);
@@ -133,16 +150,31 @@ export default {
     /*
     --- FORM EMITS REEMITED ---
      */
+    /** @vuese
+     * Reemit the edit-data event from the formular component
+     * @param item
+     */
     editData(item) {
+      // Reemitted to edit the item
+      // @arg item : the item to edit
       this.$emit("edit-data", item);
     },
 
+    /** @vuese
+     * Reemit the sent-data event from the formular component
+     * @param item
+     */
     sentData(item) {
+      // Reemitted to create a new item
+      // @arg item : the item to create
       this.$emit("sent-data", item);
     }
 
   },
 
+  /** @vuese
+   * Set the default values of the fields
+   */
   mounted() {
     this.setFieldsDefault();
   }
@@ -150,7 +182,7 @@ export default {
 </script>
 
 <style scoped>
-/**
+/** @vuese
  * This is a fix for the modal card to be scrollable
  **/
 .modal-card > * {

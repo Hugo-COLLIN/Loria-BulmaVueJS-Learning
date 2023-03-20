@@ -97,7 +97,7 @@ export default {
       return store
     },
 
-    /**
+    /** @vuese
      * Get the user infos from the session storage
      * @returns {{FirstName: string, LastName: string}|any}
      */
@@ -111,7 +111,7 @@ export default {
       };
     },
 
-    /**
+    /** @vuese
      * Return true if the user is connected
      * @returns {boolean}
      */
@@ -123,7 +123,7 @@ export default {
   emits: ['open-bug-report', 'login', 'logout'],
   data() {
     return {
-      /**
+      /** @vuese
        * Bug report modal visibility
        */
       openBugReport: false
@@ -139,7 +139,7 @@ export default {
       console.log('bugReport modal opened');
     },
 
-    /**
+    /** @vuese
      * Request the login page
      */
     login() {
@@ -147,22 +147,13 @@ export default {
       this.$emit('login');
     },
 
-    /**
+    /** @vuese
      * Request to disconnect the user
      */
     logout() {
       // emitted to parent to disconnect the user
       this.$emit('logout');
     },
-
-    // userAction() {
-    //   if (this.isConnected) {
-    //     this.$router.push('/profile');
-    //   } else {
-    //     this.login();
-    //   }
-    // }
-
   }
 }
 </script>

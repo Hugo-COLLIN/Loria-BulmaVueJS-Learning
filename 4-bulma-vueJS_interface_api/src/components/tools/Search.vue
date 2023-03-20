@@ -14,7 +14,7 @@
 </template>
 
 <script>
-/*
+/* @vuese
  * This component is used to create a search bar.
  */
 import Collect from "collect.js";
@@ -40,14 +40,14 @@ export default {
     }
   },
   methods: {
-    /**
+    /** @vuese
       * Check if the search bar is empty or not.
      */
     isSearching() {
       return (this.searchWord !== '');
     },
 
-    /**
+    /** @vuese
       * Emit the search event.
      */
     emitSearch() {
@@ -55,7 +55,7 @@ export default {
       this.$emit('search');
     },
 
-    /**
+    /** @vuese
       * Execute the search in a given list.
      */
     executeSearch(list) {
@@ -76,7 +76,7 @@ export default {
       return list;
     },
 
-    /**
+    /** @vuese
      * Initialize the search bar data attributes
      * @param attributes search attributes
      * @param placeholder text to display inside the search bar

@@ -30,6 +30,10 @@ export default {
     }
   },
   methods: {
+    /** @vuese
+     * Initialise the menu items
+     * @param items menu elements
+     */
     init(items)
     {
       this.menuItems = items;

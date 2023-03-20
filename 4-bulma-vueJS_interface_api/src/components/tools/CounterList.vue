@@ -25,12 +25,22 @@ export default {
     }
   },
   methods: {
+    /** @vuese
+     * Update the counter to corresponding values.
+     * @param initItem
+     * @param lastItem
+     * @param totalItems
+     */
     updateCounter(initItem, lastItem, totalItems) {
       this.initItem = initItem;
       this.lastItem = lastItem;
       this.totalItems = totalItems;
     },
 
+    /** @vuese
+     * Set the label of the counter.
+     * @param label counter label
+     */
     init(label) {
       this.label = label;
     }

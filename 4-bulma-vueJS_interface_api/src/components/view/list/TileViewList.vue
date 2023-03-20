@@ -52,6 +52,9 @@ export default {
   name: 'TileViewList',
   emits: ['call-edit-item', 'delete-item'],
   props: {
+    /** @vuese
+     * The list of items to display.
+     */
     items: {},
   },
   data() {
@@ -66,33 +69,35 @@ export default {
     }
   },
   methods: {
+    /** @vuese
+     * Emit an event to edit an item.
+     * @param item
+     */
     callEditItem(item) {
-      console.log(item)
+      // Emitted to edit an item
       this.$emit('call-edit-item', item);
     },
+
+    /** @vuese
+     * Emit an event to delete an item.
+     * @param item
+     */
     deleteItem(item) {
+      // Emitted to delete an item
       this.$emit('delete-item', item);
     },
     /*
     --- CARDS LIST METHODS ---
      */
+    /** @vuese
+     * Set the cards structure.
+     * @param cards
+     */
     setCards(cards) {
       // this.cards.title = this.allItems[0][title];
       this.cards = cards;
     },
-    // setCardsTitle(title, pre = "", post = "") {
-    //   this.cards.title = title;
-    //   this.cards.pre = pre;
-    //   this.cards.post = post;
-    // },
-    // setCardsSubtitle(subtitle, pre = "", post = "") {
-    //   this.cards.title = title;
-    //   this.cards.pre = pre;
-    //   this.cards.post = post;
-    // },
-    // addCardsInfo(label, pre = "", post = "") {
-    //   this.cards.infos.push({label: label, pre: pre, post: post});
-    // },
+
   }
 }
 </script>
