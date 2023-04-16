@@ -94,7 +94,7 @@
                 </div>-->
                 <div class="media-content">
                   <p class="title is-5 is-spaced is-marginless">
-                    <router-link to="/items">{{ item.Name }}</router-link>
+                    <router-link to="/tracks">{{ item.Name }}</router-link>
                   </p>
                 </div>
                 <div class="media-right">
@@ -102,7 +102,7 @@
                 </div>
               </div>
             </template>
-            <router-link to="/items" class="button is-link is-outlined">View all items</router-link>
+            <router-link to="/tracks" class="button is-link is-outlined">View all items</router-link>
           </div>
         </div>
       </div>

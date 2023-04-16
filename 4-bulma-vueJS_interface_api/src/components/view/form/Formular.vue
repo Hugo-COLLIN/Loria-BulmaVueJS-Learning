@@ -52,12 +52,13 @@
   <!--              </div>-->
 
   <!--            </div>-->
+        <div class="buttons">
+            <button class="button is-medium is-success" @click.prevent="sendForm">{{this.btnTitle}}</button>
+            <button class="button" @click.prevent="cancel">Cancel</button>
+        </div>
     </div>
     <!--          <Teleport to=".modal-card-foot" :disabled="!this.teleportState">-->
-    <div class="buttons">
-      <button class="button is-medium is-success" @click.prevent="sendForm">{{this.btnTitle}}</button>
-      <button class="button" @click.prevent="cancel">Cancel</button>
-    </div>
+
     <!--          </Teleport>-->
 
     <!--          <portal to="modal-footer">-->
